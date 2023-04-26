@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Header from "components/Header"
+import Header from "components/Header";
+import OrderCustomization from "components/OrderCustomization";
 
 export default function Order() {
   const [bevType, setBevType] = useState("coffee");
@@ -24,15 +25,9 @@ export default function Order() {
             <button type="button" value="tea" className={bevType === "tea" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Tea</button>
             <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
           </div>
-          <div className="flex flex-col w-full bg-white justify-center rounded mb-2 px-8">
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="drinkTemp">Hot/Iced</label></div>
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="numberOfShots">Espresso shots</label></div>
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="milkType">Milk</label></div>
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="syrup1">Syrup</label></div>
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="sauce">Sauce</label></div>
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="foam">Foam</label></div>
-            <div className="w-full flex flex-nowrap"><label className="text-xl my-2" for="temperature">Temperature</label></div>
-          </div>
+          <div className="flex flex-col w-full bg-white justify-center mb-2 px-8">
+             <OrderCustomization label={{label: "Hot/Iced", for:"drinkTemp"}} />
+            </div>
         </div>
       </main>
     </>
