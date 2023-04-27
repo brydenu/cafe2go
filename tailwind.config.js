@@ -19,6 +19,8 @@ module.exports = {
       white: colors.white,
       gray: colors.gray,
       blue: colors.blue,
+      green: colors.green,
+      emerald: colors.emerald,
       'blfs-blue': '#004876',
       'blfs-teal': '#32A5DC'
     },
