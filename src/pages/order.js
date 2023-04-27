@@ -14,6 +14,12 @@ export default function Order() {
   const selectedOption = "bg-blfs-teal w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
   const unselectedOption = "bg-blfs-blue w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
 
+  const testOptions = [
+    {id: 1, label: "Hot", unavailable: false},
+    {id: 3, label: "Iced", unavailable: false},
+    {id: 3, label: "Room Temp", unavailable: true},
+
+]
   return (
     <>
       <Header />
@@ -26,7 +32,7 @@ export default function Order() {
             <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
           </div>
           <div className="flex flex-col w-full bg-white justify-center mb-2 px-8">
-             <OrderCustomization label={{label: "Hot/Iced", for:"drinkTemp"}} />
+             <OrderCustomization label="Hot/Iced" options={testOptions} />
             </div>
         </div>
       </main>
