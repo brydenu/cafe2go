@@ -4,9 +4,13 @@ import OrderCustomization from "components/OrderCustomization";
 
 export default function Order() {
   const [bevType, setBevType] = useState("coffee");
-  const [drink, setDrink] = useState({});
+  const [customizations, setCustomizations] = useState({});
 
-  const customizations = [
+  const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
+  const selectedOption = "bg-blfs-teal " + bevTabClasses;
+  const unselectedOption = "bg-blfs-blue hover:bg-blfs-teal/50  " + bevTabClasses;
+
+  const customizeOptions = [
     {
       id: 1,
       label: "Drink Type",
@@ -85,7 +89,7 @@ export default function Order() {
       options: [
         {id: 1, label: "Normal Foam", unavailable: false},
         {id: 2, label: "Extra Foam", unavailable: false},
-        {id: 1, label: "No Foam", unavailable: false},
+        {id: 3, label: "No Foam", unavailable: false},
       ]
     }
   ]
@@ -96,9 +100,11 @@ export default function Order() {
     setBevType(newBevType);
   }
 
-  const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
-  const selectedOption = "bg-blfs-teal " + bevTabClasses;
-  const unselectedOption = "bg-blfs-blue hover:bg-blfs-teal/50  " + bevTabClasses;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(customizations);
+  }
+
 
   const testOptions = [
     {id: 1, label: "Hot", unavailable: false},
@@ -109,7 +115,7 @@ export default function Order() {
     <>
       <Header />
       <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-200">
-        <h1 className="text-4xl">Order A Drink</h1>
+        <h1 className="text-4xl mb-8">Order A Drink</h1>
         <div className="w-2/3 flex flex-col justify-center items-center bg-blfs-blue pt-10 pb-1 rounded">
           <div className="w-full flex justify-evenly mb-2">
             <button type="button" value="coffee" className={bevType === "coffee" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Coffee</button>
@@ -117,14 +123,14 @@ export default function Order() {
             <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
           </div>
           <div className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8">
-            {customizations.map((customization) => (
+            {customizeOptions.map((customization) => (
               <>
                 <OrderCustomization key={customization.id} label={customization.label} options={customization.options} />
                 <hr />
               </>
             ))}
           </div>
-          <button className="w-30 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2">Submit Order</button>
+          <button className="w-30 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2" onClick={handleSubmit}>Submit Order</button>
         </div>
       </main>
     </>

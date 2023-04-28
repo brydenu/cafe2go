@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
-export default function OrderCustomization({ label, options, isDropdown }) {
+export default function OrderCustomization({ label, options }) {
     const [selectedOption, setSelectedOption] = useState(options[0])
 
     return (
