@@ -114,7 +114,7 @@ export default function Order() {
   return (
     <>
       <Header />
-      <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-200">
+      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
         <h1 className="text-4xl mb-8">Order A Drink</h1>
         <div className="w-2/3 flex flex-col justify-center items-center bg-blfs-blue pt-10 pb-1 rounded">
           <div className="w-full flex justify-evenly mb-2">
