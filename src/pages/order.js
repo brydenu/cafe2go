@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "components/Header";
 import OrderCustomization from "components/OrderCustomization";
 
 export default function Order() {
   const [bevType, setBevType] = useState("coffee");
   const [customizations, setCustomizations] = useState({});
+  const [drinkOptions, setDrinkOptions] = useState([])
 
   const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
   const selectedOption = "bg-blfs-teal " + bevTabClasses;
   const unselectedOption = "bg-blfs-blue hover:bg-blfs-teal/50  " + bevTabClasses;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/api/menu');
+      const json = await res.json();
+      setDrinkOptions(json);
+    }
+
+    fetchData();
+  },[]);
+  console.log(drinkOptions)
 
   const customizeOptions = [
     {
