@@ -15,7 +15,7 @@ export default function Order() {
     const fetchData = async () => {
       const res = await fetch('/api/menu');
       const json = await res.json();
-      setDrinkOptions(json);
+      setDrinkOptions(json.menu);
     }
 
     fetchData();
