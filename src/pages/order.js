@@ -6,7 +6,6 @@ import getMenu from "helpers/getMenu";
 
 export default function Order({ menu, ingredients }) {
   const [bevType, setBevType] = useState("coffee");
-  const [customizations, setCustomizations] = useState({});
 
   const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
   const selectedOption = "bg-blfs-teal " + bevTabClasses;
@@ -14,91 +13,6 @@ export default function Order({ menu, ingredients }) {
 
   console.log("ingredients print:", ingredients);
   console.log("menu print:", menu);
-
-  const customizeOptions = [
-    {
-      id: 1,
-      label: "Drink Type",
-      name: "drink_type",
-      options: [
-        {id: 1, label: "Americano", unavailable: false},
-        {id: 2, label: "Latte", unavailable: false},
-        {id: 3, label: "Mocha", unavailable: false},
-        {id: 4, label: "White Mocha", unavailable: false},
-        {id: 5, label: "Caramel Macchiato", unavailable: false},
-        {id: 5, label: "Espresso", unavailable: false},
-        {id: 6, label: "Cortado", unavailable: false},
-        {id: 7, label: "Espresso Macchiato", unavailable: false}
-      ]
-    },
-    {
-      id: 2,
-      label: "Hot/Iced",
-      options: [
-        {id: 1, label: "Hot", unavailable: false},
-        {id: 2, label: "Iced", unavailable: false},
-      ]
-    },
-    {
-      
-      id: 3,
-      label: "Number of shots",
-      options: [
-        {id: 1, label: 1, unavailable: false},
-        {id: 2, label: 2, unavailable: false},
-        {id: 3, label: 3, unavailable: false},
-        {id: 4, label: 4, unavailable: false},
-        {id: 5, label: 5, unavailable: false},
-        {id: 6, label: 6, unavailable: false},
-        {id: 7, label: 7, unavailable: false},
-        {id: 8, label: 8, unavailable: false}
-      ]
-    },
-    {
-      id: 4,
-      label: "Syrup",
-      options: [
-        {id: 1, label: "No Syrup", unavailable: false},
-        {id: 2, label: "Vanilla", unavailable: false},
-        {id: 3, label: "Caramel", unavailable: false},
-        {id: 4, label: "Hazelnut", unavailable: false},
-        {id: 5, label: "English Toffee", unavailable: false},
-        {id: 6, label: "Mocha", unavailable: false},
-        {id: 7, label: "White Mocha", unavailable: false},
-        {id: 8, label: "Lavender", unavailable: false},
-        {id: 9, label: "Pistachio", unavailable: false},
-        {id: 10, label: "Pumpkin Spice", unavailable: false},
-        {id: 11, label: "Cardamom", unavailable: false},
-        {id: 12, label: "Brown Sugar Cinnamon", unavailable: false},
-        {id: 13, label: "Cane Sugar", unavailable: false},
-        {id: 14, label: "Peppermint", unavailable: false},
-        {id: 15, label: "Sugar Free Vanilla", unavailable: false},
-        {id: 16, label: "Sugar Free Hazelnut", unavailable: false},
-        {id: 17, label: "Sugar Free Caramel", unavailable: false},
-        {id: 18, label: "Sugar Free Peppermint", unavailable: false},
-        {id: 19, label: "Sugar Free Chocolate", unavailable: false},
-        {id: 20, label: "Sugar Free White Chocolate", unavailable: false}
-      ]
-    },
-    {
-      id: 5,
-      label: "Sauce",
-      options: [
-        {id: 1, label: "No Sauce", unavailable: false},
-        {id: 2, label: "Caramel Sauce", unavailable: false},
-        {id: 3, label: "Chocolate Sauce", unavailable: false}
-      ]
-    },
-    {
-      id: 6,
-      label: "Foam",
-      options: [
-        {id: 1, label: "Normal Foam", unavailable: false},
-        {id: 2, label: "Extra Foam", unavailable: false},
-        {id: 3, label: "No Foam", unavailable: false},
-      ]
-    }
-  ]
     
   const handleChangeTab = (e) => {
     e.preventDefault();
@@ -108,15 +22,8 @@ export default function Order({ menu, ingredients }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(customizations);
   }
 
-
-  const testOptions = [
-    {id: 1, label: "Hot", unavailable: false},
-    {id: 3, label: "Iced", unavailable: false},
-    {id: 3, label: "Room Temp", unavailable: true},
-]
   return (
     <>
       <Header />
@@ -135,7 +42,8 @@ export default function Order({ menu, ingredients }) {
                 <hr />
               </>
             ))} */}
-            {/* <OrderCustomization label="Drink" options={menu} /> */}
+            <OrderCustomization label="Drink" options={menu} ingredient={false} />
+            <OrderCustomization label="Milk" options={ingredients.milks} />
           </div>
           <button className="w-30 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2" onClick={handleSubmit}>Submit Order</button>
         </div>
