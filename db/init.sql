@@ -30,7 +30,20 @@ CREATE TABLE menu (
   drink_id SERIAL PRIMARY KEY,
   drink_name VARCHAR(100) NOT NULL,
   description TEXT,
+  drink_type VARCHAR(20) NOT NULL,
   in_stock BOOLEAN NOT NULL DEFAULT true
+);
+
+-- Create table for customizations
+CREATE TABLE customizations (
+  customization_id SERIAL PRIMARY KEY,
+  customization_name VARCHAR(50) NOT NULL,
+  customization_label VARCHAR(100) NOT NULL,
+  description TEXT,
+  customization_ingredient VARCHAR(50) NOT NULL,
+  coffee_optional boolean NOT NULL DEFAULT true,
+  tea_optional boolean NOT NULL DEFAULT true,
+  other_optional boolean NOT NULL DEFAULT true
 );
 
 -- Create table for orders
