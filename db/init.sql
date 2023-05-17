@@ -27,7 +27,7 @@ CREATE TABLE ingredients (
 
 -- Create table for menu
 CREATE TABLE menu (
-  drink_id SERIAL PRIMARY KEY,
+  menu_id SERIAL PRIMARY KEY,
   drink_name VARCHAR(100) NOT NULL,
   description TEXT,
   drink_type VARCHAR(20) NOT NULL,
@@ -46,10 +46,16 @@ CREATE TABLE customizations (
   other_optional boolean NOT NULL DEFAULT true
 );
 
+-- Create many-to-many table between menu and customizations
+CREATE TABLE menu_customizations (
+  menu_id INT NOT NULL REFERENCES menu(menu_id),
+  customization_id INT NOT NULL REFERENCES customizations(customization_id)
+);
+
 -- Create table for orders
 CREATE TABLE orders (
   order_id SERIAL PRIMARY KEY,
-  drink_id INT NOT NULL REFERENCES menu(drink_id),
+  menu_id INT NOT NULL REFERENCES menu(menu_id),
   milk_id INT NOT NULL REFERENCES ingredients(ingredient_id),
   num_shots INT NOT NULL,
   hot_iced VARCHAR(50) NOT NULL,
@@ -78,13 +84,14 @@ CREATE TABLE orders (
   packet_sweetener2_id INT REFERENCES ingredients(ingredient_id),
   packet_sweetener2_quantity VARCHAR(50),
   in_progress BOOLEAN NOT NULL DEFAULT true,
-  ordered_date TIMESTAMP NOT NULL DEFAULT NOW()
+  ordered_date TIMESTAMP NOT NULL DEFAULT NOW(),
+  note TEXT
 );
 
 -- Create table for favorites
 CREATE TABLE favorites (
   favorite_id SERIAL PRIMARY KEY,
-  drink_id INT NOT NULL REFERENCES menu(drink_id),
+  menu_id INT NOT NULL REFERENCES menu(menu_id),
   milk_id INT NOT NULL REFERENCES ingredients(ingredient_id),
   num_shots INT NOT NULL,
   hot_iced VARCHAR(50) NOT NULL,
@@ -112,7 +119,8 @@ CREATE TABLE favorites (
   packet_sweetener1_quantity VARCHAR(50),
   packet_sweetener2_id INT REFERENCES ingredients(ingredient_id),
   packet_sweetener2_quantity VARCHAR(50),
-  in_progress BOOLEAN NOT NULL DEFAULT true
+  in_progress BOOLEAN NOT NULL DEFAULT true,
+  note TEXT
 );
 
 -- Create many-to-many table between users and favorites
