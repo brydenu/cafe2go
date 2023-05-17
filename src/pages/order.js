@@ -3,16 +3,18 @@ import Header from "components/Header";
 import OrderCustomization from "components/OrderCustomization";
 import getIngredients from "helpers/getIngredients";
 import getMenu from "helpers/getMenu";
+import getCustomizations from "helpers/getCustomizations";
 
-export default function Order({ menu, ingredients }) {
+export default function Order({ menu, ingredients, customizations }) {
   const [bevType, setBevType] = useState("coffee");
 
   const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
   const selectedOption = "bg-blfs-teal " + bevTabClasses;
   const unselectedOption = "bg-blfs-blue hover:bg-blfs-teal/50  " + bevTabClasses;
 
-  console.log("ingredients print:", ingredients);
-  console.log("menu print:", menu);
+  // console.log("ingredients print:", ingredients);
+  // console.log("menu print:", menu);
+  console.log("customizations print:", customizations);
     
   const handleChangeTab = (e) => {
     e.preventDefault();
@@ -55,11 +57,13 @@ export default function Order({ menu, ingredients }) {
 export async function getStaticProps(context) {
       const menu = await getMenu();
       const ingredients = await getIngredients();
+      const customizations = await getCustomizations();
 
   return {
     props: {
       menu,
-      ingredients
+      ingredients,
+      customizations
     }
   }
 }
