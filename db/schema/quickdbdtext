@@ -1,0 +1,109 @@
+https://app.quickdatabasediagrams.com/#/d/cqTAJS
+
+users
+-
+user_id PK SERIAL
+first_name VARCHAR(50)
+last_name VARCHAR(50)
+email VARCHAR(100) UNIQUE
+phone_number VARCHAR(20)
+admin BOOLEAN
+
+ingredients
+-
+ingredient_id SERIAL PK
+ingredient_name VARCHAR(100)
+type VARCHAR(50)
+in_stock BOOLEAN
+
+menu
+-
+drink_id SERIAL PK
+drink_name VARCHAR(100)
+description TEXT
+drink_type VARCHAR(20)
+in_stock BOOLEAN
+
+cusatomizations
+-
+customization_id SERIAL PK
+customization_label VARCHAR(100)
+description TEXT
+customization_ingredient VARCHAR(50)
+coffee_optional BOOLEAN
+tea_optional BOOLEAN
+other_optional BOOLEAN
+
+orders
+-
+order_id SERIAL PK
+user_id INT FK >- users.user_id
+drink_id INT FK >- menu.drink_id
+milk_id INT FK >- ingredients.ingredient_id
+num_shots INT
+hot_iced VARCHAR(50)
+syrup1_id INT FK >- ingredients.ingredient_id
+syrup1_pumps VARCHAR(50)
+syrup2_id INT FK >- ingredients.ingredient_id
+syrup2_pumps VARCHAR(50)
+syrup3_id INT FK >- ingredients.ingredient_id
+syrup3_pumps VARCHAR(50)
+topping1_id INT FK >- ingredients.ingredient_id
+topping1_quantity VARCHAR(50)
+topping2_id INT FK >- ingredients.ingredient_id
+topping2_quantity VARCHAR(50)
+topping3_id INT FK >- ingredients.ingredient_id
+topping3_quantity VARCHAR(50)
+topping4_id INT FK >- ingredients.ingredient_id
+topping4_quantity VARCHAR(50)
+add_milk_id INT FK >- ingredients.ingredient_id
+add_milk_amount VARCHAR(50)
+custom_temp VARCHAR(50)
+tea_type_id INT FK >- ingredients.ingredient_id
+tea_amount VARCHAR(50)
+ice_amount VARCHAR(50)
+packet_sweetener1_id INT FK >- ingredients.ingredient_id
+packet_sweetener1_quantity VARCHAR(50)
+packet_sweetener2_id INT FK >- ingredients.ingredient_id
+packet_sweetener2_quantity VARCHAR(50)
+in_progress BOOLEAN
+ordered_date TIMESTAMP
+ 
+favorites
+-
+favorite_id SERIAL PK
+drink_id INT FK >- menu.drink_id
+milk_id INT FK >- ingredients.ingredient_id
+num_shots INT
+hot_iced VARCHAR(50)
+syrup1_id INT FK >- ingredients.ingredient_id
+syrup1_pumps VARCHAR(50)
+syrup2_id INT FK >- ingredients.ingredient_id
+syrup2_pumps VARCHAR(50)
+syrup3_id INT FK >- ingredients.ingredient_id
+syrup3_pumps VARCHAR(50)
+topping1_id INT FK >- ingredients.ingredient_id
+topping1_quantity VARCHAR(50)
+topping2_id INT FK >- ingredients.ingredient_id
+topping2_quantity VARCHAR(50)
+topping3_id INT FK >- ingredients.ingredient_id
+topping3_quantity VARCHAR(50)
+topping4_id INT FK >- ingredients.ingredient_id
+topping4_quantity VARCHAR(50)
+add_milk_id INT FK >- ingredients.ingredient_id
+add_milk_amount VARCHAR(50)
+custom_temp VARCHAR(50)
+tea_type_id INT FK >- ingredients.ingredient_id
+tea_amount VARCHAR(50)
+ice_amount VARCHAR(50)
+packet_sweetener1_id INT FK >- ingredients.ingredient_id
+packet_sweetener1_quantity VARCHAR(50)
+packet_sweetener2_id INT FK >- ingredients.ingredient_id
+packet_sweetener2_quantity VARCHAR(50)
+in_progress BOOLEAN
+ordered_date TIMESTAMP
+
+user_favorites
+-
+user_id INT FK >- users.user_id
+favorite_id INT FK >- favorites.favorite_id
