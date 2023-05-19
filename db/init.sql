@@ -40,10 +40,7 @@ CREATE TABLE customizations (
   customization_name VARCHAR(50) NOT NULL,
   customization_label VARCHAR(100) NOT NULL,
   description TEXT,
-  customization_ingredient VARCHAR(50) NOT NULL,
-  coffee_optional boolean NOT NULL DEFAULT true,
-  tea_optional boolean NOT NULL DEFAULT true,
-  other_optional boolean NOT NULL DEFAULT true
+  customization_ingredient VARCHAR(50) NOT NULL
 );
 
 -- Create many-to-many table between menu and customizations
