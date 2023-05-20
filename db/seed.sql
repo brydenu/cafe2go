@@ -94,11 +94,11 @@ INSERT INTO customizations (customization_label, customization_name, description
 ('Milk', 'milk_id', 'Type of milk to add to the drink', 'milk'),
 ('Add milk', 'add_milk_id', 'Add a milk (or another type of milk) to the drink', 'milk'),
 ('Syrup', 'syrup1_id', 'Add flavor syrup to the drink', 'syrup'),
-('Syrup amount', 'syrup1_pumps', 'Number of pumps of syrup', 'number'),
+('Syrup pumps', 'syrup1_pumps', 'Number of pumps of syrup', 'number'),
 ('Additional syrup', 'syrup2_id', 'Add another flavor syrup to the drink', 'syrup'),
-('Additional syrup amount', 'syrup2_pumps', 'Number of pumps for additional syrup', 'number'),
+('Additional syrup pumps', 'syrup2_pumps', 'Number of pumps for additional syrup', 'number'),
 ('Additioal syrup 2', 'syrup3_id', 'Add another flavor syrup to the drink', 'syrup'),
-('Additional syrup 2 amount', 'syrup3_pumps', 'Number of pumps for other additional syrup', 'number'),
+('Additional syrup 2 pumps', 'syrup3_pumps', 'Number of pumps for other additional syrup', 'number'),
 ('Topping', 'topping1_id', 'Topping to add to the drink', 'topping'),
 ('Topping amount', 'topping1_quantity', 'Amount of topping to add', 'amount'),
 ('Additional topping', 'topping2_id', 'Additional topping to add', 'topping'),
@@ -134,12 +134,8 @@ INSERT INTO menu_customizations (menu_id, customization_id) VALUES
 (4, 16),
 -- 5: Mocha
 (5, 1),
-(5, 3),
-(5, 4),
 -- 6: White Mocha
 (6, 1),
-(6, 3),
-(6, 4),
 -- 7: Cortado
 (7, 1),
 (7, 3),
