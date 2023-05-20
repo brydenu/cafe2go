@@ -14,16 +14,13 @@ export default function IngredientOption({ customization }) {
             const {ingredientOptions} = await res.json();
             setOptions(ingredientOptions);
             setSelectedOption(ingredientOptions[0]);
-            console.log(ingredientOptions)
         }
 
         getOptions();
     },[]);
 
-    console.log("options:", options);
-
     return (
-        <div className="w-full flex flex-nowrap justify-between my-2">
+        <div className="w-full flex flex-nowrap justify-between items-center my-2">
             <label className="text-xl">{customization_label}</label>
             <div className="">
                 <Listbox value={selectedOption} onChange={setSelectedOption}>

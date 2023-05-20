@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
-export default function QuantityOption({ customization }) {
-    const [options, setOptions] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    const [selectedOption, setSelectedOption] = useState(4);
+export default function OtherIngredientOption({ customization }) {
+    const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState("");
 
     const { customization_name, customization_label, customization_ingredient } = customization;
+    console.log("customizations in otheringredientOption", customization);
 
-    if (customization_ingredient === "amount") {
-        setOptions(["none", "light", "normal", "extra"]);
-        setSelectedOption("normal");
+    if (customization_ingredient === "packet_amount") {
+        // setOptions([".5 pack", "1 pack", "1.5 packs", "2 packs", "2.5 packs", "3 packs"]);
+        // setSelectedOption(".5 pack");
     }
 
     return (

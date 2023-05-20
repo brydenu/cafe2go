@@ -6,8 +6,8 @@ export default function DrinkOption({ selectedDrink, setSelectedDrink, menu }) {
     console.log("selectedDrink:", selectedDrink)
 
     return (
-        <div className="w-full flex flex-nowrap justify-between my-2">
-            <label className="text-xl">Drink</label>
+        <div className="w-full flex flex-nowrap justify-between items-center mb-2 mt-4 px-8">
+            <label className="text-xl font-bold">Drink</label>
             <div className="">
                 <Listbox value={selectedDrink} onChange={setSelectedDrink}>
                     <Listbox.Button className="border text-xl pr-1 pl-3 py-1 rounded flex flex-nowrap justify-between items-center gap-3">
