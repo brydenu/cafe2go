@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 import Header from "components/Header";
 import getIngredients from "helpers/getIngredients";
 import getMenu from "helpers/getMenu";
 import getCustomizations from "helpers/getCustomizations";
 import DrinkOption from "components/DrinkOption";
-import IngredientOption from "components/IngredientOption";
-import QuantityOption from "components/QuantityOption";
 import OrderCustomization from "components/OrderCustomization";
 
 
@@ -14,6 +13,11 @@ export default function Order({ menu, ingredients, customizations }) {
   const [bevType, setBevType] = useState("coffee");
   const [selectedDrink, setSelectedDrink] = useState(menu[0]);
   const [currentDrinkCustomizations, setCurrentDrinkCustomizations] = useState([]);
+  const [selectedCustomizations, setSelectedCustomizations] = useState({drink: selectedDrink.menu_id});
+
+  console.log("selectedDrink:", selectedDrink);
+
+  // console.log("selectedCustomizations:", selectedCustomizations);
 
   const router = useRouter();
 
@@ -23,9 +27,10 @@ export default function Order({ menu, ingredients, customizations }) {
 
   useEffect(() => {
     const getCurrentDrinkCustomizationOptions = async () => {
-      const res = await fetch(`api/customizations/${selectedDrink.menu_id}`);
-      const { customizations } = await res.json()
+      const res = await axios.get(`api/customizations/${selectedDrink.menu_id}`);
+      const { customizations } = res.data;
       setCurrentDrinkCustomizations(customizations);
+      setSelectedCustomizations({menu_id: selectedDrink});
     };
 
     getCurrentDrinkCustomizationOptions();
@@ -37,13 +42,23 @@ export default function Order({ menu, ingredients, customizations }) {
     setBevType(newBevType);
   }
 
+  const updateDrink = (property, value) => {
+    setSelectedCustomizations((selectedCustomizations) => ({...selectedCustomizations, [property]: value}));
+  }
+
   const handleGoBack = (e) => {
     e.preventDefault();
     router.push("/dashboard");
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("selectedCustomizations:", selectedCustomizations);
+
+    const data = { "drink": selectedCustomizations };
+    const res = await axios.post(`api/order`, data);
+    console.log("res.data from post:", res.data);
   }
 
   return (
@@ -58,11 +73,11 @@ export default function Order({ menu, ingredients, customizations }) {
             <button type="button" value="tea" className={bevType === "tea" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Tea</button>
             <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
           </div>
-          <div className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8">
-            <DrinkOption selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} menu={menu} />
+          <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8">
+            <DrinkOption bevType={bevType} selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} menu={menu} updateDrink={updateDrink} />
             <hr />
-            <OrderCustomization customizations={currentDrinkCustomizations} />
-          </div>
+            <OrderCustomization customizations={currentDrinkCustomizations} updateDrink={updateDrink} />
+          </form>
           <button className="w-30 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2" onClick={handleSubmit}>Submit Order</button>
         </div>
       </main>

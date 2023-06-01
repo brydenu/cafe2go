@@ -7,7 +7,7 @@ export default function OtherIngredientOption({ customization }) {
     const [selectedOption, setSelectedOption] = useState("");
 
     const { customization_name, customization_label, customization_ingredient } = customization;
-    console.log("customizations in otheringredientOption", customization);
+    // console.log("customizations in otheringredientOption", customization);
 
     if (customization_ingredient === "packet_amount") {
         // setOptions([".5 pack", "1 pack", "1.5 packs", "2 packs", "2.5 packs", "3 packs"]);

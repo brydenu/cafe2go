@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
-import { Listbox, Transition } from "@headlessui/react";
-import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import IngredientOption from "./IngredientOption";
-import QuantityOption from "./QuantityOption";
-import OtherIngredientOption from "./OtherIngredientOption";
 
-export default function OrderCustomization({ customizations }) {
+export default function OrderCustomization({ customizations, updateDrink }) {
 
     return (
         <div className="w-full flex flex-col w-full bg-white justify-center items-center mb-2 px-8">
@@ -19,20 +14,11 @@ export default function OrderCustomization({ customizations }) {
             </>)
             : 
               customizations.map((customization) => {
-                if (customization.customization_ingredient === "number" || customization.customization_ingredient === "amount") {
-                    return (<>
-                        <QuantityOption customization={customization} />
-                        <hr />
-                    </>)
-                } else if (customization.customization_ingredient === "packet_amount") {
-                    return (<OtherIngredientOption customization={customization} />)
-                } else {
                    return (<>
-                        <IngredientOption customization={customization} />
+                        <IngredientOption customization={customization} key={customization.customization_id} updateDrink={updateDrink} />
                         <hr />
                     </>)
-                }
-            })
+                })
             }
         </div>
     )

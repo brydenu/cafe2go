@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
-export default function QuantityOption({ customization }) {
-    const [options, setOptions] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+export default function QuantityOption({ customization, updateDrink }) {
+    const [options, setOptions] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     const [selectedOption, setSelectedOption] = useState(4);
 
     const { customization_name, customization_label, customization_ingredient } = customization;
@@ -11,13 +11,21 @@ export default function QuantityOption({ customization }) {
     if (customization_ingredient === "amount") {
         setOptions(["none", "light", "normal", "extra"]);
         setSelectedOption("normal");
+    };
+
+    useEffect(() => {
+        updateDrink(customization_name, selectedOption);
+    }, [selectedOption]);
+
+    const handleChange = (e) => {
+        setSelectedOption(e);
     }
 
     return (
         <div className="w-full flex flex-nowrap justify-between items-center my-2">
             <label className="text-xl">{customization_label}</label>
             <div className="">
-                <Listbox value={selectedOption} onChange={setSelectedOption}>
+                <Listbox value={selectedOption} onChange={handleChange}>
                     <Listbox.Button className="border text-xl pr-1 pl-3 py-1 rounded flex flex-nowrap justify-between items-center gap-3">
                         {selectedOption}
                         <ChevronUpDownIcon

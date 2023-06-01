@@ -1,29 +1,57 @@
 import { useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import QuantityChanger from "./QuantityChanger";
 
-export default function IngredientOption({ customization }) {
+export default function IngredientOption({ customization, setSelectedCustomizations, updateDrink }) {
     const [options, setOptions] = useState([])
     const [selectedOption, setSelectedOption] = useState({});
+    const [quantity, setQuantity] = useState("");
 
+    
     const { customization_name, customization_label, customization_ingredient } = customization;
+    
+    // console.log("selectedOption:", selectedOption);
+    // console.log("customizations:", customization);
 
     useEffect(() => {
         const getOptions = async () => {
             const res = await fetch(`api/ingredients/${customization_ingredient}`);
-            const {ingredientOptions} = await res.json();
+            let {ingredientOptions} = await res.json();
+            ingredientOptions.unshift({"ingredient_id": 0, "ingredient_name": "None", "in_stock": true })
             setOptions(ingredientOptions);
             setSelectedOption(ingredientOptions[0]);
         }
-
+        
         getOptions();
+        if (customization_ingredient === "syrup") {
+            setQuantity(4);
+        } else if (customization_ingredient === "topping") {
+            setQuantity("normal");
+        } else {
+            setQuantity(null);
+        }
     },[]);
+    
+    useEffect(() => {
+        updateDrink(customization_name, selectedOption);
+        }, [selectedOption]);
+
+    const handleChange = (e) => {
+        setSelectedOption(e);
+    }
 
     return (
         <div className="w-full flex flex-nowrap justify-between items-center my-2">
             <label className="text-xl">{customization_label}</label>
-            <div className="">
-                <Listbox value={selectedOption} onChange={setSelectedOption}>
+            <div className="flex flex-nowrap flex-row items-center">
+                {customization_ingredient === "syrup" && selectedOption.ingredient_name !== "None" && (
+                    <>
+                        <QuantityChanger quantity={quantity} setQuantity={setQuantity} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+                        <div className="mx-2 text-xl">pumps of</div>
+                    </>
+                )}
+                <Listbox value={selectedOption} onChange={handleChange}>
                     <Listbox.Button className="border text-xl pr-1 pl-3 py-1 rounded flex flex-nowrap justify-between items-center gap-3">
                         {selectedOption && selectedOption.ingredient_name}
                         <ChevronUpDownIcon

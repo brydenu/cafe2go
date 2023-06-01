@@ -12,7 +12,7 @@ CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
+  email VARCHAR(100) UNIQUE,
   phone_number VARCHAR(20),
   admin BOOLEAN NOT NULL DEFAULT false
 );
@@ -52,10 +52,11 @@ CREATE TABLE menu_customizations (
 -- Create table for orders
 CREATE TABLE orders (
   order_id SERIAL PRIMARY KEY,
+  customer_id INT REFERENCES users(user_id) DEFAULT 1,
   menu_id INT NOT NULL REFERENCES menu(menu_id),
-  milk_id INT NOT NULL REFERENCES ingredients(ingredient_id),
-  num_shots INT NOT NULL,
-  hot_iced VARCHAR(50) NOT NULL,
+  milk_id INT REFERENCES ingredients(ingredient_id),
+  num_shots INT,
+  hot_iced VARCHAR(50),
   syrup1_id INT REFERENCES ingredients(ingredient_id),
   syrup1_pumps VARCHAR(50),
   syrup2_id INT REFERENCES ingredients(ingredient_id),
@@ -72,7 +73,7 @@ CREATE TABLE orders (
   topping4_quantity VARCHAR(50),
   add_milk_id INT REFERENCES ingredients(ingredient_id),
   add_milk_amount VARCHAR(50),
-  custom_temp VARCHAR(50) NOT NULL,
+  custom_temp VARCHAR(50),
   tea_type_id INT REFERENCES ingredients(ingredient_id),
   tea_amount VARCHAR(50),
   ice_amount VARCHAR(50),
