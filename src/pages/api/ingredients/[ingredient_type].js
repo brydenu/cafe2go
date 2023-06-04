@@ -11,8 +11,8 @@ export default async function handler(req, res) {
             let ingredientOptions = response.rows;
             res.status(200).json({ ingredientOptions });
           } catch (error) {
-            // console.error(error)
-            res.status(500).json({ message: 'Internal server error' })
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
           }
     }
 }
