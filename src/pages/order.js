@@ -8,7 +8,6 @@ import getCustomizations from "helpers/getCustomizations";
 import DrinkOption from "components/DrinkOption";
 import OrderCustomization from "components/OrderCustomization";
 
-
 export default function Order({ menu, ingredients, customizations }) {
   const [bevType, setBevType] = useState("coffee");
   const [selectedDrink, setSelectedDrink] = useState(menu[0]);
@@ -57,7 +56,7 @@ export default function Order({ menu, ingredients, customizations }) {
     console.log("selectedCustomizations:", selectedCustomizations);
 
     const data = { "drink": selectedCustomizations };
-    const res = await axios.post(`api/order`, data);
+    const res = await axios.post(`api/orders`, data);
     console.log("res.data from post:", res.data);
   }
 

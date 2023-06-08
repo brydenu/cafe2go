@@ -1,11 +1,57 @@
+import format from "date-fns/format";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import getCustomizations from "./getCustomizations";
+import getDrinkName from "./getDrinkName";
+import getCustomerName from "./getCustomerName";
+import getIngredients from "./getIngredients";
+import getIngredientById from "./getIngredientById";
+
 /**
  * 
  * Takes order format given from front end and returns a readable format to be
  * used by barista
  * 
+ * takes a data object
+ * 
+ * should return an object with 3 properties:
+ *  -id (int) -> order_id
+ *  -customerName (string) -> name of customer
+ *  -drinkName (string) -> name of drink
+ *  -customizations (array) -> customizations to be listed for the drink 
+ * 
 */
 
-export default function createDrinkLabel(data) {
-    
+export default async function createDrinkLabel(data) {
+    const customizationNames = await getCustomizations();
+    const customer = await getCustomerName(data.customer_id);
+    const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
+    const date = new Date(data.ordered_date);
+    const order_time = format(date, "h:mm a");
+    const duration = formatDistanceToNow(date);
+    let drinkName = await getDrinkName(data.menu_id);
+    // if (data.hot_iced !== "hot") drinkName = data.hot_iced + " " + drinkName;
+    const label = {
+        "id": data.order_id,
+        order_time,
+        customerName,
+        duration,
+        drinkName
+    };
+    const nonCustomizations = ["ordered_date", "customer_id", "menu_id", "in_progress", "order_id", "hot_iced"];
+    const quantitityCustomizations = ["syrup1_pumps", "syrup2_pumps", "syrup3_pumps"];
+    const customizationKeys = Object.keys(data);
+    const customizations = [];
+    for (let key of customizationKeys) {
+        if (!!data[key] && !nonCustomizations.includes(key) && !quantitityCustomizations.includes(key)) {
+            const ingredient_id = data[key];
+            const ingredient = await getIngredientById(ingredient_id);
+            customizations.push(`${ingredient.ingredient_name} ${ingredient.type}`);
+        } else if (!!data[key] && quantitityCustomizations.includes(key)) {
+            const lastIngredient = customizations[customizations.length-1];
+            customizations[customizations.length-1] = `${data[key]} ${lastIngredient}`;
+        }
+    }
+    label["customizations"] = customizations;
+    return label;
 
 }

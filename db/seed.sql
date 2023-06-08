@@ -100,7 +100,7 @@ INSERT INTO customizations (customization_label, customization_name, description
 ('Add milk', 'add_milk_id', 'Add a milk (or another type of milk) to the drink', 'milk'),
 ('Syrup', 'syrup1_id', 'Add flavor syrup to the drink', 'syrup'),
 ('Additional syrup', 'syrup2_id', 'Add another flavor syrup to the drink', 'syrup'),
-('Additioal syrup 2', 'syrup3_id', 'Add another flavor syrup to the drink', 'syrup'),
+('Additional syrup 2', 'syrup3_id', 'Add another flavor syrup to the drink', 'syrup'),
 ('Topping', 'topping1_id', 'Topping to add to the drink', 'topping'),
 ('Topping amount', 'topping1_quantity', 'Amount of topping to add', 'amount'),
 ('Additional topping', 'topping2_id', 'Additional topping to add', 'topping'),

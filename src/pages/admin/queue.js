@@ -1,44 +1,57 @@
 import { useState, useEffect } from "react";
+import axios from 'axios';
 import Header from "components/Header";
+import QueueCard from "components/QueueCard";
 
 export default function Queue() {
-    const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-    useEffect(() => {
-        const eventSource = new EventSource('/api/order/update');
-    
-        eventSource.onmessage = (event) => {
-          const order = event.data;
-          console.log(`New order received: ${order}`);
-          fetchOrders();
-        };
-    
-        return () => {
-          eventSource.close();
-        };
-      }, []);
+  const fetchOrders = async () => {
+    try {
+      // Fetch orders data from the server
+      const response = await axios.get('/api/orders/inProgressOrders');
+      const { orders } = response.data;
+      console.log("orders:", orders);
+      setOrders(orders);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
 
-      const fetchOrders = async () => {
-        // Fetch orders data from the database
-        const response = await fetch('/api/order/inProgressOrders');
-        const data = await response.json();
-        setOrders(data);
-      };
-    
-      useEffect(() => {
-        fetchOrders();
-        console.log(orders);
-      }, []);
+  useEffect(() => {
+    // Fetch orders initially
+    fetchOrders();
 
-      useEffect(console.log("orders:", orders), [orders]);
-    
-      console.log(orders);
+    // Set up interval to fetch orders every few seconds (e.g., every 5 seconds)
+    const interval = setInterval(fetchOrders, 5000);
 
-    return (
-        <>
-            <Header />
-            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
-            </main>
-        </>
-    )
-};
+    // Clean up the interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const finishOrder = async (orderArrayIdx, orderId) => {
+    const res = await axios.patch('/api/orders/finish', {"id": orderId});
+    console.log("ordres:dfadsa", orders);
+    const newOrders = [...orders];
+    newOrders.splice(orderArrayIdx, 1);
+    console.log("newORders", newOrders);
+    setOrders(newOrders);
+  };
+
+
+  return (
+    <>
+      <Header />
+      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+        <h1 className="text-5xl font-bold my-8">Queue</h1>
+        <div className="w-full flex flex-wrap">
+          {orders.map((order, idx) => (
+            <QueueCard orderArrayIdx={idx} order={order} finishOrder={finishOrder} />
+          ))}
+        </div>
+      </main>
+    </>
+  );
+}

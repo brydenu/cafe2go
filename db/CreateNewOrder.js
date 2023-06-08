@@ -36,10 +36,9 @@ export default async function CreateNewOrder(data) {
         values: values
       };
 
-      console.log("query:", query);
-
     let response = await pool.query(query);
     console.log("response:", response);
+    return response;
 }
 
 function generatePlaceholders(values) {
