@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import QuantityChanger from "./QuantityChanger";
 
-export default function IngredientOption({ customization, setSelectedCustomizations, updateDrink }) {
+export default function IngredientOption({ customization, updateDrink, selectedDrink }) {
     const [options, setOptions] = useState([])
     const [selectedOption, setSelectedOption] = useState({});
     const [quantity, setQuantity] = useState("");
@@ -14,16 +14,24 @@ export default function IngredientOption({ customization, setSelectedCustomizati
     // console.log("selectedOption:", selectedOption);
     // console.log("customizations:", customization);
 
+    // console.log("selectedDrink", selectedDrink)
+
     useEffect(() => {
         const getOptions = async () => {
-            const res = await fetch(`api/ingredients/${customization_ingredient}`);
-            let {ingredientOptions} = await res.json();
-            ingredientOptions.unshift({"ingredient_id": 0, "ingredient_name": "None", "in_stock": true })
-            setOptions(ingredientOptions);
-            setSelectedOption(ingredientOptions[0]);
-        }
+                if (customization_ingredient !== "shots") {
+                    const res = await fetch(`api/ingredients/${customization_ingredient}`);
+                    let {ingredientOptions} = await res.json();
+                    ingredientOptions.unshift({"ingredient_id": 0, "ingredient_name": "None", "in_stock": true })
+                    setOptions(ingredientOptions);
+                    setSelectedOption(ingredientOptions[0]);
+                    // console.log("selectionOption:", selectedOption);
+                } else {
+                    setOptions(customization.shot_options);
+                    setSelectedOption(customization.shot_options[2]);
+                }
+            }
+            getOptions();
         
-        getOptions();
         if (customization_ingredient === "syrup") {
             setQuantity(4);
         } else if (customization_ingredient === "topping") {
@@ -31,11 +39,13 @@ export default function IngredientOption({ customization, setSelectedCustomizati
         } else {
             setQuantity(null);
         }
-    },[]);
+    },[selectedDrink]);
+
+    // console.log("selectdOption", selectedOption);
     
     useEffect(() => {
         updateDrink(customization_name, selectedOption);
-        }, [selectedOption]);
+        }, [selectedOption, selectedDrink]);
 
     const handleChange = (e) => {
         setSelectedOption(e);
@@ -73,7 +83,7 @@ export default function IngredientOption({ customization, setSelectedCustomizati
                                     key={option.ingredient_id}
                                     value={option}
                                     disabled={!option.in_stock}
-                                    className="hover:cursor-pointer px-10 py-1 rounded hover:bg-blfs-teal hover:text-white text-center text-xl"
+                                    className="hover:cursor-pointer px-5 py-1 rounded hover:bg-blfs-teal hover:text-white text-center text-xl"
                                 >
                                     {({active}) => (
                                         <div

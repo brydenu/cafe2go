@@ -3,7 +3,7 @@ import checkForQuantities from "helpers/checkForQuantities";
 
 export default async function CreateNewOrder(data) {
     const drink = data.drink;
-    // console.log("drink:", drink);
+    console.log("drink:", drink);
     let allColumns = Object.keys(drink);
     let columns = [];
     for (let columnName of allColumns) {
@@ -14,9 +14,12 @@ export default async function CreateNewOrder(data) {
     columns = checkForQuantities(columns);
 
     const valuesObjects = Object.values(drink);
+    console.log("valuesObjects:", valuesObjects)
     let values = [];
     for (let value of valuesObjects) {
-        if (!!value.quantity) {
+        if (value.shots_option) {
+            values.push(value.ingredient_name);
+        } else if (!!value.quantity) {
             values.push(value.ingredient_id);
             values.push(value.quantity);
         } else if (!!value.ingredient_id) {

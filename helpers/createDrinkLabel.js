@@ -22,6 +22,7 @@ import getIngredientById from "./getIngredientById";
 */
 
 export default async function createDrinkLabel(data) {
+    console.log("data", data);
     const customizationNames = await getCustomizations();
     const customer = await getCustomerName(data.customer_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
@@ -40,15 +41,20 @@ export default async function createDrinkLabel(data) {
     const nonCustomizations = ["ordered_date", "customer_id", "menu_id", "in_progress", "order_id", "hot_iced"];
     const quantitityCustomizations = ["syrup1_pumps", "syrup2_pumps", "syrup3_pumps"];
     const customizationKeys = Object.keys(data);
+    console.log("customizationKeys", customizationKeys);
     const customizations = [];
     for (let key of customizationKeys) {
-        if (!!data[key] && !nonCustomizations.includes(key) && !quantitityCustomizations.includes(key)) {
-            const ingredient_id = data[key];
-            const ingredient = await getIngredientById(ingredient_id);
-            customizations.push(`${ingredient.ingredient_name} ${ingredient.type}`);
-        } else if (!!data[key] && quantitityCustomizations.includes(key)) {
-            const lastIngredient = customizations[customizations.length-1];
-            customizations[customizations.length-1] = `${data[key]} ${lastIngredient}`;
+        if (!!data[key]) {
+            if (key === "num_shots") {
+                customizations.push(`${data[key]} shots`)
+            } else if (!nonCustomizations.includes(key) && !quantitityCustomizations.includes(key)) {
+                const ingredient_id = data[key];
+                const ingredient = await getIngredientById(ingredient_id);
+                customizations.push(`${ingredient.ingredient_name} ${ingredient.type}`);
+            } else if (quantitityCustomizations.includes(key)) {
+                const lastIngredient = customizations[customizations.length-1];
+                customizations[customizations.length-1] = `${data[key]} ${lastIngredient}`;
+            }
         }
     }
     label["customizations"] = customizations;
