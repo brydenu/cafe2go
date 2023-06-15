@@ -1,4 +1,5 @@
 import IngredientOption from "./IngredientOption";
+import SyrupCustomization from "./SyrupCustomization";
 
 export default function OrderCustomization({ customizations, updateDrink, selectedDrink, bevType, addShots }) {
 
@@ -34,10 +35,17 @@ export default function OrderCustomization({ customizations, updateDrink, select
                 ) 
                 }
                 {customizations.map((customization) => {
-                    return (<>
+                    if (customization.customization_ingredient !== "syrup") {
+
+                        return (<>
                         <IngredientOption customization={customization} key={customization.customization_id} updateDrink={updateDrink} selectedDrink={selectedDrink} />
                         <hr />
                     </>)
+                    } else {
+                        return (
+                            <SyrupCustomization customization={customization} key={customization.customization_customization_id} updateDrink={updateDrink} selectedDrink={selectedDrink} />
+                        )
+                    }
                 })}
                 </>)
             }

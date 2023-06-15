@@ -10,7 +10,7 @@ export default function QuantityChanger({ quantity, setQuantity, selectedOption,
     }
 
     useEffect(() => {
-        const optionWithQuantity = selectedOption;
+        const optionWithQuantity = selectedOption ? selectedOption : {};
         optionWithQuantity["quantity"] = quantity;
         setSelectedOption(optionWithQuantity);
     }, [quantity, selectedOption])
