@@ -11,9 +11,9 @@ export default function DrinkOption({ bevType, selectedDrink, setSelectedDrink, 
     }, [bevType]);
 
     return (
-        <div className="w-full flex flex-nowrap justify-between items-center mb-2 mt-4 px-8">
+        <div className="w-full flex flex-nowrap justify-between items-center mb-2 mt-4" style={{ zIndex: 110 }}>
             <label className="text-xl font-bold">Drink</label>
-            <div className="">
+            <div className="relative">
                 <Listbox value={selectedDrink} onChange={setSelectedDrink}>
                     <Listbox.Button className="border text-xl pr-1 pl-3 py-1 rounded flex flex-nowrap justify-between items-center gap-3">
                         {selectedDrink.drink_name}
@@ -30,21 +30,15 @@ export default function DrinkOption({ bevType, selectedDrink, setSelectedDrink, 
                         leaveFrom="transform scale-100 opacity-100"
                         leaveTo="transform scale-95 opacity-0"
                     >
-                        <Listbox.Options className="z-10 shadow absolute bg-white rounded max-h-64 overflow-auto">
+                        <Listbox.Options className="shadow absolute right-0 bg-white rounded max-h-64 overflow-auto">
                             {bevTypeMenu.map((drink) => (
                                 <Listbox.Option
                                     key={drink.id}
                                     value={drink}
                                     disabled={!drink.in_stock}
-                                    className="hover:cursor-pointer px-10 py-1 rounded hover:bg-blfs-teal hover:text-white text-center text-xl"
-                                >
-                                    {({active}) => (
-                                        <div
-                                            className={`${active && "bg-blfs-teal text-white"}`}
-                                        >
-                                            {drink.drink_name}
-                                        </div>
-                                    )}
+                                    className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
+                                    >
+                                        {drink.drink_name}
                                 </Listbox.Option>
                             ))}
                         </Listbox.Options>

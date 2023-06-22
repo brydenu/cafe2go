@@ -3,41 +3,14 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import QuantityChanger from "./QuantityChanger";
 
-export default function IngredientOption({ customization, updateDrink, selectedDrink, zIndex }) {
-    const [options, setOptions] = useState([])
-    const [selectedOption, setSelectedOption] = useState({});
+export default function HotIcedOption({ updateDrink, selectedDrink, zIndex }) {
+    const [options, setOptions] = useState([{"ingredient_name": "hot", "ingredient_label": "Hot"}, {"ingredient_name": "iced", "ingredient_label": "Iced"}]);
+    const [selectedOption, setSelectedOption] = useState({"ingredient_name": "hot", "ingredient_label": "Hot"});
     
-    const { customization_name, customization_label, customization_ingredient } = customization;
-    
-    // console.log("selectedOption:", selectedOption);
-    console.log("customizations:", customization);
+    const customization_name = "hot_iced";
+    const customization_label = "Hot/Iced";
 
-    // console.log("selectedDrink", selectedDrink)
-
-    useEffect(() => {
-        const getOptions = async () => {
-                if (customization_ingredient !== "shots") {
-                    const res = await fetch(`api/ingredients/${customization_ingredient}`);
-                    let {ingredientOptions} = await res.json();
-                    ingredientOptions.unshift({"ingredient_id": 0, "ingredient_name": "None", "in_stock": true });
-                    if (customization_name === "milk_id") {
-                        setOptions(ingredientOptions.slice(1));
-                        setSelectedOption(ingredientOptions[1]);
-                    } else {
-                        setOptions(ingredientOptions);
-                        setSelectedOption(ingredientOptions[0]);
-                    }
-                    // console.log("selectionOption:", selectedOption);
-                } else {
-                    setOptions(customization.shot_options);
-                    setSelectedOption(customization.shot_options[2]);
-                }
-            }
-            getOptions();
-        
-    },[selectedDrink]);
-
-    // console.log("selectdOption", selectedOption);
+    console.log("selectdOption", selectedOption);
     
     useEffect(() => {
         updateDrink(customization_name, selectedOption);
@@ -48,19 +21,13 @@ export default function IngredientOption({ customization, updateDrink, selectedD
     }
 
     return (
-        <div className="w-full flex flex-nowrap justify-between items-center my-2" style={{ zIndex: zIndex}}>
+        <div className="w-full flex flex-nowrap justify-between items-center my-2" style={{ zIndex: 109}}>
             <label className="text-xl">{customization_label}</label>
             <div className="flex flex-nowrap flex-row items-center">
-                {customization_ingredient === "syrup" && selectedOption.ingredient_name !== "None" && (
-                    <>
-                        <QuantityChanger quantity={quantity} setQuantity={setQuantity} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-                        <div className="mx-2 text-xl">pumps of</div>
-                    </>
-                )}
                 <div className="relative">
                     <Listbox value={selectedOption} onChange={handleChange}>
                         <Listbox.Button className="border text-xl pr-1 pl-3 py-1 rounded flex flex-nowrap justify-between items-center gap-3">
-                            {selectedOption && selectedOption.ingredient_name}
+                            {selectedOption.ingredient_label}
                             <ChevronUpDownIcon
                                 className="h-5 w-5 text-gray-400"
                                 aria-hidden="true"
@@ -78,12 +45,11 @@ export default function IngredientOption({ customization, updateDrink, selectedD
                                 {options.length > 1 && options.map((option) => (
                                     <Listbox.Option
                                         as="div"
-                                        key={option.ingredient_id}
+                                        key={option.ingredient_name}
                                         value={option}
-                                        disabled={!option.in_stock}
                                         className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
                                     >
-                                        {option.ingredient_name}
+                                        {option.ingredient_label}
                                     </Listbox.Option>
                                 ))}
                             </Listbox.Options>

@@ -21,7 +21,7 @@ export default function OrderCustomization({ customizations, updateDrink, select
     }
 
     return (
-        <div className="w-full flex flex-col w-full bg-white justify-center items-center mb-2 px-8">
+        <div className="w-full flex flex-col w-full bg-white justify-center items-center mb-2">
             { !(customizations.length > 0) ? 
             (<>
                 <div className="m-10 inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blfs-teal border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
@@ -31,19 +31,32 @@ export default function OrderCustomization({ customizations, updateDrink, select
                 </div>
             </>)
             : (<>{(bevType === "coffee" || addShots === true) && (
-                <IngredientOption customization={shotsCustomization} updateDrink={updateDrink} selectedDrink={selectedDrink} />
+                <IngredientOption customization={shotsCustomization} updateDrink={updateDrink} selectedDrink={selectedDrink} zIndex={100} />
                 ) 
                 }
-                {customizations.map((customization) => {
+                {customizations.map((customization, index) => {
+                    const zIndex = 90 - (index * 3);
                     if (customization.customization_ingredient !== "syrup") {
 
                         return (<>
-                        <IngredientOption customization={customization} key={customization.customization_id} updateDrink={updateDrink} selectedDrink={selectedDrink} />
+                        <IngredientOption 
+                            customization={customization} 
+                            key={customization.customization_id} 
+                            updateDrink={updateDrink} 
+                            selectedDrink={selectedDrink} 
+                            zIndex={zIndex}
+                        />
                         <hr />
                     </>)
                     } else {
                         return (
-                            <SyrupCustomization customization={customization} key={customization.customization_customization_id} updateDrink={updateDrink} selectedDrink={selectedDrink} />
+                            <SyrupCustomization 
+                                customization={customization}
+                                key={customization.customization_customization_id} 
+                                updateDrink={updateDrink} 
+                                selectedDrink={selectedDrink} 
+                                zIndex={zIndex}
+                            />
                         )
                     }
                 })}

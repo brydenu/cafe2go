@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SyrupOption from "./SyrupOption";
 
-export default function SyrupCustomization({ updateDrink, selectedDrink }) {
+export default function SyrupCustomization({ updateDrink, selectedDrink, zIndex }) {
     const [options, setOptions] = useState([])
     const [selectedOption, setSelectedOption] = useState({});
     const [numOfAdditionalSyrups, setNumOfAdditionalSyrups] = useState(0);
@@ -39,12 +39,36 @@ export default function SyrupCustomization({ updateDrink, selectedDrink }) {
 
     return (
         <div className="w-full flex flex-col flex-nowrap justify-between items-center my-2">
-            <SyrupOption options={options} updateDrink={updateDrink} numOfAdditionalSyrups={numOfAdditionalSyrups} selectedDrink={selectedDrink} addAdditionalSyrup={addAdditionalSyrup} subtractAdditionalSyrup={subtractAdditionalSyrup} />
+            <SyrupOption 
+                options={options} 
+                updateDrink={updateDrink} 
+                numOfAdditionalSyrups={numOfAdditionalSyrups} 
+                selectedDrink={selectedDrink} 
+                addAdditionalSyrup={addAdditionalSyrup} 
+                subtractAdditionalSyrup={subtractAdditionalSyrup} 
+                zIndex={zIndex}
+            />
             {numOfAdditionalSyrups > 0 && (
                 <>
-                <SyrupOption options={options} additionalSyrup={1} numOfAdditionalSyrups={numOfAdditionalSyrups} selectedDrink={selectedDrink} updateDrink={updateDrink} addAdditionalSyrup={addAdditionalSyrup} subtractAdditionalSyrup={subtractAdditionalSyrup} />
+                <SyrupOption 
+                    options={options} 
+                    additionalSyrup={1} 
+                    numOfAdditionalSyrups={numOfAdditionalSyrups} 
+                    selectedDrink={selectedDrink} 
+                    updateDrink={updateDrink} 
+                    addAdditionalSyrup={addAdditionalSyrup} 
+                    subtractAdditionalSyrup={subtractAdditionalSyrup} 
+                    zIndex={zIndex-1}
+                />
                 {numOfAdditionalSyrups > 1 && (
-                    <SyrupOption options={options} additionalSyrup={2} selectedDrink={selectedDrink} updateDrink={updateDrink} subtractAdditionalSyrup={subtractAdditionalSyrup} />
+                    <SyrupOption 
+                        options={options} 
+                        additionalSyrup={2} 
+                        selectedDrink={selectedDrink} 
+                        updateDrink={updateDrink} 
+                        subtractAdditionalSyrup={subtractAdditionalSyrup} 
+                        zIndex={zIndex-2}
+                    />
                 )}
                 </>
             )}

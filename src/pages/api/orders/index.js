@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       const data = req.body;
 
       // Create a new row in the orders table
-      const order = CreateNewOrder(data);
+      const order = await CreateNewOrder(data);
 
 
       res.status(201).json(order);

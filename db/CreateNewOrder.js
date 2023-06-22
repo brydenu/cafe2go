@@ -3,7 +3,7 @@ import checkForQuantities from "helpers/checkForQuantities";
 
 export default async function CreateNewOrder(data) {
     const drink = data.drink;
-    console.log("drink:", drink);
+    // console.log("drink:", drink);
     let allColumns = Object.keys(drink);
     let columns = [];
     for (let columnName of allColumns) {
@@ -14,11 +14,13 @@ export default async function CreateNewOrder(data) {
     columns = checkForQuantities(columns);
 
     const valuesObjects = Object.values(drink);
-    console.log("valuesObjects:", valuesObjects)
+    // console.log("valuesObjects:", valuesObjects)
     let values = [];
     for (let value of valuesObjects) {
         if (value.shots_option) {
             values.push(value.ingredient_name);
+        } else if (typeof value === "boolean") {
+            values.push(value);
         } else if (!!value.quantity) {
             values.push(value.ingredient_id);
             values.push(value.quantity);
@@ -26,8 +28,13 @@ export default async function CreateNewOrder(data) {
             values.push(value.ingredient_id);
         } else if (!!value.menu_id) {
             values.push(value.menu_id);
+        } else if (!!value.ingredient_name && value.ingredient_name !== "None") {
+            values.push(value.ingredient_name);
         }
     }
+
+    // console.log("keys", columns)
+    // console.log("values", values)
 
     let columnsString = columns.shift();
     while (columns.length > 0) {
@@ -35,13 +42,13 @@ export default async function CreateNewOrder(data) {
     }
 
     const query = {
-        text: `INSERT INTO orders (${columnsString}) VALUES (${generatePlaceholders(values)})`,
+        text: `INSERT INTO orders (${columnsString}) VALUES (${generatePlaceholders(values)}) RETURNING *`,
         values: values
       };
 
-    let response = await pool.query(query);
-    console.log("response:", response);
-    return response;
+    const response = await pool.query(query);
+    console.log("response.rows[0]:", response.rows[0]);
+    return response.rows[0];
 }
 
 function generatePlaceholders(values) {

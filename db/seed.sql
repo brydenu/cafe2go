@@ -82,8 +82,6 @@ INSERT INTO menu (drink_name, description, drink_type) VALUES
 ('Latte', 'Espresso shots with milk', 'coffee'),
 ('Cappuccino', 'Similar to a latte, but the milk is steamed to have extra foam (only served hot)', 'coffee'),
 ('Espresso', 'Straight shots of espresso', 'coffee'),
-('Mocha', 'Espresso shots and milk with mocha sauce', 'coffee'),
-('White Mocha', 'Espresso shots and milk with white mocha sauce', 'coffee'),
 ('Cortado', 'Equal parts espresso and milk', 'coffee'),
 ('Caramel Macchiato', 'Vanilla and milk topped with shots of espresso and caramel drizzle', 'coffee'),
 ('London Fog Tea Latte', 'Earl grey tea with vanilla syrup and milk', 'tea'),
@@ -92,7 +90,8 @@ INSERT INTO menu (drink_name, description, drink_type) VALUES
 ('Italian Soda', 'Flavored syrup and sparkling water', 'other'),
 ('Hot Chocolate', 'Mocha syrup and steamed milk (can also be iced)', 'other'),
 ('White Hot Chocolate', 'White mocha syrup and steamed milk (can also be iced)', 'other'),
-('Steamer', 'Steamed milk and syrup (no espresso shots)', 'other');
+('Steamer', 'Steamed milk and syrup (no espresso shots)', 'other'),
+('Chai Latte', 'Chai with milk', 'tea');
 
 -- Create customization options
 INSERT INTO customizations (customization_label, customization_name, description, customization_ingredient) VALUES
@@ -112,7 +111,6 @@ INSERT INTO menu_customizations (menu_id, customization_id) VALUES
 -- 1: Americano
 (1, 2),
 (1, 3),
-(1, 10),
 -- 2: Latte
 (2, 1),
 (2, 3),
@@ -122,35 +120,33 @@ INSERT INTO menu_customizations (menu_id, customization_id) VALUES
 -- 4: Espresso
 (4, 2),
 (4, 3),
-(4, 10),
--- 5: Mocha
+-- 5: Cortado
 (5, 1),
--- 6: White Mocha
+(5, 3),
+-- 6: Caramel Macchiato
 (6, 1),
--- 7: Cortado
+(6, 3),
+-- 7: London Fog Tea Latte
 (7, 1),
 (7, 3),
--- 8: Caramel Macchiato
+-- 8: Matcha Latte
 (8, 1),
 (8, 3),
--- 9: London Fog Tea Latte
-(9, 1),
+-- 9: Tea
+(9, 2),
 (9, 3),
--- 10: Matcha Latte
-(10, 1),
+-- 10: Italian Soda
+(10, 2),
 (10, 3),
--- 11: Tea
-(11, 2),
+-- 11: Hot Chocolate
+(11, 1),
 (11, 3),
--- 12: Italian Soda
-(12, 2),
+-- 12: White Hot Chocolate
+(12, 1),
 (12, 3),
--- 13: Hot Chocolate
+-- 13: Steamer
 (13, 1),
 (13, 3),
--- 14: White Hot Chocolate
+--14: Chai Latte
 (14, 1),
-(14, 3),
--- 15: Steamer
-(15, 1),
-(15, 3);
+(14, 3);

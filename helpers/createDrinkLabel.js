@@ -22,7 +22,7 @@ import getIngredientById from "./getIngredientById";
 */
 
 export default async function createDrinkLabel(data) {
-    console.log("data", data);
+    // console.log("data", data);
     const customizationNames = await getCustomizations();
     const customer = await getCustomerName(data.customer_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
@@ -30,7 +30,7 @@ export default async function createDrinkLabel(data) {
     const order_time = format(date, "h:mm a");
     const duration = formatDistanceToNow(date);
     let drinkName = await getDrinkName(data.menu_id);
-    // if (data.hot_iced !== "hot") drinkName = data.hot_iced + " " + drinkName;
+    if (data.hot_iced === "iced") drinkName = "Iced" + " " + drinkName;
     const label = {
         "id": data.order_id,
         order_time,
@@ -38,15 +38,23 @@ export default async function createDrinkLabel(data) {
         duration,
         drinkName
     };
-    const nonCustomizations = ["ordered_date", "customer_id", "menu_id", "in_progress", "order_id", "hot_iced"];
+    const nonCustomizations = ["ordered_date", "customer_id", "menu_id", "in_progress", "order_id"];
     const quantitityCustomizations = ["syrup1_pumps", "syrup2_pumps", "syrup3_pumps"];
     const customizationKeys = Object.keys(data);
-    console.log("customizationKeys", customizationKeys);
+    // console.log("customizationKeys", customizationKeys);
     const customizations = [];
     for (let key of customizationKeys) {
         if (!!data[key]) {
             if (key === "num_shots") {
-                customizations.push(`${data[key]} shots`)
+                customizations.push(`${data[key]} shots`);
+            } else if (key === "decaf" && !!data[key]){
+                customizations.push("Decaf");
+            } else if (key === "hot_iced"){
+                if (data[key] === "iced") {
+                    customizations.push("Iced");
+                }
+            } else if (key === "custom_temp" && !!data[key]) {
+                customizations.push(data[key]);
             } else if (!nonCustomizations.includes(key) && !quantitityCustomizations.includes(key)) {
                 const ingredient_id = data[key];
                 const ingredient = await getIngredientById(ingredient_id);
