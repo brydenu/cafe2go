@@ -1,5 +1,5 @@
 import { pool } from "db/db";
-import checkForQuantities from "helpers/checkForQuantities";
+import checkForQuantities from "utils/checkForQuantities";
 
 export default async function CreateNewOrder(data) {
     const drink = data.drink;
@@ -42,7 +42,7 @@ export default async function CreateNewOrder(data) {
     }
 
     const query = {
-        text: `INSERT INTO orders (${columnsString}) VALUES (${generatePlaceholders(values)}) RETURNING *`,
+        text: `INSERT INTO orders (${columnsString}) VALUES (${generatePlaceholders(values)}) RETURNING order_id`,
         values: values
       };
 

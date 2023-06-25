@@ -1,8 +1,21 @@
 import { pool } from 'db/db';
 import CreateNewOrder from "db/CreateNewOrder";
+import getOrderById from 'utils/getOrderById';
+import createDrinkLabel from 'utils/createDrinkLabel';
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === "GET") {
+    const { order_id } = req.query;
+    try {
+      const order = await getOrderById(order_id);
+      const label = await createDrinkLabel(order);
+      res.status(200).json({order: label});
+    } catch (e) {
+      console.error(`Error fetching order where id="${order_id}". Error:`, e);
+      res.status(500).json({ message: "Internal server error" })
+    }
+
+  } else if (req.method === 'POST') {
     try {
       const data = req.body;
 

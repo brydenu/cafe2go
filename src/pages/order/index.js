@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Header from "components/Header";
-import getIngredients from "helpers/getIngredients";
-import getMenu from "helpers/getMenu";
-import getCustomizations from "helpers/getCustomizations";
+import getIngredients from "utils/getIngredients";
+import getMenu from "utils/getMenu";
+import getCustomizations from "utils/getCustomizations";
 import DrinkOption from "components/DrinkOption";
 import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
@@ -24,6 +24,7 @@ export default function Order({ menu, ingredients, customizations }) {
   
   */
   // console.log("selectedCustomizations:", selectedCustomizations);
+  console.log("selectedDrink:", selectedDrink);
 
   const router = useRouter();
 
@@ -73,6 +74,13 @@ export default function Order({ menu, ingredients, customizations }) {
     const data = { "drink": selectedCustomizations };
     try {
       const res = await axios.post(`api/orders`, data);
+      if (res.status === 201) {
+        console.log("success");
+        const { order_id } = res.data;
+        router.push(`/order/success?order_id=${order_id}`);
+      } else {
+        console.log("no")
+      }
       console.log("res.data from post:", res);
     } catch (e) {
       console.error(e);
@@ -95,16 +103,28 @@ export default function Order({ menu, ingredients, customizations }) {
           <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">
             <DrinkOption bevType={bevType} selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} menu={menu} updateDrink={updateDrink} />
             <hr />
-            <HotIcedOption updateDrink={updateDrink} selectedDrink={selectedDrink} />
-            <CustomTempOption isIced={selectedCustomizations?.hot_iced?.ingredient_name === "iced"} updateDrink={updateDrink} />
+            {selectedDrink.menu_id !== 10 &&
+            (<>
+                <HotIcedOption updateDrink={updateDrink} selectedDrink={selectedDrink} />
+                <CustomTempOption isIced={selectedCustomizations?.hot_iced?.ingredient_name === "iced"} updateDrink={updateDrink} />
+              </>)
+            }
             {(bevType === "coffee" || !!selectedCustomizations.num_shots) && (
               <FormCheckbox customization={{"customization_label": "Decaf", "customization_name": "decaf"}} updateDrink={updateDrink} selectedDrink={selectedDrink} />
             )}
             <OrderCustomization customizations={currentDrinkCustomizations} updateDrink={updateDrink} selectedDrink={selectedDrink} bevType={bevType} />
           </form>
-          <button className="w-30 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2" onClick={handleSubmit}>
-
-            Submit Order
+          <button className="w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle" onClick={handleSubmit}>
+            {isSubmitting ? 
+            (<div className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-white border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                    <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                        Loading...
+                    </span>
+            </div>)
+            :
+            (
+              "Submit Order"
+            )}
           </button>
         </div>
       </main>

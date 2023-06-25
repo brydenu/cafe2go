@@ -1,5 +1,5 @@
 import { pool } from "db/db";
-import createDrinkLabel from "helpers/createDrinkLabel";
+import createDrinkLabel from "utils/createDrinkLabel";
 
 export default async function handler(req, res) {
     if (req.method === "GET") {

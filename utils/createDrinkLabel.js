@@ -22,7 +22,7 @@ import getIngredientById from "./getIngredientById";
 */
 
 export default async function createDrinkLabel(data) {
-    // console.log("data", data);
+    console.log("data", data);
     const customizationNames = await getCustomizations();
     const customer = await getCustomerName(data.customer_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
@@ -36,7 +36,8 @@ export default async function createDrinkLabel(data) {
         order_time,
         customerName,
         duration,
-        drinkName
+        drinkName,
+        in_progress: data.in_progress,
     };
     const nonCustomizations = ["ordered_date", "customer_id", "menu_id", "in_progress", "order_id"];
     const quantitityCustomizations = ["syrup1_pumps", "syrup2_pumps", "syrup3_pumps"];

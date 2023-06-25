@@ -10,7 +10,7 @@ export default function IngredientOption({ customization, updateDrink, selectedD
     const { customization_name, customization_label, customization_ingredient } = customization;
     
     // console.log("selectedOption:", selectedOption);
-    console.log("customizations:", customization);
+    // console.log("customizations:", customization);
 
     // console.log("selectedDrink", selectedDrink)
 

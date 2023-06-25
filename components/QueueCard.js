@@ -23,7 +23,7 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder}) {
     console.log("qc order", order)
 
     return (
-        <div key={order.id} className={`bg-white border m-2 rounded border-blfs-blue w-1/5 flex flex-col justify-start duration-500 ${isMouseDown ? " duration-300 translate-y-2" : ""} ${isClicked ? "-translate-y-8 opacity-0": ""}`}>
+        <div key={order.id} className={`bg-white border m-2 rounded border-blfs-blue w-1/4 flex flex-col justify-start duration-500 ${isMouseDown ? " duration-300 translate-y-2" : ""} ${isClicked ? "-translate-y-8 opacity-0": ""}`}>
             <section className="bg-blfs-blue w-full p-3">
                 <p className="text-white font-bold text-lg">{order.customerName}</p>
                 <p className="text-white font-bold text-sm">{order.order_time}</p>
@@ -35,7 +35,7 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder}) {
                 <li key={`${order.id}-${customization}`}>{customization}</li>
             ))}
             </ul>
-            <button className="bg-blfs-teal px-4 py-1 m-3 text-white rounded hover:cursor-pointer" onMouseDown={handleMouseDown} onMouseLeave={handleMouseUpOrLeave} onMouseUp={handleMouseUpOrLeave} onClick={handleFinishOrder}>Finish</button>
+            <button className="bg-blfs-teal px-4 py-1 m-3 text-white rounded hover:cursor-pointer hover:bg-blfs-teal/75 duration-300" onMouseDown={handleMouseDown} onMouseLeave={handleMouseUpOrLeave} onMouseUp={handleMouseUpOrLeave} onClick={handleFinishOrder}>Finish</button>
         </div>
     )
 }
