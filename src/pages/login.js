@@ -28,7 +28,7 @@ export default function Login() {
                     <input className="shadow appearance-none border-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" />
                 </div>
                 <div className="flex justify-end">
-                    <button className="w-full sm:w-fit bg-blfs-teal hover:bg-blfs-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Sign in</button>
+                    <button className="w-full sm:w-fit bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Sign in</button>
                 </div>
             </form>
         </main>

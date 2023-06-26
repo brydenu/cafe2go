@@ -84,7 +84,7 @@ export default function SyrupOption({ options, additionalSyrup=0, updateDrink, a
                                         key={option.ingredient_id}
                                         value={option}
                                         disabled={!option.in_stock}
-                                        className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
+                                        className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-secondary text-white" : ""}`}
                                     >
                                         {option.ingredient_name}
                                     </Listbox.Option>
@@ -96,7 +96,7 @@ export default function SyrupOption({ options, additionalSyrup=0, updateDrink, a
             </div>
         </div>
         {numOfAdditionalSyrups === additionalSyrup && selectedOption?.ingredient_name !== "None" &&(
-            <div onClick={addAdditionalSyrup} className="flex flex-nowrap gap-3 mt-4 items-center hover:cursor-pointer hover:bg-blfs-teal/50 duration-200 rounded-xl p-2">
+            <div onClick={addAdditionalSyrup} className="flex flex-nowrap gap-3 mt-4 items-center hover:cursor-pointer hover:bg-secondary/50 duration-200 rounded-xl p-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="gray" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>

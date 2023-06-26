@@ -60,7 +60,7 @@ export default function CustomTempOption({ updateDrink, isIced }) {
                                 <Listbox.Option
                                     key={option.ingredient_name}
                                     value={option}
-                                    className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
+                                    className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-secondary text-white" : ""}`}
                                     >
                                         {option.ingredient_name}
                                 </Listbox.Option>

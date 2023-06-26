@@ -1,10 +1,10 @@
 import format from "date-fns/format";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import getCustomizations from "./getCustomizations";
-import getDrinkName from "./getDrinkName";
+import getDrinkName from "./menu/getDrinkName";
 import getCustomerName from "./getCustomerName";
-import getIngredients from "./getIngredients";
-import getIngredientById from "./getIngredientById";
+import getIngredients from "./ingredients/getIngredients";
+import getIngredientById from "./ingredients/getIngredientById";
 
 /**
  * 

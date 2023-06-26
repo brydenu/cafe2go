@@ -36,7 +36,7 @@ export default function DrinkOption({ bevType, selectedDrink, setSelectedDrink, 
                                     key={drink.id}
                                     value={drink}
                                     disabled={!drink.in_stock}
-                                    className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
+                                    className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-secondary text-white" : ""}`}
                                     >
                                         {drink.drink_name}
                                 </Listbox.Option>

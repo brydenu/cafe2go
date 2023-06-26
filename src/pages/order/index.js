@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Header from "components/Header";
-import getIngredients from "utils/getIngredients";
-import getMenu from "utils/getMenu";
+import getIngredients from "utils/ingredients/getIngredients";
+import getMenu from "utils/menu/getMenu";
 import getCustomizations from "utils/getCustomizations";
 import DrinkOption from "components/DrinkOption";
 import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
 import CustomTempOption from "components/CustomTempOption";
+import LoadingSpinner from "components/LoadingSpinner";
 
 export default function Order({ menu, ingredients, customizations }) {
   const [bevType, setBevType] = useState("coffee");
@@ -29,8 +30,8 @@ export default function Order({ menu, ingredients, customizations }) {
   const router = useRouter();
 
   const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
-  const selectedOption = "bg-blfs-teal " + bevTabClasses;
-  const unselectedOption = "bg-blfs-blue hover:bg-blfs-teal/50  " + bevTabClasses;
+  const selectedOption = "bg-secondary " + bevTabClasses;
+  const unselectedOption = "bg-primary hover:bg-secondary/50  " + bevTabClasses;
 
   useEffect(() => {
     const getCurrentDrinkCustomizationOptions = async () => {
@@ -93,8 +94,8 @@ export default function Order({ menu, ingredients, customizations }) {
       <Header />
       <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
         <h1 className="text-4xl mb-4">Order A Drink</h1>
-        <small className="text-sm mb-8 text-blfs-teal underline hover:cursor-pointer" onClick={handleGoBack}>Back to dashboard</small>
-        <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 flex flex-col justify-center items-center bg-blfs-blue pt-10 pb-1 rounded">
+        <small className="text-sm mb-8 text-secondary underline hover:cursor-pointer" onClick={handleGoBack}>Back to dashboard</small>
+        <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 flex flex-col justify-center items-center bg-primary pt-10 pb-1 rounded">
           <div className="w-full flex justify-evenly mb-2">
             <button type="button" value="coffee" className={bevType === "coffee" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Coffee</button>
             <button type="button" value="tea" className={bevType === "tea" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Tea</button>
@@ -116,11 +117,7 @@ export default function Order({ menu, ingredients, customizations }) {
           </form>
           <button className="w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle" onClick={handleSubmit}>
             {isSubmitting ? 
-            (<div className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-white border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
-                    <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                        Loading...
-                    </span>
-            </div>)
+            (<LoadingSpinner size="6" color="white" />)
             :
             (
               "Submit Order"

@@ -11,10 +11,14 @@ export default function HotIcedOption({ updateDrink, selectedDrink, zIndex }) {
     const customization_label = "Hot/Iced";
 
     console.log("selectdOption", selectedOption);
+
+    useEffect(() =>(
+        setSelectedOption(options[0])
+    ), [selectedDrink])
     
     useEffect(() => {
         updateDrink(customization_name, selectedOption);
-        }, [selectedOption, selectedDrink]);
+        }, [selectedOption]);
 
     const handleChange = (e) => {
         setSelectedOption(e);
@@ -47,7 +51,7 @@ export default function HotIcedOption({ updateDrink, selectedDrink, zIndex }) {
                                         as="div"
                                         key={option.ingredient_name}
                                         value={option}
-                                        className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
+                                        className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-secondary text-white" : ""}`}
                                     >
                                         {option.ingredient_label}
                                     </Listbox.Option>

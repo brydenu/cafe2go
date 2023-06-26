@@ -16,7 +16,7 @@ export default function FormCheckbox({ customization, updateDrink, selectedDrink
     return (
         <div className="w-full flex flex-nowrap justify-between items-center my-2">
             <label className="text-xl">{customization_label}</label>
-            <div className={`w-6 h-6 rounded border hover:cursor-pointer flex justify-center items-middle duration-200 ${ isChecked ? "bg-blfs-teal" : "bg-white" }`} onClick={handleClick}>
+            <div className={`w-6 h-6 rounded border hover:cursor-pointer flex justify-center items-middle duration-200 ${ isChecked ? "bg-secondary" : "bg-white" }`} onClick={handleClick}>
                 {isChecked && ( 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />

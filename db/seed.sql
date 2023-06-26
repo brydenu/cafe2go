@@ -1,7 +1,7 @@
 -- Add 2 base users
-INSERT INTO users (first_name, last_name, email, admin) VALUES
-  ('Guest', '', '', false),
-  ('Bryden', 'Uyehara', 'buyehara@biolifesolutions.com', true);
+INSERT INTO users (first_name, last_name, email, password, admin) VALUES
+  ('Guest', '', '', 'unhashedpwd123!',false),
+  ('Bryden', 'Uyehara', 'buyehara@biolifesolutions.com', 'unhashedpwd123!',true);
 
 -- Add milk ingredients
 INSERT INTO ingredients (ingredient_name, type) VALUES 

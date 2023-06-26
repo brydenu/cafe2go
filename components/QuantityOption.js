@@ -46,11 +46,11 @@ export default function QuantityOption({ customization, updateDrink }) {
                                 <Listbox.Option
                                     key={option}
                                     value={option}
-                                    className="hover:cursor-pointer px-10 py-1 rounded hover:bg-blfs-teal hover:text-white text-center text-xl"
+                                    className="hover:cursor-pointer px-10 py-1 rounded hover:bg-secondary hover:text-white text-center text-xl"
                                 >
                                     {({active}) => (
                                         <div
-                                            className={`${active && "bg-blfs-teal text-white"}`}
+                                            className={`${active && "bg-secondary text-white"}`}
                                         >
                                             {option}
                                         </div>

@@ -81,7 +81,7 @@ export default function IngredientOption({ customization, updateDrink, selectedD
                                         key={option.ingredient_id}
                                         value={option}
                                         disabled={!option.in_stock}
-                                        className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-blfs-teal text-white" : ""}`}
+                                        className={({ active })=> `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${active ? "bg-secondary text-white" : ""}`}
                                     >
                                         {option.ingredient_name}
                                     </Listbox.Option>

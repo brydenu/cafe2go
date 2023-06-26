@@ -1,5 +1,5 @@
 import { pool } from 'db/db';
-import CreateNewOrder from "db/CreateNewOrder";
+import CreateNewOrder from "utils/orders/CreateNewOrder";
 import getOrderById from 'utils/getOrderById';
 import createDrinkLabel from 'utils/createDrinkLabel';
 
