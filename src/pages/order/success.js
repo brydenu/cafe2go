@@ -10,7 +10,6 @@ export default function Success() {
     const router = useRouter()
     const { order_id } = router.query;
 
-    console.log("orderid", order_id)
     useEffect(() => {
         const getOrder = async () => {
             if (order_id) {

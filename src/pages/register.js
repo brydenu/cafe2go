@@ -2,10 +2,14 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import FormikInput from 'components/FormikInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import LoadingSpinner from 'components/LoadingSpinner';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -21,19 +25,29 @@ export default function Register() {
       password: yup.string().required('Password is required'),
     }),
     onSubmit: async (values) => {
-        
-        const response = await axios.post("/api/auth/register", values);
-        console.log("response:", response);
-
-        if (response.ok) {
-            const { token } = await response.json();
-            localStorage.setItem('token', token);
-
-        } else {
-        // Handle error
+        setIsSubmitting(true);
+        try {
+            const response = await axios.post("/api/auth/register", values);
+            console.log("response:", response);
+            if (response.status === 200) {
+                const data = response.data;
+                const { token } = data;
+                localStorage.setItem('token', token);
+                console.log("good");
+                router.push("/dashboard");
+            }
+        } catch (e) {
+            console.error("Error creating user. Error:", e);
+        }
       }
-    },
-  });
+    });
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            router.push("/dashboard");
+        }
+    }, []);
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
@@ -45,15 +59,22 @@ export default function Register() {
                 className="flex flex-col bg-white gap-2 pt-4"
                 onSubmit={formik.handleSubmit}
             >
-            <FormikInput name="first_name" id="first_name" label="First Name" formik={formik} />
-            <FormikInput name="last_name" id="last_name" label="Last Name" formik={formik} />
-            <FormikInput name="email" id="email" label="Email" formik={formik} />
-            <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
-                <div className="bg-primary flex justify-end py-2 rounded-b">
-                    <button type="submit" className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4 mr-4">Submit</button>
+                <FormikInput name="first_name" id="first_name" label="First Name" formik={formik} />
+                <FormikInput name="last_name" id="last_name" label="Last Name" formik={formik} />
+                <FormikInput name="email" id="email" label="Email" formik={formik} />
+                <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
+                <div className="bg-primary flex justify-end py-2 rounded-b">                    
+                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4 mr-4">
+                        {isSubmitting ? 
+                            (<LoadingSpinner size="6" color="white" />)
+                            :
+                            "Submit"
+                        }
+                    </button>
                 </div>
             </form>
         </div>
+        <Link href="/login" className="text-sm text-secondary underline mt-2">Already have an account? Login</Link>
     </main>
   );
 }

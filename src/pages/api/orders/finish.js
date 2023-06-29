@@ -1,4 +1,3 @@
-import { pool } from 'db/db';
 import patchInProgressOrder from 'utils/patchInProgressOrder';
 
 export default async function handler(req, res) {

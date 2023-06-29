@@ -1,9 +1,7 @@
 import format from "date-fns/format";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import getCustomizations from "./getCustomizations";
 import getDrinkName from "./menu/getDrinkName";
 import getCustomerName from "./getCustomerName";
-import getIngredients from "./ingredients/getIngredients";
 import getIngredientById from "./ingredients/getIngredientById";
 
 /**
@@ -23,8 +21,7 @@ import getIngredientById from "./ingredients/getIngredientById";
 
 export default async function createDrinkLabel(data) {
     console.log("data", data);
-    const customizationNames = await getCustomizations();
-    const customer = await getCustomerName(data.customer_id);
+    const customer = await getCustomerName(data.user_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
     const date = new Date(data.ordered_date);
     const order_time = format(date, "h:mm a");
@@ -39,7 +36,7 @@ export default async function createDrinkLabel(data) {
         drinkName,
         in_progress: data.in_progress,
     };
-    const nonCustomizations = ["ordered_date", "customer_id", "menu_id", "in_progress", "order_id"];
+    const nonCustomizations = ["ordered_date", "user_id", "menu_id", "in_progress", "order_id"];
     const quantitityCustomizations = ["syrup1_pumps", "syrup2_pumps", "syrup3_pumps"];
     const customizationKeys = Object.keys(data);
     // console.log("customizationKeys", customizationKeys);

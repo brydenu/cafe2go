@@ -11,8 +11,10 @@ import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
 import CustomTempOption from "components/CustomTempOption";
 import LoadingSpinner from "components/LoadingSpinner";
+import getLoggedInUser from "utils/users/getLoggedInUser";
 
 export default function Order({ menu, ingredients, customizations }) {
+  const [user, setUser] = useState({});
   const [bevType, setBevType] = useState("coffee");
   const [selectedDrink, setSelectedDrink] = useState(menu[0]);
   const [currentDrinkCustomizations, setCurrentDrinkCustomizations] = useState([]);
@@ -28,6 +30,19 @@ export default function Order({ menu, ingredients, customizations }) {
   console.log("selectedDrink:", selectedDrink);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        router.push("/login");
+    }
+    const getUser = async () => {
+        const res = await getLoggedInUser(token);
+        const loggedInUser = res.user.data;
+        setUser(loggedInUser);
+    }
+    getUser();
+},[])
 
   const bevTabClasses = "w-40 text-white text-xl px-5 py-2 rounded-xl duration-200";
   const selectedOption = "bg-secondary " + bevTabClasses;
@@ -72,19 +87,17 @@ export default function Order({ menu, ingredients, customizations }) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const data = { "drink": selectedCustomizations };
+    const data = { "drink": selectedCustomizations, "user_id": user.user_id };
     try {
       const res = await axios.post(`api/orders`, data);
       if (res.status === 201) {
-        console.log("success");
         const { order_id } = res.data;
         router.push(`/order/success?order_id=${order_id}`);
       } else {
         console.log("no")
       }
-      console.log("res.data from post:", res);
     } catch (e) {
-      console.error(e);
+      console.error("error creating drink");
     }
   }
 

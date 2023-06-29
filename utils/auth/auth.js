@@ -1,11 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-export function createToken(user) {
+export function createToken(userId) {
   // Expires in one day
   const expiresIn = 24 * 60 * 60;
+  console.log("user in createToken:", userId);
+  const secret = process.env.JWT_SECRET;
+  console.log("JWT_SECRET:", secret);
 
   const payload = {
-    sub: user.id,
+    sub: userId,
     iat: Date.now()
   };
 
@@ -14,6 +17,7 @@ export function createToken(user) {
   return signedToken;
 }
 
-export function decodeToken(token) {
-  return jwt.verify(token, process.env.JWT_SECRET);
+export async function decodeToken(token) {
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    return decoded;
 }

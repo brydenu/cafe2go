@@ -53,7 +53,7 @@ CREATE TABLE menu_customizations (
 -- Create table for orders
 CREATE TABLE orders (
   order_id SERIAL PRIMARY KEY,
-  customer_id INT REFERENCES users(user_id) DEFAULT 1,
+  user_id INT REFERENCES users(user_id) DEFAULT 1,
   guest_name VARCHAR(50),
   menu_id INT NOT NULL REFERENCES menu(menu_id),
   hot_iced VARCHAR(50) DEFAULT 'hot',
