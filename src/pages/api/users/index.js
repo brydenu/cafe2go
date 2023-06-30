@@ -1,5 +1,7 @@
 import getUserById from "utils/users/getUserById";
+import getUserCurrentOrder from "utils/orders/getUserCurrentOrder";
 import { decodeToken } from "utils/auth/auth";
+import createDrinkLabel from "utils/createDrinkLabel";
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
@@ -17,7 +19,12 @@ export default async function handler(req, res) {
         const decoded = await decodeToken(token);
   
         // Retrieve user data based on the user identifier
-        const user = await getUserById(decoded.sub.user_id);
+        const user = await getUserById(decoded.sub);
+        const userCurrentOrder = await getUserCurrentOrder(user.user_id);
+        if (!!userCurrentOrder) {
+            const order = await createDrinkLabel(userCurrentOrder)
+            user["currentOrder"] = order;
+        }
     
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

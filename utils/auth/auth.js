@@ -3,9 +3,7 @@ import jwt from 'jsonwebtoken';
 export function createToken(userId) {
   // Expires in one day
   const expiresIn = 24 * 60 * 60;
-  console.log("user in createToken:", userId);
   const secret = process.env.JWT_SECRET;
-  console.log("JWT_SECRET:", secret);
 
   const payload = {
     sub: userId,

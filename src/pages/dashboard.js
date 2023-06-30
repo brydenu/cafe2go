@@ -6,6 +6,7 @@ import Navbar from "components/Navbar";
 import DashboardOption from "components/DashboardOption";
 import getLoggedInUser from "utils/users/getLoggedInUser";
 import validateToken from "utils/auth/validateToken";
+import DashboardDrinkTracker from "components/DashboardDrinkTracker";
 
 export default function Dashboard(){
     const [user, setUser] = useState({});
@@ -13,16 +14,26 @@ export default function Dashboard(){
     
     useEffect(() => {
         const token = localStorage.getItem("token");
+        
+
         if (!token) {
             router.push("/login");
+        }
+        const validate = async () => {
+            try {
+                await validateToken(token);
+            } catch (e) {
+                localStorage.clear();
+                router.push("/login");
+            }
         }
         const getUser = async () => {
             const res = await getLoggedInUser(token);
             const loggedInUser = res.user.data;
+            console.log("loggedInUSer", loggedInUser);
             setUser(loggedInUser);
-            const validated = await validateToken(token);
-            console.log("validated", validated);
         }
+        validate();
         getUser();
     },[])
 
@@ -39,6 +50,10 @@ export default function Dashboard(){
                     <DashboardOption title="Edit Favorites" destination="/login" bgColor="primary" bgHover="secondary" />
                     <DashboardOption title="Order History" destination="/login" bgColor="primary" bgHover="secondary" />
                 </div>
+                {user.currentOrder && (
+                    <DashboardDrinkTracker drink={user?.currentOrder} />
+                    )
+                }
             </main>
         </>
     )

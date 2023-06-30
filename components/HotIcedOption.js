@@ -10,8 +10,6 @@ export default function HotIcedOption({ updateDrink, selectedDrink, zIndex }) {
     const customization_name = "hot_iced";
     const customization_label = "Hot/Iced";
 
-    console.log("selectdOption", selectedOption);
-
     useEffect(() =>(
         setSelectedOption(options[0])
     ), [selectedDrink])

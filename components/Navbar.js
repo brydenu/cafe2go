@@ -4,10 +4,7 @@ import { useEffect } from "react";
 
 export default function Navbar({ user }){
     const router = useRouter();
-
-    console.log("user from Navbar", user)
     
-
     const handleClickHome = () => {
         router.push("/dashboard")
     }
@@ -18,7 +15,7 @@ export default function Navbar({ user }){
     }
 
     return (
-        <nav className="bg-primary w-full h-16 flex flex-row justify-between">
+        <nav className="bg-primary w-full h-16 flex flex-row justify-between absolute top-0">
             <div 
                 className="flex flex-row justify-between items-center gap-2 bg-white px-4"
                 onClick={handleClickHome}
@@ -33,10 +30,10 @@ export default function Navbar({ user }){
                 />
                 <p className="font-bold text-primary text-3xl hover:cursor-pointer">Biolife Cafe</p>
             </div>
-            <div className="flex flex-row justify-between items-center gap-2 mr-4">
-                <p className="text-white">Welcome, {user?.first_name}</p>
+            <div className="flex flex-col justify-center items-center mr-4 text-sm text-center sm:text-md grow sm:grow-0">
+                <p className="text-white">{user?.first_name} {user?.last_name}</p>
                 <p 
-                    className="hover:cursor-pointer text-secondary underline"
+                    className="hover:cursor-pointer text-secondary underline text-xs"
                     onClick={handleLogout}
                 >
                 Logout

@@ -27,7 +27,7 @@ export default function Order({ menu, ingredients, customizations }) {
   
   */
   // console.log("selectedCustomizations:", selectedCustomizations);
-  console.log("selectedDrink:", selectedDrink);
+  // console.log("selectedDrink:", selectedDrink);
 
   const router = useRouter();
 
@@ -93,8 +93,6 @@ export default function Order({ menu, ingredients, customizations }) {
       if (res.status === 201) {
         const { order_id } = res.data;
         router.push(`/order/success?order_id=${order_id}`);
-      } else {
-        console.log("no")
       }
     } catch (e) {
       console.error("error creating drink");

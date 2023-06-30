@@ -21,10 +21,8 @@ export default async function handler(req, res) {
         const data = req.body;
         try {
             const userId = await LoginUser(data);
-            console.log("userId", userId);
             if (userId) {
                 const token = createToken(userId);
-                console.log("login successful. token:", token);
                 res.status(200).json({ token });
             } else if (user.error) {
                 res.status(401).json({ "error": "Invalid username or password" });

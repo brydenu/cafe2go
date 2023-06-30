@@ -20,7 +20,6 @@ import getIngredientById from "./ingredients/getIngredientById";
 */
 
 export default async function createDrinkLabel(data) {
-    console.log("data", data);
     const customer = await getCustomerName(data.user_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
     const date = new Date(data.ordered_date);
