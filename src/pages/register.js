@@ -51,9 +51,9 @@ export default function Register() {
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
-        <div className="bg-primary pt-3 rounded w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
+        <div className="bg-primary pt-3 sm:rounded w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div className="mb-4">
-                <h1 className="text-4xl text-white font-bold mx-4">Register</h1>
+                <h1 className="text-4xl text-white font-bold mx-10">Register</h1>
             </div>
             <form 
                 className="flex flex-col bg-white gap-2 pt-4"
@@ -64,7 +64,7 @@ export default function Register() {
                 <FormikInput name="email" id="email" label="Email" formik={formik} />
                 <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
                 <div className="bg-primary flex justify-end py-2 rounded-b">                    
-                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4 mr-4">
+                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4 mr-10">
                         {isSubmitting ? 
                             (<LoadingSpinner size="6" color="white" />)
                             :

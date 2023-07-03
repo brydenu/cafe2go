@@ -85,6 +85,7 @@ CREATE TABLE orders (
   packet_sweetener2_quantity VARCHAR(50),
   in_progress BOOLEAN NOT NULL DEFAULT true,
   ordered_date TIMESTAMP NOT NULL DEFAULT NOW(),
+  completed_date TIMESTAMP,
   note TEXT
 );
 

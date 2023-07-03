@@ -51,7 +51,7 @@ export default function Status() {
                                     <li key={`${order.id}-${customization}`} className="text-lg">{customization}</li>
                                     ))}
                             </ul>
-                            <p className="text-sm text-center mt-4 mb-2">Order submitted at {order.order_time} ({order.duration} ago)</p>
+                            <p className="text-sm text-center mt-4 mb-2">Order submitted at {order?.info.orderTime} ({order?.info.orderDuration} ago)</p>
                         </>                        
                     )
                     :

@@ -1,5 +1,4 @@
-import format from "date-fns/format";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { isSameDay, startOfDay, format, formatDistanceToNow } from "date-fns";
 import getDrinkName from "./menu/getDrinkName";
 import getCustomerName from "./getCustomerName";
 import getIngredientById from "./ingredients/getIngredientById";
@@ -23,19 +22,32 @@ export default async function createDrinkLabel(data) {
     const customer = await getCustomerName(data.user_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
     const date = new Date(data.ordered_date);
-    const order_time = format(date, "h:mm a");
-    const duration = formatDistanceToNow(date);
+    const orderTime = format(date, "h:mm a");
+    const orderDate = format(date, 'dd/MM/yyyy');
+    const orderDuration = formatDistanceToNow(date);
+    const orderedToday = isSameDay(date, startOfDay(new Date()));
+    const completed = data.completed_date ? new Date(data.completed_date) : null;
+    const completedTime = completed ? format(completed, "h:mm a") : null;
+    const completedDate = completed ? format(date, "dd/MM/yyyy"): null;
+    const completedDuration = completed ? formatDistanceToNow(completed): null;
     let drinkName = await getDrinkName(data.menu_id);
     if (data.hot_iced === "iced") drinkName = "Iced" + " " + drinkName;
     const label = {
         "id": data.order_id,
-        order_time,
         customerName,
-        duration,
         drinkName,
-        in_progress: data.in_progress,
+        inProgress: data.in_progress,
+        info: {
+            orderTime,
+            orderDate,
+            orderDuration,
+            orderedToday,
+            completedTime,
+            completedDate,
+            completedDuration
+        }
     };
-    const nonCustomizations = ["ordered_date", "user_id", "menu_id", "in_progress", "order_id"];
+    const nonCustomizations = ["ordered_date", "completed_date", "user_id", "menu_id", "in_progress", "order_id"];
     const quantitityCustomizations = ["syrup1_pumps", "syrup2_pumps", "syrup3_pumps"];
     const customizationKeys = Object.keys(data);
     // console.log("customizationKeys", customizationKeys);

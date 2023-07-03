@@ -10,9 +10,9 @@ export default async function getUserCurrentOrder(id) {
     `)
     const order = res.rows[0];
     const currentDate = new Date();
-    const twoHoursAgo = subHours(currentDate, 2);
-    const isWithinLastTwoHours = isWithinInterval(order.ordered_date, { start: twoHoursAgo, end: currentDate });
-    if (order.inProgress || isWithinLastTwoHours) {
+    const twoHoursAgo = subHours(currentDate, 1);
+    const isWithinLastTwoHours = isWithinInterval(order?.ordered_date, { start: twoHoursAgo, end: currentDate });
+    if (order?.inProgress || isWithinLastTwoHours) {
         return order;
     } else {
         return null;

@@ -2,8 +2,11 @@ import { Dialog, Transition, Fragment } from "@headlessui/react"
 import { useState } from "react"
 import LoadingSpinner from "./LoadingSpinner";
 
-export default function DashboardDrinkTracker({ drink }) {
+export default function HistoryDrink({ drink }) {
     const [isOpen, setIsOpen] = useState(false);
+    
+    const {  customerName, customizations, inProgress, drinkName, info } = drink;
+    const { orderedToday, orderTime, orderDate, orderDuration, completedTime, completedDate, completedDuration } = info;
 
     const openDrinkModal = () => {
         setIsOpen(true);
@@ -15,20 +18,25 @@ export default function DashboardDrinkTracker({ drink }) {
 
     return (
         <>
-        <div onClick={openDrinkModal} className={`w-full sm:w-4/5 sm:h-16 fixed sm:absolute bottom-0 sm:bottom-5 sm:rounded-lg flex flex-row justify-evenly items-center text-white hover:cursor-pointer px-3 py-2 bg-${drink.inProgress ? "secondary" : "primary"}`}>
-            <div className="text-center flex flex-col sm:flex-row items-center">
-                <div className="text-center flex flex-col sm:flex-row">
-                    Latest order:
-                </div>
-                <div className="flex flex-col">
-
-                    <div className="font-bold sm:ml-1">{drink.drinkName}</div>
-                    {/* <div className="text-xs sm:ml-1">({drink.duration} ago)</div> */}
-                </div>
-            </div>
-            <div className="text-center flex flex-col sm:flex-row items-center">
-                <div>Order status:{" "}</div>
-                <div className="font-bold sm:ml-1">{drink.inProgress ? "In progress" : "Completed"}</div>
+        <div onClick={openDrinkModal} className="w-full h-20 border border-primary flex flex-row justify-between items-center bg-white hover:cursor-pointer px-3 py-2">
+            <div className="font-bold text-xl">{drink.drinkName}</div>
+            <div className="text-md text-primary">
+                {inProgress ? 
+                (<div className="flex flex-col sm:flex-row gap-1 items-center justify-end">
+                  <div>Ordered:</div>
+                  <div className="flex flex-row gap-1 items-center justify-end">
+                    <span className="font-bold">{orderedToday ? orderTime : orderDate}</span>
+                    <span className="text-sm">({orderDuration} ago)</span>
+                  </div>
+                </div>)
+                :
+                (<div className="flex flex-col sm:flex-row gap-1 items-center justify-end">
+                  <div>Completed:</div>
+                  <div className="flex flex-row gap-1 items-center justify-end">
+                    <span className="font-bold">{orderedToday ? completedTime : completedDate}</span>
+                  </div>
+                </div>)
+                }
             </div>
         </div>
         <Transition appear show={isOpen} as={Fragment}>
@@ -56,21 +64,27 @@ export default function DashboardDrinkTracker({ drink }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl pt-6 pb-3 text-left align-middle shadow-xl transition-all bg-secondary">
+                <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl pt-6 pb-3 text-left align-middle shadow-xl transition-all bg-primary">
                   <Dialog.Title
                     className="leading-6 text-white px-10 pb-4 text-center"
                   >
                     <p className="text-2xl">
                     Order status: {" "}
-                    <span className="font-bold">{drink.inProgress ? "In progress" : "Completed"}</span>
+                    <span className="font-bold">{inProgress ? "In progress" : "Completed"}</span>
                     </p>
-                    <p className="text-sm text-white">Ordered received at {drink.info.orderTime} ({drink.info.orderDuration} ago)</p>
+                    
                   </Dialog.Title>
                   <div className="bg-white px-10 py-4 text-center">
-                    <h3 className="font-bold text-xl">{drink.drinkName}</h3>
-                    {!!drink.customizations ? (
+                    <div className="mb-3">
+                      <p className="text-xs italic">Ordered {orderDate} at {orderTime}</p>
+                      {!inProgress && (
+                        <p className="text-xs italic">Completed {completedDate} at {completedTime}</p>
+                        )}
+                    </div>
+                      <h3 className="font-bold text-xl">{drinkName}</h3>
+                    {!!customizations ? (
                         <ul>
-                            {drink.customizations.map((customization) => (
+                            {customizations.map((customization) => (
                                 <li key={`${drink.id}-${customization}`} className="text-md">{customization}</li>
                             ))}
                         </ul>
@@ -84,7 +98,7 @@ export default function DashboardDrinkTracker({ drink }) {
                 }
                   </div>
 
-                  <div className="mt-4 w-full flex justify-center bg-secondary">
+                  <div className="mt-4 w-full flex justify-center bg-primary">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

@@ -26,8 +26,8 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder}) {
         <div key={order.id} className={`bg-white border m-2 rounded border-primary w-1/4 flex flex-col justify-start duration-500 ${isMouseDown ? " duration-300 translate-y-2" : ""} ${isClicked ? "-translate-y-8 opacity-0": ""}`}>
             <section className="bg-primary w-full p-3">
                 <p className="text-white font-bold text-lg">{order.customerName}</p>
-                <p className="text-white font-bold text-sm">{order.order_time}</p>
-                <p className="text-white text-xs">{order.duration} ago</p>
+                <p className="text-white font-bold text-sm">{order?.info?.orderTime}</p>
+                <p className="text-white text-xs">{order?.info?.orderDuration} ago</p>
             </section>
             <ul className="p-3 grow">
                 <li className="font-bold">{order.drinkName}</li>

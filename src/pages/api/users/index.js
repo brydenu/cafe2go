@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   
     try {
         // Verify and decode the JWT
-        const decoded = await decodeToken(token);
+        const decoded = decodeToken(token);
   
         // Retrieve user data based on the user identifier
         const user = await getUserById(decoded.sub);

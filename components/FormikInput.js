@@ -9,7 +9,7 @@ export default function FormikInput({ name, id, label, formik, type="text" }) {
     // const classNames =  isError ? "border border-red-500" : "";
     
     return (
-        <div className="flex flex-col mx-4">
+        <div className="flex flex-col mx-10">
             <label htmlFor={name} className="text-sm font-bold">{label}</label>
             <div className={`duration-200 pb-3 pt-2 rounded`}>
                 <input id={id} type={type} className="w-full px-3 pt-2 text-2xl outline-none duration-300 focus:bg-gray-100" {...formik.getFieldProps(id)} />

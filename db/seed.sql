@@ -105,7 +105,8 @@ INSERT INTO customizations (customization_label, customization_name, description
 ('Additional topping', 'topping2_id', 'Additional topping to add', 'topping'),
 ('Additional topping 2', 'topping3_id', 'Another additional topping to add', 'topping'),
 ('Packet sweetener', 'packet_sweetener1_id', 'Add packet sweetener (Splenda, Stevia, Raw Sugar)', 'packet_sweetener'),
-('Additional packet sweetener', 'packet_sweetener2_id', 'Add an additional type of packet sweetener', 'packet_sweetener');
+('Additional packet sweetener', 'packet_sweetener2_id', 'Add an additional type of packet sweetener', 'packet_sweetener'),
+('Tea', 'tea_type', 'Type of tea to use', 'tea');
 -- Create menu-customization relationships
 INSERT INTO menu_customizations (menu_id, customization_id) VALUES
 -- 1: Americano
@@ -135,6 +136,7 @@ INSERT INTO menu_customizations (menu_id, customization_id) VALUES
 -- 9: Tea
 (9, 2),
 (9, 3),
+(9, 12),
 -- 10: Italian Soda
 (10, 2),
 (10, 3),

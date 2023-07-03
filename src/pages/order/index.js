@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Header from "components/Header";
+import AuthWrapper from "components/AuthWrapper";
 import getIngredients from "utils/ingredients/getIngredients";
 import getMenu from "utils/menu/getMenu";
 import getCustomizations from "utils/getCustomizations";
@@ -101,42 +101,41 @@ export default function Order({ menu, ingredients, customizations }) {
 
   console.log("selectedCustomizations", selectedCustomizations);
   return (
-    <>
-      <Header />
-      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
-        <h1 className="text-4xl mb-4">Order A Drink</h1>
-        <small className="text-sm mb-8 text-secondary underline hover:cursor-pointer" onClick={handleGoBack}>Back to dashboard</small>
-        <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 flex flex-col justify-center items-center bg-primary pt-10 pb-1 rounded">
-          <div className="w-full flex justify-evenly mb-2">
-            <button type="button" value="coffee" className={bevType === "coffee" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Coffee</button>
-            <button type="button" value="tea" className={bevType === "tea" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Tea</button>
-            <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
+      <AuthWrapper>
+        <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+          <h1 className="text-4xl mb-4">Order A Drink</h1>
+          <small className="text-sm mb-8 text-secondary underline hover:cursor-pointer" onClick={handleGoBack}>Back to dashboard</small>
+          <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 flex flex-col justify-center items-center bg-primary pt-10 pb-1 rounded">
+            <div className="w-full flex justify-evenly mb-2">
+              <button type="button" value="coffee" className={bevType === "coffee" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Coffee</button>
+              <button type="button" value="tea" className={bevType === "tea" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Tea</button>
+              <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
+            </div>
+            <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">
+              <DrinkOption bevType={bevType} selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} menu={menu} updateDrink={updateDrink} />
+              <hr />
+              {selectedDrink.menu_id !== 10 &&
+              (<>
+                  <HotIcedOption updateDrink={updateDrink} selectedDrink={selectedDrink} />
+                  <CustomTempOption isIced={selectedCustomizations?.hot_iced?.ingredient_name === "iced"} updateDrink={updateDrink} />
+                </>)
+              }
+              {(bevType === "coffee" || !!selectedCustomizations.num_shots) && (
+                <FormCheckbox customization={{"customization_label": "Decaf", "customization_name": "decaf"}} updateDrink={updateDrink} selectedDrink={selectedDrink} />
+              )}
+              <OrderCustomization customizations={currentDrinkCustomizations} updateDrink={updateDrink} selectedDrink={selectedDrink} bevType={bevType} />
+            </form>
+            <button className="w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle" onClick={handleSubmit}>
+              {isSubmitting ? 
+              (<LoadingSpinner size="6" color="white" />)
+              :
+              (
+                "Submit Order"
+              )}
+            </button>
           </div>
-          <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">
-            <DrinkOption bevType={bevType} selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} menu={menu} updateDrink={updateDrink} />
-            <hr />
-            {selectedDrink.menu_id !== 10 &&
-            (<>
-                <HotIcedOption updateDrink={updateDrink} selectedDrink={selectedDrink} />
-                <CustomTempOption isIced={selectedCustomizations?.hot_iced?.ingredient_name === "iced"} updateDrink={updateDrink} />
-              </>)
-            }
-            {(bevType === "coffee" || !!selectedCustomizations.num_shots) && (
-              <FormCheckbox customization={{"customization_label": "Decaf", "customization_name": "decaf"}} updateDrink={updateDrink} selectedDrink={selectedDrink} />
-            )}
-            <OrderCustomization customizations={currentDrinkCustomizations} updateDrink={updateDrink} selectedDrink={selectedDrink} bevType={bevType} />
-          </form>
-          <button className="w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle" onClick={handleSubmit}>
-            {isSubmitting ? 
-            (<LoadingSpinner size="6" color="white" />)
-            :
-            (
-              "Submit Order"
-            )}
-          </button>
-        </div>
-      </main>
-    </>
+        </main>
+      </AuthWrapper>
   )
 }
 
