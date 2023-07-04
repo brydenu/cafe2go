@@ -50,14 +50,14 @@ export default function History() {
             <div className="w-full flex flex-col items-center">
                 <div className="w-full font-bold text-xl text-primary mb-4 ml-4 sm:ml-10">In-progress orders</div>
                 <div className="w-full sm:w-11/12 flex flex-col justify-center items-center align-middle mb-8">
-                    {inProgressOrders?.map((drink) => (<HistoryDrink drink={drink} />))}
+                    {inProgressOrders?.map((drink) => (<HistoryDrink key={drink.id} drink={drink} />))}
                 </div>
             </div>
             }
             <div className="w-full flex flex-col items-center">
                 <div className="w-full font-bold text-xl text-primary mb-4 ml-4 sm:ml-10">Completed orders</div>
                 <div className="w-full sm:w-11/12 flex flex-col justify-center items-center align-middle">
-                    {completedOrders?.map((drink) => (<HistoryDrink drink={drink} />))}
+                    {completedOrders?.map((drink) => (<HistoryDrink key={drink.id} drink={drink} />))}
                 </div>
             </div>
             </main>
