@@ -1,4 +1,4 @@
-import { Dialog, Transition, Fragment } from "@headlessui/react"
+import { Dialog, Transition } from "@headlessui/react"
 import { useState } from "react"
 import LoadingSpinner from "./LoadingSpinner";
 
@@ -31,10 +31,10 @@ export default function DashboardDrinkTracker({ drink }) {
                 <div className="font-bold sm:ml-1">{drink.inProgress ? "In progress" : "Completed"}</div>
             </div>
         </div>
-        <Transition appear show={isOpen} as={Fragment}>
+        <Transition appear show={isOpen} as="div">
         <Dialog as="div" className="relative z-10" onClose={closeDrinkModal}>
           <Transition.Child
-            as={Fragment}
+            as="div"
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -48,7 +48,7 @@ export default function DashboardDrinkTracker({ drink }) {
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
-                as={Fragment}
+                as="div"
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
