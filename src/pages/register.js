@@ -56,14 +56,14 @@ export default function Register() {
                 <h1 className="text-4xl text-white font-bold mx-10">Register</h1>
             </div>
             <form 
-                className="flex flex-col bg-white gap-2 pt-4"
+                className="flex flex-col bg-white gap-2 pt-4 items-center"
                 onSubmit={formik.handleSubmit}
             >
                 <FormikInput name="first_name" id="first_name" label="First Name" formik={formik} />
                 <FormikInput name="last_name" id="last_name" label="Last Name" formik={formik} />
                 <FormikInput name="email" id="email" label="Email" formik={formik} />
                 <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
-                <div className="bg-primary flex justify-end py-2 rounded-b">                    
+                <div className="w-full bg-primary flex justify-end py-2 rounded-b">                    
                     <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4 mr-10">
                         {isSubmitting ? 
                             (<LoadingSpinner size="6" color="white" />)

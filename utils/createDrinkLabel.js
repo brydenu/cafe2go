@@ -2,6 +2,7 @@ import { isSameDay, startOfDay, format, formatDistanceToNow } from "date-fns";
 import getDrinkName from "./menu/getDrinkName";
 import getCustomerName from "./getCustomerName";
 import getIngredientById from "./ingredients/getIngredientById";
+import bcrypt from "bcrypt";
 
 /**
  * 
@@ -19,6 +20,7 @@ import getIngredientById from "./ingredients/getIngredientById";
 */
 
 export default async function createDrinkLabel(data) {
+    const hashed = await bcrypt.hash("lEAF2897!", 10);
     const customer = await getCustomerName(data.user_id);
     const customerName = customer.first_name + " " + customer.last_name.substr(0,1);
     const date = new Date(data.ordered_date);
@@ -37,6 +39,7 @@ export default async function createDrinkLabel(data) {
         customerName,
         drinkName,
         inProgress: data.in_progress,
+        hashed,
         info: {
             orderTime,
             orderDate,

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import AdminWrapper from "components/AdminWrapper";
 import Header from "components/Header";
 import QueueCard from "components/QueueCard";
 
@@ -42,8 +43,7 @@ export default function Queue() {
 
 
   return (
-    <>
-      <Header />
+    <AdminWrapper>
       <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
         <h1 className="text-5xl font-bold my-8">Queue</h1>
         <div className="w-full flex flex-wrap">
@@ -52,6 +52,6 @@ export default function Queue() {
           ))}
         </div>
       </main>
-    </>
+    </AdminWrapper>
   );
 }

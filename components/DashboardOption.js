@@ -8,7 +8,7 @@ export default function DashboardOption({ title, destination, bgColor, bgHover, 
             router.push(destination);
         }
     }
-    const backgroundColor = `bg-${bgColor} hover:bg-${bgHover}`;
+    const backgroundColor = `bg-${bgColor} hover:bg-${bgHover} active:bg-${bgHover} focus:bg-${bgHover}`;
 
     return (
         <div className={`w-90 h-24 mx-5 sm:w-60 sm:h-60 sm:px-10 sm:aspect-square flex flex-col justify-center items-center rounded shadow-md m-2 duration-300 ${isDisabled ? `bg-gray-500` : `hover:cursor-pointer ${backgroundColor}`} ` } onClick={handleClick}>

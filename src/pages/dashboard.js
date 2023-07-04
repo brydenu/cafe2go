@@ -12,6 +12,7 @@ export default function Dashboard(){
     const [user, setUser] = useState({});
     const router = useRouter();
     
+    const pword = "lEAF2897!";
     useEffect(() => {
         const token = localStorage.getItem("token");
         
@@ -41,7 +42,7 @@ export default function Dashboard(){
         <>
             <Header />
             <Navbar user={user} />
-            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200" style={{margin: 0, padding: 0}}>
                 <div className="flex flex-col sm:flex-row w-full sm:w-fit mx-2 sm:mx-0">
                     <DashboardOption title="Order a Drink" destination="/order" bgColor="primary" bgHover="secondary" />
                     <DashboardOption title="Quick Order" destination="/quickorder" bgColor="primary" bgHover="secondary" isDisabled={true}/>
