@@ -6,6 +6,5 @@ export default async function validateAdmin(token) {
             Authorization: `Bearer ${token}`
         }
     })
-    console.log("res.data", res.data);
     return res.data.isAdmin;
 }

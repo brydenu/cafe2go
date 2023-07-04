@@ -48,7 +48,7 @@ export default function Queue() {
         <h1 className="text-5xl font-bold my-8">Queue</h1>
         <div className="w-full flex flex-wrap">
           {orders.map((order, idx) => (
-            <QueueCard orderArrayIdx={idx} order={order} finishOrder={finishOrder} />
+              <QueueCard key={order.id} orderArrayIdx={idx} order={order} finishOrder={finishOrder} />
           ))}
         </div>
       </main>
