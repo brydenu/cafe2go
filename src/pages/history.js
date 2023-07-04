@@ -5,7 +5,7 @@ import getUserHistory from "utils/getUserHistory";
 import HistoryDrink from "components/HistoryDrink";
 
 
-export default function history() {
+export default function History() {
     const [orders, setOrders] = useState([]);
     const [completedOrders, setCompletedOrders] = useState([]);
     const [inProgressOrders, setInProgressOrders] = useState([]);
