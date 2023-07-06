@@ -13,7 +13,7 @@ import CustomTempOption from "components/CustomTempOption";
 import LoadingSpinner from "components/LoadingSpinner";
 import getLoggedInUser from "utils/users/getLoggedInUser";
 
-export default function Order({ menu, ingredients, customizations }) {
+export default function Order({ menu=[] }) {
   const [user, setUser] = useState({});
   const [bevType, setBevType] = useState("coffee");
   const [selectedDrink, setSelectedDrink] = useState(menu[0]);
