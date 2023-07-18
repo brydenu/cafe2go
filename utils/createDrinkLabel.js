@@ -1,7 +1,7 @@
 import { isSameDay, startOfDay, format, formatDistanceToNow } from "date-fns";
-import getDrinkName from "./menu/getDrinkName";
-import getCustomerName from "./getCustomerName";
-import getIngredientById from "./ingredients/getIngredientById";
+import getDrinkName from "./db/menu/getDrinkName";
+import getCustomerName from "./db/users/getCustomerName";
+import getIngredientById from "./db/ingredients/getIngredientById";
 import bcrypt from "bcrypt";
 
 /**

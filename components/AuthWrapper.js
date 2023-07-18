@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import getLoggedInUser from "utils/users/getLoggedInUser";
+import getLoggedInUser from "utils/getLoggedInUser";
 import validateToken from "utils/auth/validateToken";
 
 

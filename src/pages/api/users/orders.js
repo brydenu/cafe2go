@@ -1,4 +1,4 @@
-import getOrderHistory from "utils/orders/getOrderHistory"
+import getOrderHistory from "utils/db/orders/getOrderHistory"
 import createDrinkLabel from "utils/createDrinkLabel";
 import { decodeToken } from "utils/auth/auth";
 

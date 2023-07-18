@@ -1,14 +1,16 @@
-import { pool } from "db/db"
+import getMenu from "utils/db/menu/getMenu";
 
 export default async function handler(req, res) {
     if (req.method === "GET") {
         try {
-            let response = await pool.query('SELECT * FROM menu');
-            let menu = response.rows
+            const { menu_id } = req.query;
+            const menu = getMenu(menu_id);
             res.status(200).json({menu});
           } catch (error) {
             console.error(error)
             res.status(500).json({ message: 'Internal server error' })
           }
+    } else {
+      res.status(405).json({message: "Method not allowed"})
     }
 }

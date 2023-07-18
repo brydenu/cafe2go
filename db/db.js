@@ -1,32 +1,20 @@
-const { Pool } = require("pg");
+import { Pool } from "pg";
+import { createClient } from '@supabase/supabase-js';
 
-const ENV = process.env.ENVIRONMENT;
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_KEY = process.env.SUPABASE_PUBLIC_KEY;
 
-let user, host, database, password, port;
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-if (ENV === "prod") {
-  user = process.env.DB_USER;
-  host = process.env.DB_HOST;
-  database = process.env.DB_NAME;
-  password = process.env.DB_PASS;
-  port = process.env.DB_PORT;
-} else {
-  user = 'bryden';
-  host = 'localhost';
-  database = 'blfs_cafe';
-  password = '';
-  port = 5432;
-}
-
-const pool = new Pool({
-    user: user,
-    host: host,
-    database: database,
-    password: password,
-    port: port,
+  const pool = new Pool({
+    user: 'bryden',
+    host: 'localhost',
+    database: 'blfs_cafe',
+    password: '',
+    port: 5432,
   });
-  
 
-  module.exports = {
-    pool,
-  }
+module.exports = {
+  pool,
+  supabase
+};

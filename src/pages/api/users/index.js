@@ -1,5 +1,5 @@
-import getUserById from "utils/users/getUserById";
-import getUserCurrentOrder from "utils/orders/getUserCurrentOrder";
+import getUserById from "utils/db/users/getUserById";
+import getUserCurrentOrder from "utils/db/orders/getUserCurrentOrder";
 import { decodeToken } from "utils/auth/auth";
 import createDrinkLabel from "utils/createDrinkLabel";
 
@@ -19,6 +19,7 @@ export default async function handler(req, res) {
         const decoded = decodeToken(token);
   
         // Retrieve user data based on the user identifier
+        console.log("hit /users endpoint.")
         const user = await getUserById(decoded.sub);
         const userCurrentOrder = await getUserCurrentOrder(user.user_id);
         if (!!userCurrentOrder) {

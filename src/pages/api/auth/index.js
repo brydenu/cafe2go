@@ -1,5 +1,5 @@
 import { createToken, decodeToken } from "utils/auth/auth";
-import LoginUser from "utils/users/LoginUser";
+import LoginUser from "utils/db/users/LoginUser";
 
 export default async function handler(req, res) {
     if (req.method === "GET") {

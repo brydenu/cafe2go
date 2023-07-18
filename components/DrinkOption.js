@@ -16,7 +16,7 @@ export default function DrinkOption({ bevType, selectedDrink, setSelectedDrink, 
             <div className="relative">
                 <Listbox value={selectedDrink} onChange={setSelectedDrink}>
                     <Listbox.Button className="border text-xl pr-1 pl-3 py-1 rounded flex flex-nowrap justify-between items-center gap-3">
-                        {selectedDrink.drink_name}
+                        {selectedDrink?.drink_name}
                         <ChevronUpDownIcon
                             className="h-5 w-5 text-gray-400"
                             aria-hidden="true"

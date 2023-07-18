@@ -1,6 +1,6 @@
 import { pool } from 'db/db';
-import CreateNewOrder from "utils/orders/CreateNewOrder";
-import getOrderById from 'utils/getOrderById';
+import CreateNewOrder from "utils/db/orders/CreateNewOrder";
+import getOrderById from 'utils/db/orders/getOrderById';
 import createDrinkLabel from 'utils/createDrinkLabel';
 
 export default async function handler(req, res) {

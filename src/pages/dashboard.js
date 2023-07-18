@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
 import DashboardOption from "components/DashboardOption";
-import getLoggedInUser from "utils/users/getLoggedInUser";
+import getLoggedInUser from "utils/getLoggedInUser";
 import validateToken from "utils/auth/validateToken";
 import DashboardDrinkTracker from "components/DashboardDrinkTracker";
 
