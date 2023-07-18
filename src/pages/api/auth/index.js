@@ -28,11 +28,7 @@ export default async function handler(req, res) {
                 res.status(401).json({ "error": "Invalid username or password" });
             }
         } catch (e) {
-            if (e.code === "23505") {
-                res.status(400).json({"error": {"code": e.code, "type": "duplicate_email"}})
-            } else {
-                res.status(400).json({"error": e});
-            }
+                res.status(400).json({"error": "Invalid username or password"});
         }
     }
 }

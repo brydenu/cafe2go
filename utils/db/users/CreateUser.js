@@ -27,7 +27,10 @@ export default async function CreateUser(user) {
     return response.rows[0];
   } else {
     // Supabase code
-    const { data, error } = await supabase.from("users").insert(user, { returning: "minimal" });
+    const { password } = user;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user["password"] = hashedPassword;
+    const { data, error } = await supabase.from("users").insert(user).select('user_id');
 
     if (error) {
       // Handle the error
