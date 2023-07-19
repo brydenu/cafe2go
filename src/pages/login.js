@@ -56,8 +56,8 @@ export default function Login() {
                 <Image 
                     priority
                     src="/images/BS-Symbol-BS-Master-TM.svg"
-                    height={75}
-                    width={75}
+                    height={60}
+                    width={60}
                     alt="Biolife Solutions logo"
                 />
                 <h1 className="mx-4 font-bold text-primary text-4xl">Biolife Cafe</h1>
@@ -69,7 +69,7 @@ export default function Login() {
                     <FormikInput name="email" id="email" label="Email" formik={formik} />
                     <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
                 <div className="w-full flex flex-col-reverse gap-2 sm:gap-0 sm:flex-row justify-between items-center">
-                    <Link href="/register" as="p" className="text-xs text-secondary underline">Create your account</Link>
+                    <Link href="/register" className="text-xs text-secondary underline">Create your account</Link>
                     <p className="text-red-700 text-sm">{showError && "Invalid email or password"}</p>
                     <button disabled={isSubmitting ? true : false} className="w-40 bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         {isSubmitting ? 

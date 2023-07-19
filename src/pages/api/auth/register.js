@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     res.status(200).json({ token });
   } catch (e) {
     if (e.code === "23505") {
-        res.status(400).json({"error": {"code": e.code, "type": "duplicate_email"}})
+        res.status(409).json({"error": {"code": e.code, "type": "duplicate_email"}})
     } else {
         res.status(400).json({"error": e});
     }

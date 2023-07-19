@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "components/Header";
@@ -12,7 +11,6 @@ export default function Dashboard(){
     const [user, setUser] = useState({});
     const router = useRouter();
     
-    const pword = "lEAF2897!";
     useEffect(() => {
         const token = localStorage.getItem("token");
         

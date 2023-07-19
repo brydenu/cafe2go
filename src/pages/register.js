@@ -6,9 +6,11 @@ import { useState, useEffect } from 'react';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
     const router = useRouter();
 
   const formik = useFormik({
@@ -28,6 +30,7 @@ export default function Register() {
         setIsSubmitting(true);
         try {
             const response = await axios.post("/api/auth/register", values);
+
             console.log("response:", response);
             if (response.status === 200) {
                 const data = response.data;
@@ -37,7 +40,12 @@ export default function Register() {
                 router.push("/dashboard");
             }
         } catch (e) {
-            console.error("Error creating user. Error:", e);
+            if (e.response.status === 409) {
+                setErrorMessage("Account with that email already exists");
+                setIsSubmitting(false);
+            } else {
+                setErrorMessage("Error creating account. Please try again later.")
+            }
         }
       }
     });
@@ -51,9 +59,16 @@ export default function Register() {
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
-        <div className="bg-primary pt-3 sm:rounded w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
-            <div className="mb-4">
-                <h1 className="text-4xl text-white font-bold mx-10">Register</h1>
+        <div className="pt-3 sm:rounded w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
+            <div className="flex flex-row items-center justify-center gap-5">
+                <Image 
+                    priority
+                    src="/images/BS-Symbol-BS-Master-TM.svg"
+                    height={45}
+                    width={45}
+                    alt="Biolife Solutions logo"
+                />
+                <h1 className="text-4xl text-primary font-bold my-5">Register</h1>
             </div>
             <form 
                 className="flex flex-col bg-white gap-2 pt-4 items-center"
@@ -63,8 +78,10 @@ export default function Register() {
                 <FormikInput name="last_name" id="last_name" label="Last Name" formik={formik} />
                 <FormikInput name="email" id="email" label="Email" formik={formik} />
                 <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
-                <div className="w-full bg-primary flex justify-end py-2 rounded-b">                    
-                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4 mr-10">
+                <div className="w-full flex justify-between py-2 rounded-b px-10 pb-5">                    
+                    <Link href="/login" className="text-sm text-secondary underline mt-2">Already have an account? Login</Link>
+                    <p className="text-red-700 font-sm">{!!errorMessage && errorMessage}</p>
+                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4">
                         {isSubmitting ? 
                             (<LoadingSpinner size="6" color="white" />)
                             :
@@ -74,7 +91,6 @@ export default function Register() {
                 </div>
             </form>
         </div>
-        <Link href="/login" className="text-sm text-secondary underline mt-2">Already have an account? Login</Link>
     </main>
   );
 }
