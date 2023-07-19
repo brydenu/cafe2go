@@ -11,7 +11,6 @@ export default async function getCurrentDrinkCustomizations(menu_id) {
         WHERE mc.menu_id = ${menu_id};
     `);
     const customizations = response.rows;
-    console.log("customizations from dev:", customizations);
     return customizations;
   } else {
     // Supabase code
@@ -24,8 +23,7 @@ export default async function getCurrentDrinkCustomizations(menu_id) {
       // Handle the error
     }
     const customizations = data.map((item) => item.customizations);
-    console.log("customizations from prod", customizations);
 
-    return data.map((item) => item.customizations);
+    return customizations;
   }
 }

@@ -1,19 +1,9 @@
-import { pool } from "db/db";
-import createDrinkLabel from "utils/createDrinkLabel";
+import getInProgressOrders from "utils/db/orders/getInProgressOrders";
 
 export default async function handler(req, res) {
     if (req.method === "GET") {
         try {
-            let response = await pool.query(`
-                SELECT * FROM orders
-                WHERE in_progress = true
-            `)
-            const ordersRes = response.rows;
-            let orders = [];
-            for (let order of ordersRes) {
-                const label = await createDrinkLabel(order);
-                orders.push(label);
-            }
+            const orders = await getInProgressOrders();
             res.status(200).json({orders});
         } catch (error) {
             console.error(error);

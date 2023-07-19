@@ -1,14 +1,10 @@
-import { pool } from "db/db"
+import getIngredientsByType from "utils/db/ingredients/getIngredientsByType";
 
 export default async function handler(req, res) {
     if (req.method === "GET") {
         try {
             const { ingredient_type } = req.query;
-            let response = await pool.query(`
-                SELECT * FROM ingredients
-                WHERE type = '${ingredient_type}'    
-            `);
-            let ingredientOptions = response.rows;
+            const ingredientOptions = await getIngredientsByType(ingredient_type);
             res.status(200).json({ ingredientOptions });
           } catch (error) {
             console.error(error);
