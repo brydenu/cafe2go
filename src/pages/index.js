@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import validateToken from 'utils/auth/validateToken';
 
 export default function Home() {
   const router = useRouter();
@@ -13,9 +14,11 @@ export default function Home() {
     if (token) {
         const validate = async () => {
             try {
-                await validateToken(token);
-                router.push("/dashboard");
-            } catch (e) {
+                const res = await validateToken(token);
+                if (res.message === "valid_token") {
+                  router.push("/dashboard");
+                }
+              } catch (e) {
                 localStorage.clear();
             }
         }
