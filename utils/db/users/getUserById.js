@@ -4,7 +4,6 @@ export default async function getUserById(id) {
   const environment = process.env.ENVIRONMENT;
   console.log("environment:", environment);
   if (process.env.ENVIRONMENT === "dev") {
-    console.log("hello world")
 
     // Original code
     const res = await pool.query(`

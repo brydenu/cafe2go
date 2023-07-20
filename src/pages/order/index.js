@@ -7,9 +7,9 @@ import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
 import CustomTempOption from "components/CustomTempOption";
-import LoadingSpinner from "components/LoadingSpinner";
 import getLoggedInUser from "utils/getLoggedInUser";
 import fetchMenu from "utils/fetchMenu";
+import { ClipLoader, SyncLoader } from "react-spinners";
 
 export default function Order() {
   const [user, setUser] = useState({});
@@ -129,7 +129,7 @@ export default function Order() {
               <button type="button" value="tea" className={bevType === "tea" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Tea</button>
               <button type="button" value="other" className={bevType === "other" ? selectedOption : unselectedOption} onClick={handleChangeTab}>Other</button>
             </div>
-            <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">
+            <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">{ menu.length > 0 ? (<>
               <DrinkOption bevType={bevType} selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} menu={menu} updateDrink={updateDrink} />
               <hr />
               {selectedDrink?.menu_id !== 10 &&
@@ -142,10 +142,17 @@ export default function Order() {
                 <FormCheckbox customization={{"customization_label": "Decaf", "customization_name": "decaf"}} updateDrink={updateDrink} selectedDrink={selectedDrink} />
               )}
               <OrderCustomization customizations={currentDrinkCustomizations} updateDrink={updateDrink} selectedDrink={selectedDrink} bevType={bevType} />
-            </form>
-            <button className="w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle" onClick={handleSubmit}>
+              
+              </>)
+              :
+              <div className="self-center py-10">
+                <SyncLoader color="#32A5DC" size={12} loading={true} aria-label="Loading Spinner"  />
+              </div>
+              }
+              </form>
+            <button className={`w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle ${isSubmitting && "bg-gray-400 hover:bg-gray-400 hover:cursor-default"}`} onClick={handleSubmit} disabled={isSubmitting}>
               {isSubmitting ? 
-              (<LoadingSpinner size="6" color="white" />)
+              (<ClipLoader color="#ffffff" size={16} loading={true} aria-label="Loading Spinner" />)
               :
               (
                 "Submit Order"

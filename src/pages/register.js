@@ -3,10 +3,10 @@ import axios from 'axios';
 import * as yup from 'yup';
 import FormikInput from 'components/FormikInput';
 import { useState, useEffect } from 'react';
-import LoadingSpinner from 'components/LoadingSpinner';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ClipLoader } from 'react-spinners';
 
 export default function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +83,7 @@ export default function Register() {
                     <p className="text-red-700 font-sm">{!!errorMessage && errorMessage}</p>
                     <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4">
                         {isSubmitting ? 
-                            (<LoadingSpinner size="6" color="white" />)
+                            (<ClipLoader color="#ffffff" size={16} loading={true} aria-label="Loading Spinner" />)
                             :
                             "Submit"
                         }

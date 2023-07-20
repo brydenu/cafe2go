@@ -6,6 +6,7 @@ import DashboardOption from "components/DashboardOption";
 import getLoggedInUser from "utils/getLoggedInUser";
 import validateToken from "utils/auth/validateToken";
 import DashboardDrinkTracker from "components/DashboardDrinkTracker";
+import AuthWrapper from "components/AuthWrapper";
 
 export default function Dashboard(){
     const [user, setUser] = useState({});
@@ -29,7 +30,6 @@ export default function Dashboard(){
         const getUser = async () => {
             const res = await getLoggedInUser(token);
             const loggedInUser = res.user.data;
-            console.log("loggedInUSer", loggedInUser);
             setUser(loggedInUser);
         }
         validate();
@@ -37,9 +37,7 @@ export default function Dashboard(){
     },[])
 
     return (
-        <>
-            <Header />
-            <Navbar user={user} />
+        <AuthWrapper>
             <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200" style={{margin: 0, padding: 0}}>
                 <div className="flex flex-col sm:flex-row w-full sm:w-fit mx-2 sm:mx-0">
                     <DashboardOption title="Order a Drink" destination="/order" bgColor="primary" bgHover="secondary" />
@@ -54,6 +52,6 @@ export default function Dashboard(){
                     )
                 }
             </main>
-        </>
+        </AuthWrapper>
     )
 }

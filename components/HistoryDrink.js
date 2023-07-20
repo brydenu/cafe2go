@@ -1,6 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { useState } from "react"
-import LoadingSpinner from "./LoadingSpinner";
 
 export default function HistoryDrink({ drink }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -91,9 +90,9 @@ export default function HistoryDrink({ drink }) {
                     )
                     :
                     (
-                        <div className="w-full flex justify-center mb-5">
-                        <LoadingSpinner size="16" color="secondary" otherClasses="my-6" />
-                    </div>
+                      <div className="py-5">
+                        <BeatLoader color="#32A5DC" size={12} loading={true} aria-label="Loading Spinner"  />
+                      </div>
                     )
                 }
                   </div>

@@ -5,9 +5,9 @@ import axios from 'axios';
 import FormikInput from 'components/FormikInput';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import LoadingSpinner from 'components/LoadingSpinner';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { ClipLoader } from 'react-spinners';
 
 export default function Login() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,7 +73,7 @@ export default function Login() {
                     <p className="text-red-700 text-sm">{showError && "Invalid email or password"}</p>
                     <button disabled={isSubmitting ? true : false} className="w-40 bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         {isSubmitting ? 
-                            (<LoadingSpinner size="6" color="white" />)
+                            <ClipLoader color="#ffffff" size={16} loading={true} aria-label="Loading Spinner" />
                             :
                             "Sign in"
                         }

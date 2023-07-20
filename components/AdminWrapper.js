@@ -22,16 +22,17 @@ export default function AdminWrapper({ children }) {
             if (!isAdmin) {
                 router.push("/dashboard");
             } else {
+                console.log("is Admin!");
                 setAdminVerified(true);
             }
         }
 
         getAndAuthorizeUser();
-    })
+    }, []);
 
     return (
         <>
-        <Header />
+        <Header title="Order Queue" />
         <Navbar user={user} />
         { adminVerified && children }
         </>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import AdminWrapper from "components/AdminWrapper";
 import Header from "components/Header";
 import QueueCard from "components/QueueCard";
+import fetchInProgressOrders from "utils/fetchInProgressOrders";
 
 export default function Queue() {
   const [orders, setOrders] = useState([]);
@@ -10,8 +11,7 @@ export default function Queue() {
   const fetchOrders = async () => {
     try {
       // Fetch orders data from the server
-      const response = await axios.get('/api/orders/inProgressOrders');
-      const { orders } = response.data;
+      const orders = await fetchInProgressOrders();
       console.log("orders:", orders);
       setOrders(orders);
     } catch (error) {

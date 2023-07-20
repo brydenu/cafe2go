@@ -4,10 +4,12 @@ import Header from "./Header";
 import Navbar from "./Navbar";
 import getLoggedInUser from "utils/getLoggedInUser";
 import validateToken from "utils/auth/validateToken";
+import validateAdmin from "utils/auth/validateAdmin";
 
 
 export default function AuthWrapper({ children }) {
     const [user, setUser] = useState({});
+    const [admin, setAdmin] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -28,8 +30,12 @@ export default function AuthWrapper({ children }) {
         const getUser = async () => {
             const res = await getLoggedInUser(token);
             const loggedInUser = res.user.data;
-            console.log("loggedInUSer", loggedInUser);
             setUser(loggedInUser);
+            const isAdmin = await validateAdmin(token);
+            if (isAdmin) {
+                console.log("is Admin!");
+                setAdmin(true);
+            }
         }
         validate();
         getUser();
@@ -38,7 +44,7 @@ export default function AuthWrapper({ children }) {
     return (
         <div className="mt-16">
             <Header />
-            <Navbar user={user} />
+            <Navbar user={user} admin={admin}/>
             { children }
         </div>
     )

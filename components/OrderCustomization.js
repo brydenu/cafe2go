@@ -1,5 +1,5 @@
+import { BeatLoader } from "react-spinners";
 import IngredientOption from "./IngredientOption";
-import LoadingSpinner from "./LoadingSpinner";
 import SyrupCustomization from "./SyrupCustomization";
 
 export default function OrderCustomization({ customizations, updateDrink, selectedDrink, bevType, addShots }) {
@@ -24,9 +24,11 @@ export default function OrderCustomization({ customizations, updateDrink, select
     return (
         <div className="w-full flex flex-col w-full bg-white justify-center items-center mb-2">
             { !(customizations.length > 0) ? 
-            (<>
-                <LoadingSpinner size="8" color="secondary" otherClasses="m-10" />
-            </>)
+            (
+                <div className="py-5">
+                    <BeatLoader color="#32A5DC" size={12} loading={true} aria-label="Loading Spinner"  />
+                </div>
+            )
             : (<>{(bevType === "coffee" || addShots === true) && (
                 <IngredientOption customization={shotsCustomization} updateDrink={updateDrink} selectedDrink={selectedDrink} zIndex={100} />
                 ) 

@@ -1,9 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { useState } from "react"
-import LoadingSpinner from "./LoadingSpinner";
+import { BeatLoader } from "react-spinners";
 
 export default function DashboardDrinkTracker({ drink }) {
     const [isOpen, setIsOpen] = useState(false);
+
+    console.log("drink", drink)
 
     const openDrinkModal = () => {
         setIsOpen(true);
@@ -77,8 +79,8 @@ export default function DashboardDrinkTracker({ drink }) {
                     )
                     :
                     (
-                        <div className="w-full flex justify-center mb-5">
-                        <LoadingSpinner size="16" color="secondary" otherClasses="my-6" />
+                    <div className="w-full flex justify-center mb-5">
+                        <BeatLoader color="#32A5DC" loading={true} aria-label="Loading Spinner" size={16} />
                     </div>
                     )
                 }

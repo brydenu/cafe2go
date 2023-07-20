@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Header from "components/Header"
-import LoadingSpinner from "components/LoadingSpinner";
+import { BeatLoader } from "react-spinners";
 
 export default function Status() {
     const [order, setOrder] = useState({});
@@ -57,7 +57,7 @@ export default function Status() {
                     :
                     (
                     <div className="w-full flex justify-center mb-5">
-                        <LoadingSpinner size="16" color="secondary" otherClasses="my-6" />
+                        <BeatLoader color="#32A5DC" size={12} loading={true} aria-label="Loading Spinner" />
                     </div>)
                     }
                 </div>
