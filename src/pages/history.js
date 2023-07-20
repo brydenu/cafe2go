@@ -15,7 +15,6 @@ export default function History() {
         const token = localStorage.getItem("token");
         const getOrders = async () => {
             const res = await getUserHistory(token);
-            console.log("res", res);
             setOrders(res);
         }
         getOrders();

@@ -31,12 +31,10 @@ export default function Register() {
         try {
             const response = await axios.post("/api/auth/register", values);
 
-            console.log("response:", response);
             if (response.status === 200) {
                 const data = response.data;
                 const { token } = data;
                 localStorage.setItem('token', token);
-                console.log("good");
                 router.push("/dashboard");
             }
         } catch (e) {
@@ -71,7 +69,7 @@ export default function Register() {
                 <h1 className="text-4xl text-primary font-bold my-5">Register</h1>
             </div>
             <form 
-                className="flex flex-col bg-white gap-2 pt-4 items-center"
+                className="flex flex-col bg-white gap-2 pt-4 items-center sm:rounded shadow-md"
                 onSubmit={formik.handleSubmit}
             >
                 <FormikInput name="first_name" id="first_name" label="First Name" formik={formik} />

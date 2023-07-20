@@ -12,7 +12,6 @@ export default function Queue() {
     try {
       // Fetch orders data from the server
       const orders = await fetchInProgressOrders();
-      console.log("orders:", orders);
       setOrders(orders);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -45,8 +44,11 @@ export default function Queue() {
   return (
     <AdminWrapper>
       <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
-        <h1 className="text-5xl font-bold my-8">Queue</h1>
+        <h1 className="text-5xl font-bold mb-8 mt-20">Queue</h1>
         <div className="w-full flex flex-wrap">
+          {orders.length < 1 && (
+            <p className="w-full text-center text-md">No orders in queue.</p>
+          )}
           {orders.map((order, idx) => (
               <QueueCard key={order.id} orderArrayIdx={idx} order={order} finishOrder={finishOrder} />
           ))}

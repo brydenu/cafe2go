@@ -23,7 +23,6 @@ export default async function CreateUser(user) {
 
     const response = await pool.query(query);
 
-    console.log("response:", response);
     return response.rows[0];
   } else {
     // Supabase code

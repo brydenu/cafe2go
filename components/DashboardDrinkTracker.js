@@ -5,8 +5,6 @@ import { BeatLoader } from "react-spinners";
 export default function DashboardDrinkTracker({ drink }) {
     const [isOpen, setIsOpen] = useState(false);
 
-    console.log("drink", drink)
-
     const openDrinkModal = () => {
         setIsOpen(true);
     }

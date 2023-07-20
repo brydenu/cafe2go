@@ -11,12 +11,10 @@ export default function Status() {
     const { order_id } = router.query;
     
 
-    console.log("orderid", order_id)
     useEffect(() => {
         const getOrder = async () => {
             if (order_id) {
                 const res = await axios.get(`/api/orders?order_id=${order_id}`);
-                console.log("res.data:", res.data.order);
                 setOrder(res.data.order);
             }
         }

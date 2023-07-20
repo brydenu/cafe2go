@@ -19,7 +19,6 @@ export default async function handler(req, res) {
         const decoded = decodeToken(token);
   
         // Retrieve user data based on the user identifier
-        console.log("hit /users endpoint.")
         const user = await getUserById(decoded.sub);
         const userCurrentOrder = await getUserCurrentOrder(user.user_id);
         if (!!userCurrentOrder) {

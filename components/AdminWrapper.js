@@ -18,11 +18,10 @@ export default function AdminWrapper({ children }) {
         const getAndAuthorizeUser = async () => {
             const loggedInUser = await getLoggedInUser(token);
             const isAdmin = await validateAdmin(token);
-            setUser(loggedInUser);
+            setUser(loggedInUser.user.data);
             if (!isAdmin) {
                 router.push("/dashboard");
             } else {
-                console.log("is Admin!");
                 setAdminVerified(true);
             }
         }
@@ -33,7 +32,7 @@ export default function AdminWrapper({ children }) {
     return (
         <>
         <Header title="Order Queue" />
-        <Navbar user={user} />
+        <Navbar user={user} admin={adminVerified} />
         { adminVerified && children }
         </>
     )

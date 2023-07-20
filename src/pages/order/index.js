@@ -117,7 +117,6 @@ export default function Order() {
     }
   }
 
-  console.log("selectedCustomizations", selectedCustomizations);
   return (
       <AuthWrapper>
         <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">

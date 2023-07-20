@@ -10,7 +10,6 @@ export default async function getUserById(id) {
       SELECT user_id, first_name, last_name, email, phone_number
       FROM users
       WHERE user_id = ${id}`);
-      console.log("res", res)
       
     const user = res.rows[0];
     return user;

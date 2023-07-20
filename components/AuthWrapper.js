@@ -33,7 +33,6 @@ export default function AuthWrapper({ children }) {
             setUser(loggedInUser);
             const isAdmin = await validateAdmin(token);
             if (isAdmin) {
-                console.log("is Admin!");
                 setAdmin(true);
             }
         }

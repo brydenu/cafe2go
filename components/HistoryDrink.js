@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { useState } from "react"
+import { BeatLoader } from "react-spinners";
 
 export default function HistoryDrink({ drink }) {
     const [isOpen, setIsOpen] = useState(false);

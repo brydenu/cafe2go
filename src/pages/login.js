@@ -25,7 +25,6 @@ export default function Login() {
         }),
         onSubmit: async (values) => {
             setIsSubmitting(true);
-            console.log("submitted. values:", values)
             try {
                 const response = await axios.post("/api/auth", values);
                 if (response.status === 200) {

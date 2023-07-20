@@ -14,14 +14,12 @@ export default async function CreateNewOrder(drinkData) {
     };
 
     const response = await pool.query(query);
-    console.log("response.rows[0]:", response.rows[0]);
     return response.rows[0];
   } else {
     // Supabase code
     const orderObject = buildOrderObject(drinkData);
     // console.log("drinkData.drink:", drinkData.drink);
     const { data, error } = await supabase.from("orders").insert(orderObject);
-      console.log("dataaa", data);
     if (error) {
       // Handle the error
     }

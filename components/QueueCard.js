@@ -20,8 +20,6 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder}) {
         }, 500);
     }
 
-    console.log("qc order", order)
-
     return (
         <div key={order.id} className={`bg-white border m-2 rounded border-primary w-1/4 flex flex-col justify-start duration-500 ${isMouseDown ? " duration-300 translate-y-2" : ""} ${isClicked ? "-translate-y-8 opacity-0": ""}`}>
             <section className="bg-primary w-full p-3">
