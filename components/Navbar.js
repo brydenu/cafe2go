@@ -32,12 +32,12 @@ export default function Navbar({ user, admin }){
                     alt="Biolife Solutions logo"
                     className="hover:cursor-pointer"
                 />
-                <p className="font-bold text-primary text-3xl hover:cursor-pointer">Biolife Cafe{admin && " Admin"}</p>
+                <p className="font-bold text-primary text-md text-center sm:text-3xl hover:cursor-pointer">Biolife Cafe{admin && " Admin"}</p>
             </div>
             {admin && (
-                <p className="hover:cursor-pointer text-white text-xl font-bold" onClick={handleGoToQueue}>Queue</p>
+                <p className="hover:cursor-pointer text-white text-md sm:text-xl font-bold ml-2" onClick={handleGoToQueue}>Queue</p>
             )}
-            <div className="flex flex-col justify-center items-center mr-4 text-sm text-center sm:text-md grow sm:grow-0">
+            <div className="flex flex-col justify-center items-center mr-4 text-sm text-center text-xs sm:text-md grow sm:grow-0">
                 <p className="text-white">{user?.first_name} {user?.last_name}</p>
                 <p 
                     className="hover:cursor-pointer text-secondary underline text-xs"

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-export default function Header({ title="BLFS Cafe" }) {
+export default function Header({ title="Biolife Cafe" }) {
     return (
         <Head>
             <title>{title}</title>
