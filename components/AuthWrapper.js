@@ -41,7 +41,7 @@ export default function AuthWrapper({ children }) {
     },[])
 
     return (
-        <div className="mt-16">
+        <div className="mt-16 min-h-screen">
             <Header />
             <Navbar user={user} admin={admin}/>
             { children }

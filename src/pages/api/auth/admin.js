@@ -1,4 +1,4 @@
-import checkAdmin from "utils/auth/checkAdmin";
+import checkAdmin from "utils/db/users/checkAdmin";
 
 export default async function handler(req, res) {
     if (req.method !== "GET") {

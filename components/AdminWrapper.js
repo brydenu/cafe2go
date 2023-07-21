@@ -30,11 +30,11 @@ export default function AdminWrapper({ children }) {
     }, []);
 
     return (
-        <>
-        <Header title="Order Queue" />
-        <Navbar user={user} admin={adminVerified} />
-        { adminVerified && children }
-        </>
+        <div className="mt-16 min-h-screen">
+            <Header title="Order Queue" />
+            <Navbar user={user} admin={adminVerified} />
+            { adminVerified && children }
+        </div>
     )
 
     
