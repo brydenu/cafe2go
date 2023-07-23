@@ -22,3 +22,15 @@ Web app to create an easy ordering system for internal coffee orders at Biolife 
 - **Guest ordering**
   
   Index should add a new button for guests to order - that is, order without registering for an account. This ordering system should add a new option on the order screen for guest name.
+
+- **Personal cup option in order**
+
+  Add a checkbox in the user ordering system for personal cup
+
+- **Schedule an order**
+
+  Users should be able to put an order in that should be made at a specific time. This could possibly lead to a second row in the queue; one row for the current queue and one row for scheduled/upcoming orders
+
+- **Order completion estimate**
+
+  After ordering, users get a estimated time the order will be completed, based on how many orders are ahead of the user. Could also be let known when the user's drink is being worked on, i.e. the user is at the front of the queue.

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -38,13 +39,20 @@ export default function Navbar({ user, admin }){
                 <p className="hover:cursor-pointer text-white text-md sm:text-xl font-bold ml-2" onClick={handleGoToQueue}>Queue</p>
             )}
             <div className="flex flex-col justify-center items-center mr-4 text-sm text-center text-xs sm:text-md grow sm:grow-0">
-                <p className="text-white">{user?.first_name} {user?.last_name}</p>
-                <p 
-                    className="hover:cursor-pointer text-secondary underline text-xs"
-                    onClick={handleLogout}
-                >
-                Logout
-                </p>
+                {!!user ? (<>
+                    <p className="text-white">{user?.first_name} {user?.last_name}</p>
+                    <p 
+                        className="hover:cursor-pointer text-secondary underline text-xs"
+                        onClick={handleLogout}
+                        >
+                    Logout
+                    </p>
+                </>)
+                :
+                <>
+                    <p className="text-white"><Link href="/login" className="underline">Login</Link> or <Link href="/register" className="underline">Register</Link></p>
+                </>
+                }
             </div>
         </nav>
     )
