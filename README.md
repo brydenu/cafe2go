@@ -8,6 +8,7 @@ Web app to create an easy ordering system for internal coffee orders at Biolife 
 ## List of known bugs
 - Temperature option (extra hot, light ice) doesn't work.
 - DashboardDrinkTracker component doesn't render
+- Time in db is +6 hours
 
 ## List of features to be added
 - **Quick order/favorites system**
