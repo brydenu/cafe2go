@@ -15,6 +15,8 @@ export default function Login() {
     const [showError, setShowError] = useState(false);
     const router = useRouter();
 
+    console.log("now!", new Date());
+
     const formik = useFormik({
         initialValues: {
             email: '',
