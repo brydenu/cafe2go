@@ -33,11 +33,11 @@ export default function Queue() {
 
   const finishOrder = async (orderArrayIdx, orderId) => {
     const res = await axios.patch('/api/orders/finish', {"id": orderId});
-    // console.log("ordres:dfadsa", orders);
+
     const newOrders = [...orders];
     newOrders.splice(orderArrayIdx, 1);
     // console.log("newORders", newOrders);
-    setOrders(newOrders);
+    setOrders([...newOrders]);
   };
 
 
