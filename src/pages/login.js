@@ -61,7 +61,7 @@ export default function Login() {
                     width={60}
                     alt="Biolife Solutions logo"
                 />
-                <h1 className="mx-4 font-bold text-primary text-4xl">Biolife Cafe</h1>
+                <h1 className="mx-4 font-bold text-primary text-4xl">Login</h1>
             </div>
             <form 
                 className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full w-full sm:w-4/5 sm:max-w-3xl flex flex-col items-center justify-center"

@@ -10,8 +10,9 @@ import CustomTempOption from "components/CustomTempOption";
 import getLoggedInUser from "utils/getLoggedInUser";
 import fetchMenu from "utils/fetchMenu";
 import { ClipLoader, SyncLoader } from "react-spinners";
+import { useSearchParams } from "next/navigation";
 
-export default function Order() {
+export default function Order({ searchParams }) {
   const [user, setUser] = useState({});
   const [bevType, setBevType] = useState("coffee");
   const [menu, setMenu] = useState([]);
@@ -30,10 +31,15 @@ export default function Order() {
 
   const router = useRouter();
 
+  console.log("searchParams:", searchParams)
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-        router.push("/login");
+      console.log("isGuest", isGuest);
+        if (!isGuest) {
+          router.push("/login");
+        }
     }
     const getUser = async () => {
         const res = await getLoggedInUser(token);
@@ -162,17 +168,3 @@ export default function Order() {
       </AuthWrapper>
   )
 }
-
-// export async function getStaticProps(context) {
-//       console.log("about to axios:")
-//       const menu = await fetchMenu();
-//       console.log("menu res from axios:", menu);
-//       // const ingredients = await getIngredients();
-//       // const customizations = await getCustomizations();
-
-//   return {
-//     props: {
-//       menu
-//     }
-//   }
-// }
