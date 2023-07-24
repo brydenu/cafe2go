@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ClipLoader } from 'react-spinners';
+import Navbar from 'components/Navbar';
 
 export default function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,6 +58,7 @@ export default function Register() {
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+        <Navbar />
         <div className="pt-3 sm:rounded w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
             <div className="flex flex-row items-center justify-center gap-5">
                 <Image 
@@ -77,9 +79,9 @@ export default function Register() {
                 <FormikInput name="email" id="email" label="Email" formik={formik} />
                 <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
                 <div className="w-full flex justify-between py-2 rounded-b px-10 pb-5">                    
-                    <Link href="/login" className="text-sm text-secondary underline mt-2">Already have an account? Login</Link>
+                    <p className="text-sm mt-2">Already have an account? <Link href="/login" className=" text-secondary underline">Login</Link></p>
                     <p className="text-red-700 font-sm">{!!errorMessage && errorMessage}</p>
-                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-5 py-2 rounded-lg w-1/4">
+                    <button type="submit" disabled={isSubmitting ? true : false} className="bg-secondary text-white px-2 py-2 rounded-lg w-1/4 text-center">
                         {isSubmitting ? 
                             (<ClipLoader color="#ffffff" size={16} loading={true} aria-label="Loading Spinner" />)
                             :

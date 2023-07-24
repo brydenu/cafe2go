@@ -34,3 +34,11 @@ Web app to create an easy ordering system for internal coffee orders at Biolife 
 - **Order completion estimate**
 
   After ordering, users get a estimated time the order will be completed, based on how many orders are ahead of the user. Could also be let known when the user's drink is being worked on, i.e. the user is at the front of the queue.
+
+- **User settings**
+
+  Users should be able to change their settings, and potentiall eventually add a phone number to allow twilio to text them.
+
+- **Cancel orders**
+
+  Users can cancel orders after ordering, removing the drink from the queue.

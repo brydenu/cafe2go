@@ -43,7 +43,7 @@ export default function Home() {
             />
             <h1 className=" text-4xl sm:text-6xl text-primary font-bold text-center">Welcome to Biolife Cafe</h1>
             </div>
-            <div className="w-full flex flex-col sm:flex-row gap-5 justify-center items-center my-5">
+            <div className="w-full flex flex-col sm:flex-row gap-5 justify-center items-center my-5 mx-3">
               <Link href="/login" className="hover:cursor-pointer hover:scale-110 duration-200 text-white text-lg bg-secondary text-center px-4 py-2 rounded w-full sm:w-1/4 shadow-md">Login</Link>
               <Link href="/register" className="hover:cursor-pointer hover:scale-110 duration-200 text-white text-lg bg-secondary text-center px-4 py-2 rounded w-full sm:w-1/4 shadow-md">Register</Link>          
             </div>

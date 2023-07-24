@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ClipLoader } from 'react-spinners';
+import Navbar from 'components/Navbar';
 
 export default function Login() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,6 +51,7 @@ export default function Login() {
     return (
         <>
         <Header />
+        <Navbar />
         <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
             <div className="w-full flex justify-center items-center my-10">
                 <Image 
@@ -62,15 +64,15 @@ export default function Login() {
                 <h1 className="mx-4 font-bold text-primary text-4xl">Biolife Cafe</h1>
             </div>
             <form 
-                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full w-full sm:w-4/5 flex flex-col items-center justify-center"
+                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full w-full sm:w-4/5 sm:max-w-3xl flex flex-col items-center justify-center"
                 onSubmit={formik.handleSubmit}    
             >
                     <FormikInput name="email" id="email" label="Email" formik={formik} />
                     <FormikInput name="password" id="password" label="Password" type="password" formik={formik} />
-                <div className="w-full flex flex-col-reverse gap-2 sm:gap-0 sm:flex-row justify-between items-center">
+                <div className="w-full flex flex-col-reverse gap-2 sm:gap-0 sm:flex-row justify-between items-center px-8">
                     <Link href="/register" className="text-xs text-secondary underline">Create your account</Link>
                     <p className="text-red-700 text-sm">{showError && "Invalid email or password"}</p>
-                    <button disabled={isSubmitting ? true : false} className="w-40 bg-secondary hover:bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    <button disabled={isSubmitting ? true : false} className="w-40 bg-secondary hover:bg-primary text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         {isSubmitting ? 
                             <ClipLoader color="#ffffff" size={16} loading={true} aria-label="Loading Spinner" />
                             :
