@@ -5,10 +5,12 @@ export default async function getMenu(menu_id) {
     // Original code
     let response;
     if (menu_id) {
-      response = await pool.query(`SELECT drink_name FROM menu WHERE menu_id = ${menu_id}`);
+      response = await pool.query(
+        `SELECT drink_name FROM menu WHERE menu_id = ${menu_id}`
+      );
       return response.rows[0];
     } else {
-      response = await pool.query('SELECT * FROM menu');
+      response = await pool.query("SELECT * FROM menu");
     }
     return response.rows;
   } else {

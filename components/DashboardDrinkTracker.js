@@ -1,37 +1,43 @@
-import { Dialog, Transition } from "@headlessui/react"
-import { useState } from "react"
+import { Dialog, Transition } from "@headlessui/react";
+import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 
 export default function DashboardDrinkTracker({ drink }) {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const openDrinkModal = () => {
-        setIsOpen(true);
-    }
-    
-    const closeDrinkModal = () => {
-        setIsOpen(false);
-    }
+  const openDrinkModal = () => {
+    setIsOpen(true);
+  };
 
-    return (
-        <>
-        <div onClick={openDrinkModal} className={`w-full sm:w-4/5 sm:h-16 fixed sm:absolute bottom-0 sm:bottom-5 sm:rounded-lg flex flex-row justify-evenly items-center text-white hover:cursor-pointer px-3 py-2 bg-${drink.inProgress ? "secondary" : "primary"}`}>
-            <div className="text-center flex flex-col sm:flex-row items-center">
-                <div className="text-center flex flex-col sm:flex-row">
-                    Latest order:
-                </div>
-                <div className="flex flex-col">
+  const closeDrinkModal = () => {
+    setIsOpen(false);
+  };
 
-                    <div className="font-bold sm:ml-1">{drink.drinkName}</div>
-                    {/* <div className="text-xs sm:ml-1">({drink.duration} ago)</div> */}
-                </div>
-            </div>
-            <div className="text-center flex flex-col sm:flex-row items-center">
-                <div>Order status:{" "}</div>
-                <div className="font-bold sm:ml-1">{drink.inProgress ? "In progress" : "Completed"}</div>
-            </div>
+  return (
+    <>
+      <div
+        onClick={openDrinkModal}
+        className={`w-full sm:w-4/5 sm:h-16 fixed sm:absolute bottom-0 sm:bottom-5 sm:rounded-lg flex flex-row justify-evenly items-center text-white hover:cursor-pointer px-3 py-2 bg-${
+          drink.inProgress ? "secondary" : "primary"
+        }`}
+      >
+        <div className="text-center flex flex-col sm:flex-row items-center">
+          <div className="text-center flex flex-col sm:flex-row">
+            Latest order:
+          </div>
+          <div className="flex flex-col">
+            <div className="font-bold sm:ml-1">{drink.drinkName}</div>
+            {/* <div className="text-xs sm:ml-1">({drink.duration} ago)</div> */}
+          </div>
         </div>
-        <Transition appear show={isOpen} as="div">
+        <div className="text-center flex flex-col sm:flex-row items-center">
+          <div>Order status: </div>
+          <div className="font-bold sm:ml-1">
+            {drink.inProgress ? "In progress" : "Completed"}
+          </div>
+        </div>
+      </div>
+      <Transition appear show={isOpen} as="div">
         <Dialog as="div" className="relative z-10" onClose={closeDrinkModal}>
           <Transition.Child
             as="div"
@@ -57,31 +63,41 @@ export default function DashboardDrinkTracker({ drink }) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl pt-6 pb-3 text-left align-middle shadow-xl transition-all bg-secondary">
-                  <Dialog.Title
-                    className="leading-6 text-white px-10 pb-4 text-center"
-                  >
+                  <Dialog.Title className="leading-6 text-white px-10 pb-4 text-center">
                     <p className="text-2xl">
-                    Order status: {" "}
-                    <span className="font-bold">{drink.inProgress ? "In progress" : "Completed"}</span>
+                      Order status:{" "}
+                      <span className="font-bold">
+                        {drink.inProgress ? "In progress" : "Completed"}
+                      </span>
                     </p>
-                    <p className="text-sm text-white">Ordered received at {drink.info.orderTime} ({drink.info.orderDuration} ago)</p>
+                    <p className="text-sm text-white">
+                      Ordered received at {drink.info.orderTime} (
+                      {drink.info.orderDuration} ago)
+                    </p>
                   </Dialog.Title>
                   <div className="bg-white px-10 py-4 text-center">
                     <h3 className="font-bold text-xl">{drink.drinkName}</h3>
                     {!!drink.customizations ? (
-                        <ul>
-                            {drink.customizations.map((customization) => (
-                                <li key={`${drink.id}-${customization}`} className="text-md">{customization}</li>
-                            ))}
-                        </ul>
-                    )
-                    :
-                    (
-                    <div className="w-full flex justify-center mb-5">
-                        <BeatLoader color="#32A5DC" loading={true} aria-label="Loading Spinner" size={16} />
-                    </div>
-                    )
-                }
+                      <ul>
+                        {drink.customizations.map((customization) => (
+                          <li
+                            key={`${drink.id}-${customization}`}
+                            className="text-md"
+                          >
+                            {customization}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="w-full flex justify-center mb-5">
+                        <BeatLoader
+                          color="#32A5DC"
+                          loading={true}
+                          aria-label="Loading Spinner"
+                          size={16}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-4 w-full flex justify-center bg-secondary">
@@ -99,6 +115,6 @@ export default function DashboardDrinkTracker({ drink }) {
           </div>
         </Dialog>
       </Transition>
-        </>
-    )
+    </>
+  );
 }

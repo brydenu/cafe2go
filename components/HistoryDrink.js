@@ -1,45 +1,60 @@
-import { Dialog, Transition } from "@headlessui/react"
-import { useState } from "react"
+import { Dialog, Transition } from "@headlessui/react";
+import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 
 export default function HistoryDrink({ drink }) {
-    const [isOpen, setIsOpen] = useState(false);
-    
-    const {  customerName, customizations, inProgress, drinkName, info } = drink;
-    const { orderedToday, orderTime, orderDate, orderDuration, completedTime, completedDate, completedDuration } = info;
+  const [isOpen, setIsOpen] = useState(false);
 
-    const openDrinkModal = () => {
-        setIsOpen(true);
-    }
-    
-    const closeDrinkModal = () => {
-        setIsOpen(false);
-    }
+  const { customerName, customizations, inProgress, drinkName, info } = drink;
+  const {
+    orderedToday,
+    orderTime,
+    orderDate,
+    orderDuration,
+    completedTime,
+    completedDate,
+    completedDuration,
+  } = info;
 
-    return (
-        <>
-        <div onClick={openDrinkModal} className="w-full h-20 border border-primary flex flex-row justify-between items-center bg-white hover:cursor-pointer px-3 py-2">
-            <div className="font-bold text-xl">{drink.drinkName}</div>
-            <div className="text-md text-primary">
-                {inProgress ? 
-                (<div className="flex flex-col sm:flex-row gap-1 items-center justify-end">
-                  <div>Ordered:</div>
-                  <div className="flex flex-row gap-1 items-center justify-end">
-                    <span className="font-bold">{orderedToday ? orderTime : orderDate}</span>
-                    <span className="text-sm">({orderDuration} ago)</span>
-                  </div>
-                </div>)
-                :
-                (<div className="flex flex-col sm:flex-row gap-1 items-center justify-end">
-                  <div>Completed:</div>
-                  <div className="flex flex-row gap-1 items-center justify-end">
-                    <span className="font-bold">{orderedToday ? completedTime : completedDate}</span>
-                  </div>
-                </div>)
-                }
+  const openDrinkModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeDrinkModal = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <>
+      <div
+        onClick={openDrinkModal}
+        className="w-full h-20 border border-primary flex flex-row justify-between items-center bg-white hover:cursor-pointer px-3 py-2"
+      >
+        <div className="font-bold text-xl">{drink.drinkName}</div>
+        <div className="text-md text-primary">
+          {inProgress ? (
+            <div className="flex flex-col sm:flex-row gap-1 items-center justify-end">
+              <div>Ordered:</div>
+              <div className="flex flex-row gap-1 items-center justify-end">
+                <span className="font-bold">
+                  {orderedToday ? orderTime : orderDate}
+                </span>
+                <span className="text-sm">({orderDuration} ago)</span>
+              </div>
             </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row gap-1 items-center justify-end">
+              <div>Completed:</div>
+              <div className="flex flex-row gap-1 items-center justify-end">
+                <span className="font-bold">
+                  {orderedToday ? completedTime : completedDate}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
-        <Transition appear show={isOpen} as="div">
+      </div>
+      <Transition appear show={isOpen} as="div">
         <Dialog as="div" className="relative z-10" onClose={closeDrinkModal}>
           <Transition.Child
             as="div"
@@ -65,37 +80,47 @@ export default function HistoryDrink({ drink }) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl pt-6 pb-3 text-left align-middle shadow-xl transition-all bg-primary">
-                  <Dialog.Title
-                    className="leading-6 text-white px-10 pb-4 text-center"
-                  >
+                  <Dialog.Title className="leading-6 text-white px-10 pb-4 text-center">
                     <p className="text-2xl">
-                    Order status: {" "}
-                    <span className="font-bold">{inProgress ? "In progress" : "Completed"}</span>
+                      Order status:{" "}
+                      <span className="font-bold">
+                        {inProgress ? "In progress" : "Completed"}
+                      </span>
                     </p>
-                    
                   </Dialog.Title>
                   <div className="bg-white px-10 py-4 text-center">
                     <div className="mb-3">
-                      <p className="text-xs italic">Ordered {orderDate} at {orderTime}</p>
+                      <p className="text-xs italic">
+                        Ordered {orderDate} at {orderTime}
+                      </p>
                       {!inProgress && (
-                        <p className="text-xs italic">Completed {completedDate} at {completedTime}</p>
-                        )}
+                        <p className="text-xs italic">
+                          Completed {completedDate} at {completedTime}
+                        </p>
+                      )}
                     </div>
-                      <h3 className="font-bold text-xl">{drinkName}</h3>
+                    <h3 className="font-bold text-xl">{drinkName}</h3>
                     {!!customizations ? (
-                        <ul>
-                            {customizations.map((customization) => (
-                                <li key={`${drink.id}-${customization}`} className="text-md">{customization}</li>
-                            ))}
-                        </ul>
-                    )
-                    :
-                    (
+                      <ul>
+                        {customizations.map((customization) => (
+                          <li
+                            key={`${drink.id}-${customization}`}
+                            className="text-md"
+                          >
+                            {customization}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
                       <div className="py-5">
-                        <BeatLoader color="#32A5DC" size={12} loading={true} aria-label="Loading Spinner"  />
+                        <BeatLoader
+                          color="#32A5DC"
+                          size={12}
+                          loading={true}
+                          aria-label="Loading Spinner"
+                        />
                       </div>
-                    )
-                }
+                    )}
                   </div>
 
                   <div className="mt-4 w-full flex justify-center bg-primary">
@@ -113,6 +138,6 @@ export default function HistoryDrink({ drink }) {
           </div>
         </Dialog>
       </Transition>
-        </>
-    )
+    </>
+  );
 }

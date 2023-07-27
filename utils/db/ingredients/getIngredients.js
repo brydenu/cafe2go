@@ -3,18 +3,28 @@ import { pool, supabase } from "db/db";
 export default async function getIngredients() {
   if (process.env.ENVIRONMENT === "dev") {
     // Original code
-    const milks = await pool.query("SELECT * FROM ingredients WHERE type = 'milk'");
-    const syrups = await pool.query("SELECT * FROM ingredients WHERE type = 'syrup'");
-    const toppings = await pool.query("SELECT * FROM ingredients WHERE type = 'topping'");
-    const teas = await pool.query("SELECT * FROM ingredients WHERE type = 'tea'");
-    const packetSweeteners = await pool.query("SELECT * FROM ingredients WHERE type = 'packet_sweetener'");
+    const milks = await pool.query(
+      "SELECT * FROM ingredients WHERE type = 'milk'"
+    );
+    const syrups = await pool.query(
+      "SELECT * FROM ingredients WHERE type = 'syrup'"
+    );
+    const toppings = await pool.query(
+      "SELECT * FROM ingredients WHERE type = 'topping'"
+    );
+    const teas = await pool.query(
+      "SELECT * FROM ingredients WHERE type = 'tea'"
+    );
+    const packetSweeteners = await pool.query(
+      "SELECT * FROM ingredients WHERE type = 'packet_sweetener'"
+    );
 
     return {
       milks: milks.rows,
       syrups: syrups.rows,
       toppings: toppings.rows,
       teas: teas.rows,
-      packetSweeteners: packetSweeteners.rows
+      packetSweeteners: packetSweeteners.rows,
     };
   } else {
     // Supabase code
@@ -38,12 +48,19 @@ export default async function getIngredients() {
       .select("*")
       .eq("type", "tea");
 
-    const { data: packetSweeteners, error: packetSweetenersError } = await supabase
-      .from("ingredients")
-      .select("*")
-      .eq("type", "packet_sweetener");
+    const { data: packetSweeteners, error: packetSweetenersError } =
+      await supabase
+        .from("ingredients")
+        .select("*")
+        .eq("type", "packet_sweetener");
 
-    if (milksError || syrupsError || toppingsError || teasError || packetSweetenersError) {
+    if (
+      milksError ||
+      syrupsError ||
+      toppingsError ||
+      teasError ||
+      packetSweetenersError
+    ) {
       // Handle the errors
     }
 
@@ -52,7 +69,7 @@ export default async function getIngredients() {
       syrups,
       toppings,
       teas,
-      packetSweeteners
+      packetSweeteners,
     };
   }
 }
