@@ -64,7 +64,7 @@ export default function Login() {
             src="/images/BS-Symbol-BS-Master-TM.svg"
             height={60}
             width={60}
-            alt="Biolife Solutions logo"
+            alt="BioLife Solutions logo"
           />
           <h1 className="mx-4 font-bold text-primary text-4xl">Login</h1>
         </div>

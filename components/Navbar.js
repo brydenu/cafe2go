@@ -42,11 +42,11 @@ export default function Navbar({ user, admin, guest }) {
           src="/images/BS-Symbol-BS-Master-TM.svg"
           height={40}
           width={40}
-          alt="Biolife Solutions logo"
+          alt="BioLife Solutions logo"
           className="hover:cursor-pointer"
         />
         <p className="font-bold text-primary text-xl text-center sm:text-3xl hover:cursor-pointer">
-          Biolife Cafe{admin && " Admin"}
+          BioLife Cafe{admin && " Admin"}
         </p>
       </div>
       {admin && (

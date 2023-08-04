@@ -69,7 +69,7 @@ export default function Register() {
             src="/images/BS-Symbol-BS-Master-TM.svg"
             height={45}
             width={45}
-            alt="Biolife Solutions logo"
+            alt="BioLife Solutions logo"
           />
           <h1 className="text-4xl text-primary font-bold my-5">Register</h1>
         </div>
