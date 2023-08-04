@@ -1,6 +1,6 @@
-# Biolife cafe
+# BioLife Cafe
 
-Website is live at www.biolifecafe.com
+Website is live at [www.biolifecafe.com](https://www.biolifecafe.com).
 
 Web app to create an easy ordering system for internal coffee orders at Biolife Solutions.
 ---
