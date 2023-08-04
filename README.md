@@ -1,19 +1,12 @@
 # BioLife Cafe
 
-Website is live at [www.biolifecafe.com](https://www.biolifecafe.com).
+Welcome to the BioLife Cafe repository!
 
-Web app to create an easy ordering system for internal coffee orders at Biolife Solutions.
+BioLife Cafe is a web-based system for internal coffee orders at BioLife Solutions. Find it at [www.biolifecafe.com](https://www.biolifecafe.com).
+
 ---
 
-## List of known bugs
-- Temperature option (extra hot, light ice) doesn't work.
-- DashboardDrinkTracker component doesn't render
-- Time in db is +6 hours
-
 ## List of features to be added
-- **Quick order/favorites system**
-  
-  These two systems should go hand in hand - edit favorites should allow users to create preset "favorite" drinks, which should show up in the quick order options to order with one or two buttons. (Quick order should also include the most recent order if the most recent order isn't already on the favorites)
 
 - **Comments/notes option for drink orders**
   
