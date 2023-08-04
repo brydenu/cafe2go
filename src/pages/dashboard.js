@@ -29,6 +29,10 @@ export default function Dashboard() {
     const getUser = async () => {
       const res = await getLoggedInUser(token);
       const loggedInUser = res.user.data;
+      if (loggedInUser.user_id === 1) {
+        localStorage.clear();
+        router.push("/");
+      }
       setUser(loggedInUser);
     };
     validate();

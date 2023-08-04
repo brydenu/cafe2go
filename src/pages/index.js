@@ -3,10 +3,13 @@ import Navbar from "components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 import validateToken from "utils/auth/validateToken";
+import signInGuest from "utils/signInGuest";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,6 +29,20 @@ export default function Home() {
       validate();
     }
   }, []);
+
+  const handleGuestSignIn = async () => {
+    setIsLoading(true);
+    const guest = await signInGuest();
+    const { token } = guest;
+    localStorage.setItem("token", token);
+    router.push("/order");
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => (setIsLoading(false), 5000));
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -58,6 +75,21 @@ export default function Home() {
             >
               Register
             </Link>
+            <button
+              onClick={handleGuestSignIn}
+              className="hover:cursor-pointer hover:scale-110 duration-200 text-white text-lg bg-secondary text-center px-4 py-2 rounded w-full sm:w-1/4 shadow-md"
+            >
+              {isLoading ? (
+                <ClipLoader
+                  color="#ffffff"
+                  size={16}
+                  loading={true}
+                  aria-label="Loading Spinner"
+                />
+              ) : (
+                "Order as guest"
+              )}
+            </button>
           </div>
         </div>
       </main>

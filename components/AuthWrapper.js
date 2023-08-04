@@ -9,11 +9,11 @@ import validateAdmin from "utils/auth/validateAdmin";
 export default function AuthWrapper({ children }) {
   const [user, setUser] = useState({});
   const [admin, setAdmin] = useState(false);
+  const [guest, setGuest] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       router.push("/login");
     }
@@ -28,10 +28,13 @@ export default function AuthWrapper({ children }) {
     const getUser = async () => {
       const res = await getLoggedInUser(token);
       const loggedInUser = res.user.data;
-      setUser(loggedInUser);
+      const isGuest = loggedInUser?.user_id === 1;
       const isAdmin = await validateAdmin(token);
       if (isAdmin) {
         setAdmin(true);
+      }
+      if (isGuest) {
+        setGuest(true);
       }
     };
     validate();
@@ -41,7 +44,7 @@ export default function AuthWrapper({ children }) {
   return (
     <div className="mt-16 min-h-screen bg-gray-200">
       <Header />
-      <Navbar user={user} admin={admin} />
+      <Navbar user={user} admin={admin} guest={guest} />
       {children}
     </div>
   );

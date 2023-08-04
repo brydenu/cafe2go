@@ -8,9 +8,9 @@ import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
 import CustomTempOption from "components/CustomTempOption";
 import getLoggedInUser from "utils/getLoggedInUser";
+import checkIfGuest from "utils/checkIfGuest";
 import fetchMenu from "utils/fetchMenu";
 import { ClipLoader, SyncLoader } from "react-spinners";
-import { useSearchParams } from "next/navigation";
 
 export default function Order({ searchParams }) {
   const [user, setUser] = useState({});
@@ -24,6 +24,7 @@ export default function Order({ searchParams }) {
     drink: selectedDrink?.menu_id,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGuest, setIsGuest] = useState(true);
 
   // console.log("selectedDrink:", selectedDrink);egg slay!!!!!!! geeia smells
   /*
@@ -35,20 +36,20 @@ export default function Order({ searchParams }) {
 
   const router = useRouter();
 
-  console.log("searchParams:", searchParams);
-
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      console.log("isGuest", isGuest);
-      if (!isGuest) {
-        router.push("/login");
-      }
-    }
+
     const getUser = async () => {
-      const res = await getLoggedInUser(token);
-      const loggedInUser = res.user.data;
-      setUser(loggedInUser);
+      const guest = await checkIfGuest(token);
+      if (guest) {
+        setUser(guest);
+        setIsGuest(true);
+      } else {
+        const res = await getLoggedInUser(token);
+        const loggedInUser = res.user.data;
+        setUser(loggedInUser);
+        setIsGuest(false);
+      }
     };
 
     const getMenu = async () => {
