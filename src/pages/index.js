@@ -56,10 +56,10 @@ export default function Home() {
               src="/images/BS-Symbol-BS-Master-TM.svg"
               height={75}
               width={75}
-              alt="Biolife Solutions logo"
+              alt="BioLife Solutions logo"
             />
             <h1 className=" text-4xl sm:text-6xl text-primary font-bold text-center">
-              Welcome to Biolife Cafe
+              Welcome to BioLife Cafe
             </h1>
           </div>
           <div className="w-full flex flex-col sm:flex-row gap-5 justify-center items-center my-5 mx-3">
