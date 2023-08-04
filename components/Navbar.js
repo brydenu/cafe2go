@@ -3,16 +3,28 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function Navbar({ user, admin }) {
+export default function Navbar({ user, admin, guest }) {
   const router = useRouter();
 
   const handleClickHome = () => {
-    router.push("/dashboard");
+    if (guest) {
+      localStorage.clear();
+      router.push("/");
+    } else if (user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/");
+    }
   };
 
   const handleLogout = () => {
     localStorage.clear();
     router.push("/login");
+  };
+
+  const handleGuestRegister = () => {
+    localStorage.clear();
+    router.push("/register");
   };
 
   const handleGoToQueue = () => {
@@ -46,7 +58,7 @@ export default function Navbar({ user, admin }) {
         </p>
       )}
       <div className="flex flex-col justify-center items-end mr-6 text-sm text-center text-xs sm:text-md grow sm:grow-0">
-        {!!user ? (
+        {!!user && !guest ? (
           <>
             <p className="text-white text-center">
               {user?.first_name} {user?.last_name}
@@ -61,13 +73,22 @@ export default function Navbar({ user, admin }) {
         ) : (
           <>
             <p className="text-white">
-              <Link href="/login" className="underline">
+              {guest && <p className="mb-1">Ordering as guest</p>}
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="underline"
+              >
                 Login
-              </Link>{" "}
+              </button>{" "}
               or{" "}
-              <Link href="/register" className="underline">
+              <button
+                type="button"
+                onClick={handleGuestRegister}
+                className="underline"
+              >
                 Register
-              </Link>
+              </button>
             </p>
           </>
         )}
