@@ -6,6 +6,5 @@ export default async function checkIfGuest(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log("isGuest", res.data.isGuest);
   return res.data?.isGuest;
 }

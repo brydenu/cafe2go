@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import AuthWrapper from "components/AuthWrapper";
+import GuestNameInput from "components/GuestNameInput";
 import DrinkOption from "components/DrinkOption";
 import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
@@ -25,6 +26,8 @@ export default function Order({ searchParams }) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGuest, setIsGuest] = useState(true);
+  const [guestName, setGuestName] = useState("");
+  const [guestNameError, setGuestNameError] = useState(false);
 
   // console.log("selectedDrink:", selectedDrink);egg slay!!!!!!! geeia smells
   /*
@@ -41,15 +44,12 @@ export default function Order({ searchParams }) {
 
     const getUser = async () => {
       const guest = await checkIfGuest(token);
-      if (guest) {
-        setUser(guest);
-        setIsGuest(true);
-      } else {
-        const res = await getLoggedInUser(token);
-        const loggedInUser = res.user.data;
-        setUser(loggedInUser);
+      if (!guest) {
         setIsGuest(false);
       }
+      const res = await getLoggedInUser(token);
+      const loggedInUser = res.user.data;
+      setUser(loggedInUser);
     };
 
     const getMenu = async () => {
@@ -127,6 +127,16 @@ export default function Order({ searchParams }) {
     setIsSubmitting(true);
 
     const data = { drink: selectedCustomizations, user_id: user.user_id };
+    if (isGuest) {
+      if (!!guestName) {
+        data["guestName"] = guestName;
+      } else {
+        setGuestNameError(true);
+        setIsSubmitting(false);
+        return;
+      }
+    }
+    console.log("data:", data);
     try {
       const res = await axios.post(`api/orders`, data);
       if (res.status === 201) {
@@ -137,6 +147,8 @@ export default function Order({ searchParams }) {
       console.error("error creating drink");
     }
   };
+
+  console.log("guestName", guestName);
 
   return (
     <AuthWrapper>
@@ -180,6 +192,16 @@ export default function Order({ searchParams }) {
             </button>
           </div>
           <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">
+            {isGuest && (
+              <>
+                <GuestNameInput setGuestName={setGuestName} />
+                {guestNameError && (
+                  <p className="text-red-500 text-sm text-end">
+                    Please enter your name
+                  </p>
+                )}
+              </>
+            )}
             {menu.length > 0 ? (
               <>
                 <DrinkOption
@@ -235,7 +257,7 @@ export default function Order({ searchParams }) {
             )}
           </form>
           <button
-            className={`w-40 text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle ${
+            className={`w-40 min-h-[44px] text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle ${
               isSubmitting &&
               "bg-gray-400 hover:bg-gray-400 hover:cursor-default"
             }`}

@@ -17,6 +17,7 @@ export default function Success() {
     const getOrder = async () => {
       if (order_id) {
         const res = await axios.get(`/api/orders?order_id=${order_id}`);
+        console.log("res:::::", res);
         setOrder(res.data.order);
       }
     };

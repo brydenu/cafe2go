@@ -2,7 +2,6 @@ import { isSameDay, startOfDay, format, formatDistanceToNow } from "date-fns";
 import getDrinkName from "./db/menu/getDrinkName";
 import getCustomerName from "./db/users/getCustomerName";
 import getIngredientById from "./db/ingredients/getIngredientById";
-import bcrypt from "bcrypt";
 
 /**
  *
@@ -20,10 +19,16 @@ import bcrypt from "bcrypt";
  */
 
 export default async function createDrinkLabel(data) {
-  const hashed = await bcrypt.hash("lEAF2897!", 10);
-  const customer = await getCustomerName(data.user_id);
-  const customerName =
-    customer.first_name + " " + customer.last_name.substr(0, 1);
+  let customer;
+  let customerName;
+  let isGuest = false;
+  if (data.user_id === 1) {
+    isGuest = true;
+    customerName = data.guest_name;
+  } else {
+    customer = await getCustomerName(data.user_id);
+    customerName = customer.first_name + " " + customer.last_name.substr(0, 1);
+  }
   const date = new Date(data.ordered_date);
   const orderTime = format(date, "h:mm a");
   const orderDate = format(date, "dd/MM/yyyy");
@@ -40,7 +45,7 @@ export default async function createDrinkLabel(data) {
     customerName,
     drinkName,
     inProgress: data.in_progress,
-    hashed,
+    isGuest,
     info: {
       orderTime,
       orderDate,
@@ -58,6 +63,7 @@ export default async function createDrinkLabel(data) {
     "menu_id",
     "in_progress",
     "order_id",
+    "guest_name",
   ];
   const quantitityCustomizations = [
     "syrup1_pumps",
