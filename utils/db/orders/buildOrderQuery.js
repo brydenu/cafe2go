@@ -1,12 +1,15 @@
 import checkForQuantities from "utils/checkForQuantities";
 
 export default function buildOrderQuery(data) {
-  console.log("data:", data);
   const drink = data.drink;
   const userId = data.user_id;
+  const guestName = data.user_id === 1 ? data.guestName : null;
 
   let allColumns = Object.keys(drink);
   let columns = ["user_id"];
+  if (guestName) {
+    columns.push("guest_name");
+  }
   for (let columnName of allColumns) {
     if (drink[columnName]?.ingredient_id !== 0) {
       columns.push(columnName);
@@ -16,6 +19,9 @@ export default function buildOrderQuery(data) {
 
   const valuesObjects = Object.values(drink);
   let values = [userId];
+  if (guestName) {
+    values.push(guestName);
+  }
   for (let value of valuesObjects) {
     if (value.shots_option) {
       values.push(value.ingredient_name);

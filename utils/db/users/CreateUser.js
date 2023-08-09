@@ -1,6 +1,6 @@
 import { pool } from "db/db";
 import { supabase } from "db/db";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 export default async function CreateUser(user) {
   if (process.env.ENVIRONMENT === "dev") {
@@ -17,8 +17,10 @@ export default async function CreateUser(user) {
     }
 
     const query = {
-      text: `INSERT INTO users (${columnsString}) VALUES (${generatePlaceholders(values)}) RETURNING user_id;`,
-      values: values
+      text: `INSERT INTO users (${columnsString}) VALUES (${generatePlaceholders(
+        values
+      )}) RETURNING user_id;`,
+      values: values,
     };
 
     const response = await pool.query(query);
@@ -29,13 +31,14 @@ export default async function CreateUser(user) {
     const { password } = user;
     const hashedPassword = await bcrypt.hash(password, 10);
     user["password"] = hashedPassword;
-    const { data, error } = await supabase.from("users").insert(user).select('user_id');
+    const { data, error } = await supabase
+      .from("users")
+      .insert(user)
+      .select("user_id");
 
     if (error) {
       // Handle the error
     }
-
-    console.log("data:", data);
 
     return data[0];
   }

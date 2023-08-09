@@ -19,6 +19,11 @@ export default async function handler(req, res) {
 
       // Retrieve user data based on the user identifier
       const user = await getUserById(decoded.sub);
+
+      if (user.user_id === 1) {
+        return res.status(200).json(user);
+      }
+
       const userCurrentOrder = await getUserCurrentOrder(user.user_id);
       if (!!userCurrentOrder) {
         const order = await createDrinkLabel(userCurrentOrder);

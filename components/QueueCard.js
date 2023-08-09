@@ -27,7 +27,11 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder }) {
         isMouseDown ? " duration-300 translate-y-2" : ""
       } ${isClicked ? "-translate-y-8 opacity-0" : ""}`}
     >
-      <section className="bg-primary w-full p-3">
+      <section
+        className={`${
+          order.isGuest ? "bg-secondary" : "bg-primary"
+        } w-full p-3`}
+      >
         <p className="text-white font-bold text-lg">{order.customerName}</p>
         <p className="text-white font-bold text-sm">{order?.info?.orderTime}</p>
         <p className="text-white text-xs">{order?.info?.orderDuration} ago</p>
