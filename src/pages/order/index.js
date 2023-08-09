@@ -136,7 +136,6 @@ export default function Order({ searchParams }) {
         return;
       }
     }
-    console.log("data:", data);
     try {
       const res = await axios.post(`api/orders`, data);
       if (res.status === 201) {
@@ -147,8 +146,6 @@ export default function Order({ searchParams }) {
       console.error("error creating drink");
     }
   };
-
-  console.log("guestName", guestName);
 
   return (
     <AuthWrapper>

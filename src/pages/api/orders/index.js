@@ -8,9 +8,7 @@ export default async function handler(req, res) {
     const { order_id } = req.query;
     try {
       const order = await getOrderById(order_id);
-      console.log("getOrderById works. order:", order);
       const label = await createDrinkLabel(order);
-      console.log("label works, label", label);
       res.status(200).json({ order: label });
     } catch (e) {
       console.error(`Error fetching order where id="${order_id}". Error:`, e);
