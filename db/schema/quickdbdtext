@@ -1,7 +1,7 @@
 https://app.quickdatabasediagrams.com/#/d/cqTAJS
 
-users
--
+## users
+
 user_id PK SERIAL
 first_name VARCHAR(50)
 last_name VARCHAR(50)
@@ -9,23 +9,23 @@ email VARCHAR(100) UNIQUE
 phone_number VARCHAR(20)
 admin BOOLEAN
 
-ingredients
--
+## ingredients
+
 ingredient_id SERIAL PK
 ingredient_name VARCHAR(100)
 type VARCHAR(50)
 in_stock BOOLEAN
 
-menu
--
+## menu
+
 drink_id SERIAL PK
 drink_name VARCHAR(100)
 description TEXT
 drink_type VARCHAR(20)
 in_stock BOOLEAN
 
-cusatomizations
--
+## cusatomizations
+
 customization_id SERIAL PK
 customization_label VARCHAR(100)
 description TEXT
@@ -34,8 +34,8 @@ coffee_optional BOOLEAN
 tea_optional BOOLEAN
 other_optional BOOLEAN
 
-orders
--
+## orders
+
 order_id SERIAL PK
 user_id INT FK >- users.user_id
 drink_id INT FK >- menu.drink_id
@@ -68,9 +68,9 @@ packet_sweetener2_id INT FK >- ingredients.ingredient_id
 packet_sweetener2_quantity VARCHAR(50)
 in_progress BOOLEAN
 ordered_date TIMESTAMP
- 
-favorites
--
+
+## favorites
+
 favorite_id SERIAL PK
 drink_id INT FK >- menu.drink_id
 milk_id INT FK >- ingredients.ingredient_id
@@ -103,7 +103,7 @@ packet_sweetener2_quantity VARCHAR(50)
 in_progress BOOLEAN
 ordered_date TIMESTAMP
 
-user_favorites
--
+## user_favorites
+
 user_id INT FK >- users.user_id
 favorite_id INT FK >- favorites.favorite_id

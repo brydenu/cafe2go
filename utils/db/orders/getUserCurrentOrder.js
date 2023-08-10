@@ -14,11 +14,14 @@ export default async function getUserCurrentOrder(id) {
     const order = res.rows[0];
     const currentDate = new Date();
     const twoHoursAgo = subHours(currentDate, 1);
-    const isWithinLastTwoHours = isWithinInterval(order?.ordered_date, { start: twoHoursAgo, end: currentDate });
+    const isWithinLastTwoHours = isWithinInterval(order?.ordered_date, {
+      start: twoHoursAgo,
+      end: currentDate,
+    });
     if (order?.inProgress || isWithinLastTwoHours) {
-        return order;
+      return order;
     } else {
-        return null;
+      return null;
     }
   } else {
     // Supabase code
@@ -36,11 +39,14 @@ export default async function getUserCurrentOrder(id) {
     const order = data[0];
     const currentDate = new Date();
     const twoHoursAgo = subHours(currentDate, 1);
-    const isWithinLastTwoHours = isWithinInterval(order?.ordered_date, { start: twoHoursAgo, end: currentDate });
+    const isWithinLastTwoHours = isWithinInterval(order?.ordered_date, {
+      start: twoHoursAgo,
+      end: currentDate,
+    });
     if (order?.inProgress || isWithinLastTwoHours) {
-        return order;
+      return order;
     } else {
-        return null;
+      return null;
     }
   }
 }

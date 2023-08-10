@@ -1,14 +1,13 @@
 import { pool, supabase } from "db/db";
 
-export default async function getUserById(id) {
+export default async function getGuestUser() {
   const environment = process.env.ENVIRONMENT;
-  // console.log("environment:", environment);
   if (process.env.ENVIRONMENT === "dev") {
     // Original code
     const res = await pool.query(`
       SELECT user_id, first_name, last_name, email, phone_number
       FROM users
-      WHERE user_id = ${id}`);
+      WHERE user_id = 1`); // user_id 1 is guest
 
     const user = res.rows[0];
     return user;
@@ -17,7 +16,7 @@ export default async function getUserById(id) {
     const { data, error } = await supabase
       .from("users")
       .select("user_id, first_name, last_name, email, phone_number")
-      .eq("user_id", id)
+      .eq("user_id", 1)
       .single();
 
     if (error) {

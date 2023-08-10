@@ -4,7 +4,7 @@ import { supabase } from "db/db";
 export default async function getCustomizations() {
   if (process.env.ENVIRONMENT === "dev") {
     // Original code
-    let response = await pool.query('SELECT * FROM customizations');
+    let response = await pool.query("SELECT * FROM customizations");
     return response.rows;
   } else {
     // Supabase code

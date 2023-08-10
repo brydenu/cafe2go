@@ -5,12 +5,13 @@ import buildOrderQuery from "./buildOrderQuery";
 
 export default async function CreateNewOrder(drinkData) {
   if (process.env.ENVIRONMENT === "dev") {
-
     const { columnsString, values } = buildOrderQuery(drinkData);
 
     const query = {
-      text: `INSERT INTO orders (${columnsString}) VALUES (${generatePlaceholders(values)}) RETURNING order_id`,
-      values: values
+      text: `INSERT INTO orders (${columnsString}) VALUES (${generatePlaceholders(
+        values
+      )}) RETURNING order_id`,
+      values: values,
     };
 
     const response = await pool.query(query);

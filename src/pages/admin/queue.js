@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import AdminWrapper from "components/AdminWrapper";
 import Header from "components/Header";
 import QueueCard from "components/QueueCard";
@@ -14,7 +14,7 @@ export default function Queue() {
       const orders = await fetchInProgressOrders();
       setOrders(orders);
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      console.error("Error fetching orders:", error);
     }
   };
 
@@ -32,14 +32,13 @@ export default function Queue() {
   }, []);
 
   const finishOrder = async (orderArrayIdx, orderId) => {
-    const res = await axios.patch('/api/orders/finish', {"id": orderId});
+    const res = await axios.patch("/api/orders/finish", { id: orderId });
 
     const newOrders = [...orders];
     newOrders.splice(orderArrayIdx, 1);
     // console.log("newORders", newOrders);
     setOrders([...newOrders]);
   };
-
 
   return (
     <AdminWrapper>
@@ -50,7 +49,12 @@ export default function Queue() {
             <p className="w-full text-center text-md">No orders in queue.</p>
           )}
           {orders.map((order, idx) => (
-              <QueueCard key={order.id} orderArrayIdx={idx} order={order} finishOrder={finishOrder} />
+            <QueueCard
+              key={order.id}
+              orderArrayIdx={idx}
+              order={order}
+              finishOrder={finishOrder}
+            />
           ))}
         </div>
       </main>
