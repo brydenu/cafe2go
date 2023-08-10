@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   if (!authHeader) {
     try {
       const token = await createToken(1); // user_id 1 === Guest User
-      res.status(200).json({ token });
+      return res.status(200).json({ token });
     } catch (e) {
       return res.status(500).json("Error fetching guest user info");
     }
