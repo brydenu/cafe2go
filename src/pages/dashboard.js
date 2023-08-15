@@ -57,7 +57,7 @@ export default function Dashboard() {
             destination="/quickorder"
             bgColor="primary"
             bgHover="secondary"
-            isDisabled={true}
+            isDisabled={false}
           />
         </div>
         <div className="flex flex-col sm:flex-row w-full sm:w-fit mx-2 sm:mx-0">
@@ -66,7 +66,7 @@ export default function Dashboard() {
             destination="/favorites"
             bgColor="primary"
             bgHover="secondary"
-            isDisabled={true}
+            isDisabled={false}
           />
           <DashboardOption
             title="Order History"
