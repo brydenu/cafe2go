@@ -29,7 +29,7 @@ export default function OrderCustomization({
   };
 
   useEffect(() => {
-    if (!selectedCustomizations.num_shots) {
+    if (bevType === "coffee" && !selectedCustomizations.num_shots) {
       updateDrink(
         shotsCustomization.customization_name,
         shotsCustomization.selectedOption
