@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 import IngredientOption from "./IngredientOption";
 import SyrupCustomization from "./SyrupCustomization";
@@ -8,6 +9,7 @@ export default function OrderCustomization({
   selectedDrink,
   bevType,
   addShots,
+  selectedCustomizations,
 }) {
   const shotsCustomization = {
     customization_name: "num_shots",
@@ -25,6 +27,15 @@ export default function OrderCustomization({
       { ingredient_name: 8, in_stock: true, shots_option: true },
     ],
   };
+
+  useEffect(() => {
+    if (bevType === "coffee" && !selectedCustomizations.num_shots) {
+      updateDrink(
+        shotsCustomization.customization_name,
+        shotsCustomization.selectedOption
+      );
+    }
+  }, []);
 
   return (
     <div className="w-full flex flex-col w-full bg-white justify-center items-center mb-2">
