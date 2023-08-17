@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import validateToken from "utils/auth/validateToken";
-import signInGuest from "utils/signInGuest";
+import signInGuest from "utils/client/signInGuest";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);

@@ -3,13 +3,15 @@ import { useRouter } from "next/router";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
 import DashboardOption from "components/DashboardOption";
-import getLoggedInUser from "utils/getLoggedInUser";
+import getLoggedInUser from "utils/client/getLoggedInUser";
+
 import validateToken from "utils/auth/validateToken";
 import DashboardDrinkTracker from "components/DashboardDrinkTracker";
 import AuthWrapper from "components/AuthWrapper";
 
 export default function Dashboard() {
   const [user, setUser] = useState({});
+  const [userCurrentDrink, setUserCurrentDrink] = useState({});
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +40,8 @@ export default function Dashboard() {
     validate();
     getUser();
   }, []);
+
+  useEffect(() => {}, [user]);
 
   return (
     <AuthWrapper>

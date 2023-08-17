@@ -8,9 +8,9 @@ import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
 import CustomTempOption from "components/CustomTempOption";
-import getLoggedInUser from "utils/getLoggedInUser";
-import checkIfGuest from "utils/checkIfGuest";
-import fetchMenu from "utils/fetchMenu";
+import getLoggedInUser from "utils/client/getLoggedInUser";
+import checkIfGuest from "utils/client/checkIfGuest";
+import fetchMenu from "utils/client/fetchMenu";
 import { ClipLoader, SyncLoader } from "react-spinners";
 
 export default function Order({ searchParams }) {

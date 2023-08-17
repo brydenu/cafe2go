@@ -3,7 +3,7 @@ import axios from "axios";
 import AdminWrapper from "components/AdminWrapper";
 import Header from "components/Header";
 import QueueCard from "components/QueueCard";
-import fetchInProgressOrders from "utils/fetchInProgressOrders";
+import fetchInProgressOrders from "utils/client/fetchInProgressOrders";
 
 export default function Queue() {
   const [orders, setOrders] = useState([]);
