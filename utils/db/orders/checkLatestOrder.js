@@ -19,6 +19,7 @@ export default async function checkLatestOrder(orderId, orderTime) {
   });
   console.log("orderIsRecent", orderIsRecent);
   if (orderIsRecent) {
+    latestOrder["isRecent"] = true;
     const { data, error } = await supabase
       .from("orders")
       .select("*")

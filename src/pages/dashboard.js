@@ -12,24 +12,20 @@ import AuthWrapper from "components/AuthWrapper";
 export default function Dashboard() {
   const [user, setUser] = useState({});
   const [storageToken, setStorageToken] = useState("");
-  const [userCurrentDrink, setUserCurrentDrink] = useState(null);
   const router = useRouter();
 
-  console.log("storageToken", storageToken);
-  const { currentDrink, isLoading, isError } =
-    useFetchCurrentDrink(storageToken);
-  console.log("user", user);
-  console.log("currentDrink", currentDrink);
-  console.log("isLoading ->", isLoading);
-  console.log("isError ->", isError);
-  if (currentDrink?.currentOrder) {
-    setUserCurrentDrink(currentDrink?.currentOrder);
-  }
+  // console.log("storageToken", storageToken);
+  // const { currentDrink, isLoading, isError } =
+  //   useFetchCurrentDrink(storageToken);
+  // console.log("user", user);
+  // // console.log("currentDrink", currentDrink);
+  // // console.log("isLoading ->", isLoading);
+  // // console.log("isError ->", isError);
+  // if (currentDrink?.currentOrder) {
+  //   setUserCurrentDrink(currentDrink?.currentOrder);
+  // }
 
-  useEffect(() => {
-    console.log("storageTokenuseeffect", storageToken);
-    console.log("currentDrink", userCurrentDrink);
-  }, [storageToken]);
+  useEffect(() => {}, [storageToken]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     console.log("token", token);
@@ -57,6 +53,8 @@ export default function Dashboard() {
     validate();
     getUser();
   }, []);
+
+  console.log("user", user);
 
   return (
     <AuthWrapper>
@@ -94,7 +92,9 @@ export default function Dashboard() {
             bgHover="secondary"
           />
         </div>
-        <DashboardDrinkTracker drink={userCurrentDrink} />
+        {user?.latestOrder?.isRecent && (
+          <DashboardDrinkTracker drink={user?.latestOrder?.order} />
+        )}
       </main>
     </AuthWrapper>
   );
