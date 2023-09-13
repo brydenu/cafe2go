@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     }
 
     let decoded;
+    let userId;
     try {
       // Verify and decode the JWT
       decoded = decodeToken(token);
@@ -23,10 +24,11 @@ export default async function handler(req, res) {
     }
 
     try {
+      userId = decoded.sub;
       // Retrieve user data based on the user identifier
       const user = await getUserById(decoded.sub);
     } catch (e) {
-      res.status(401).json({ message: "cant find user" });
+      res.status(401).json({ message: `cant find user with id ${userId}` });
     }
     try {
       if (user.user_id === 1) {
