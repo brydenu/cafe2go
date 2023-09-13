@@ -14,15 +14,17 @@ export default async function handler(req, res) {
         .json({ message: "Unauthorized", no_token_token: token });
     }
 
+    let decoded;
     try {
       // Verify and decode the JWT
-      const retObject = { token };
-      const decoded = decodeToken(token);
-      retObject["decoded"] = decoded;
+      decoded = decodeToken(token);
+    } catch (e) {
+      return res.status(401).json({ message: "error decoding token" });
+    }
 
+    try {
       // Retrieve user data based on the user identifier
       const user = await getUserById(decoded.sub);
-      retObject["user"] = user;
 
       if (user.user_id === 1) {
         return res.status(200).json(user);
@@ -35,7 +37,7 @@ export default async function handler(req, res) {
       return res.status(401).json({
         message: "An error occurred retrieving user info",
         token,
-        retObject,
+        decoded,
         error: error,
       });
     }
