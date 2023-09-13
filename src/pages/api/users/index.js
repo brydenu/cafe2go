@@ -25,7 +25,10 @@ export default async function handler(req, res) {
     try {
       // Retrieve user data based on the user identifier
       const user = await getUserById(decoded.sub);
-
+    } catch (e) {
+      res.status(401).json({ message: "cant find user" });
+    }
+    try {
       if (user.user_id === 1) {
         return res.status(200).json(user);
       }
