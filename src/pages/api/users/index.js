@@ -9,7 +9,9 @@ export default async function handler(req, res) {
     const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ message: "Unauthorized", no_token_token: token });
     }
 
     try {
@@ -38,7 +40,9 @@ export default async function handler(req, res) {
       return res.status(200).json(user);
     } catch (error) {
       // JWT verification failed
-      return res.status(401).json({ message: "Invalid token", error: error });
+      return res
+        .status(401)
+        .json({ message: "Invalid token", token, error: error });
     }
   }
 }
