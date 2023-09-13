@@ -28,7 +28,6 @@ export default function Dashboard() {
   useEffect(() => {}, [storageToken]);
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("token", token);
     setStorageToken(token);
     if (!token) {
       router.push("/login");
@@ -44,6 +43,7 @@ export default function Dashboard() {
     const getUser = async () => {
       const res = await getLoggedInUser(token);
       const loggedInUser = res.user.data;
+      console.log("loggedInUser", loggedInUser);
       if (loggedInUser.user_id === 1) {
         localStorage.clear();
         router.push("/");
