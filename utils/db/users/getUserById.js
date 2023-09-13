@@ -6,7 +6,7 @@ export default async function getUserById(id) {
   if (process.env.ENVIRONMENT === "dev") {
     // Original code
     const res = await pool.query(`
-      SELECT user_id, first_name, last_name, email, phone_number
+      SELECT user_id, first_name, last_name, email, phone_number, latest_order_id, latest_order_date
       FROM users
       WHERE user_id = ${id}`);
 
@@ -16,7 +16,9 @@ export default async function getUserById(id) {
     // Supabase code
     const { data, error } = await supabase
       .from("users")
-      .select("user_id, first_name, last_name, email, phone_number")
+      .select(
+        "user_id, first_name, last_name, email, phone_number, latest_order_id, latest_order_date"
+      )
       .eq("user_id", id)
       .single();
 

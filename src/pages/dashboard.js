@@ -4,19 +4,36 @@ import Header from "components/Header";
 import Navbar from "components/Navbar";
 import DashboardOption from "components/DashboardOption";
 import getLoggedInUser from "utils/client/getLoggedInUser";
-
+import { useFetchCurrentDrink } from "utils/client/useFetchCurrentDrink";
 import validateToken from "utils/auth/validateToken";
 import DashboardDrinkTracker from "components/DashboardDrinkTracker";
 import AuthWrapper from "components/AuthWrapper";
 
 export default function Dashboard() {
   const [user, setUser] = useState({});
-  const [userCurrentDrink, setUserCurrentDrink] = useState({});
+  const [storageToken, setStorageToken] = useState("");
+  const [userCurrentDrink, setUserCurrentDrink] = useState(null);
   const router = useRouter();
 
+  console.log("storageToken", storageToken);
+  const { currentDrink, isLoading, isError } =
+    useFetchCurrentDrink(storageToken);
+  console.log("user", user);
+  console.log("currentDrink", currentDrink);
+  console.log("isLoading ->", isLoading);
+  console.log("isError ->", isError);
+  if (currentDrink?.currentOrder) {
+    setUserCurrentDrink(currentDrink?.currentOrder);
+  }
+
+  useEffect(() => {
+    console.log("storageTokenuseeffect", storageToken);
+    console.log("currentDrink", userCurrentDrink);
+  }, [storageToken]);
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+    console.log("token", token);
+    setStorageToken(token);
     if (!token) {
       router.push("/login");
     }
@@ -40,8 +57,6 @@ export default function Dashboard() {
     validate();
     getUser();
   }, []);
-
-  useEffect(() => {}, [user]);
 
   return (
     <AuthWrapper>
@@ -79,9 +94,7 @@ export default function Dashboard() {
             bgHover="secondary"
           />
         </div>
-        {user.currentOrder && (
-          <DashboardDrinkTracker drink={user?.currentOrder} />
-        )}
+        <DashboardDrinkTracker drink={userCurrentDrink} />
       </main>
     </AuthWrapper>
   );

@@ -1,7 +1,6 @@
 import getUserById from "utils/db/users/getUserById";
-import getUserCurrentOrder from "utils/db/orders/getUserCurrentOrder";
+import checkLatestOrder from "utils/db/orders/checkLatestOrder";
 import { decodeToken } from "utils/auth/auth";
-import createDrinkLabel from "utils/createDrinkLabel";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -24,14 +23,16 @@ export default async function handler(req, res) {
         return res.status(200).json(user);
       }
 
-      const userCurrentOrder = await getUserCurrentOrder(user.user_id);
-      if (!!userCurrentOrder) {
-        const order = await createDrinkLabel(userCurrentOrder);
-        user["currentOrder"] = order;
-      }
-
       if (!user) {
         return res.status(404).json({ message: "User not found" });
+      }
+
+      if (!!user.latest_order_id) {
+        const latestOrder = await checkLatestOrder(
+          user.latest_order_id,
+          user.latest_order_date
+        );
+        user["latestOrder"] = latestOrder;
       }
       // Return the user data in the API response
       return res.status(200).json(user);

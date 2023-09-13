@@ -1,4 +1,10 @@
-import { isSameDay, startOfDay, format, formatDistanceToNow } from "date-fns";
+import {
+  isSameDay,
+  startOfDay,
+  format,
+  formatDistanceToNow,
+  subHours,
+} from "date-fns";
 import getDrinkName from "./db/menu/getDrinkName";
 import getCustomerName from "./db/users/getCustomerName";
 import getIngredientById from "./db/ingredients/getIngredientById";
@@ -29,7 +35,8 @@ export default async function createDrinkLabel(data) {
     customer = await getCustomerName(data.user_id);
     customerName = customer.first_name + " " + customer.last_name.substr(0, 1);
   }
-  const date = new Date(data.ordered_date);
+  const dbDate = new Date(data.ordered_date);
+  const date = subHours(dbDate, 7);
   const orderTime = format(date, "h:mm a");
   const orderDate = format(date, "dd/MM/yyyy");
   const orderDuration = formatDistanceToNow(date);

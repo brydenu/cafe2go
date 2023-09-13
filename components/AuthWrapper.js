@@ -35,6 +35,8 @@ export default function AuthWrapper({ children }) {
       }
       if (isGuest) {
         setGuest(true);
+      } else {
+        setUser(loggedInUser);
       }
     };
     validate();
