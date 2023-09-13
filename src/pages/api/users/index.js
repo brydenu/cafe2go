@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     try {
       userId = decoded.sub;
       // Retrieve user data based on the user identifier
-      user = await getUserById(decoded.sub);
+      user = await getUserById(userId);
     } catch (e) {
       res.status(401).json({ message: `cant find user with id ${userId}` });
     }
