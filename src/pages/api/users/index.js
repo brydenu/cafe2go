@@ -28,7 +28,16 @@ export default async function handler(req, res) {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
+    } catch (error) {
+      return res
+        .status(401)
+        .json({
+          message: "An error occurred connecting to database for user info",
+          token,
+          error: error,
+        });
+    }
+    try {
       if (!!user.latest_order_id) {
         const latestOrder = await checkLatestOrder(
           user.latest_order_id,
@@ -42,7 +51,10 @@ export default async function handler(req, res) {
       // JWT verification failed
       return res
         .status(401)
-        .json({ message: "Invalid token", token, error: error });
+        .json({
+          message: "An error occurred retrieving latest drink information",
+          error: error,
+        });
     }
   }
 }
