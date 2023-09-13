@@ -16,6 +16,7 @@ export default async function handler(req, res) {
 
     let decoded;
     let userId;
+    let user;
     try {
       // Verify and decode the JWT
       decoded = decodeToken(token);
@@ -26,7 +27,7 @@ export default async function handler(req, res) {
     try {
       userId = decoded.sub;
       // Retrieve user data based on the user identifier
-      const user = await getUserById(decoded.sub);
+      user = await getUserById(decoded.sub);
     } catch (e) {
       res.status(401).json({ message: `cant find user with id ${userId}` });
     }
@@ -35,14 +36,15 @@ export default async function handler(req, res) {
         return res.status(200).json(user);
       }
 
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
+      // if (!user) {
+      //   return res.status(404).json({ message: "User not found" });
+      // }
     } catch (error) {
       return res.status(401).json({
         message: "An error occurred retrieving user info",
         token,
         decoded,
+        user,
         error: error,
       });
     }
