@@ -17,6 +17,9 @@ export default async function checkLatestOrder(orderId, orderTime) {
     start: recentTimeDuration,
     end: now,
   });
+  const timeInfo = { recentTimeDuration, orderTimeISO, orderIsRecent };
+  latestOrder["timeInfo"] = timeInfo;
+
   console.log("orderIsRecent", orderIsRecent);
   if (orderIsRecent) {
     latestOrder["isRecent"] = true;
