@@ -1,6 +1,6 @@
 import { pool } from "db/db";
 import { supabase } from "db/db";
-import { isWithinInterval, subHours } from "date-fns";
+import { isWithinInterval, parseISO, subHours } from "date-fns";
 
 export default async function getUserCurrentOrder(id) {
   if (process.env.ENVIRONMENT === "dev") {
@@ -33,20 +33,26 @@ export default async function getUserCurrentOrder(id) {
       .limit(1);
 
     if (error) {
-      // Handle the error
+      console.log("the error happened on searching within supabase");
     }
 
     const order = data[0];
     const currentDate = new Date();
+    // console.log("currentDate", currentDate);
     const twoHoursAgo = subHours(currentDate, 1);
-    const isWithinLastTwoHours = isWithinInterval(order?.ordered_date, {
+    // console.log("oneHourAgo", twoHoursAgo);
+
+    const orderedDate = parseISO(order?.ordered_date);
+    // console.log("orderedDate", orderedDate);
+    const isWithinLastTwoHours = isWithinInterval(orderedDate, {
       start: twoHoursAgo,
       end: currentDate,
     });
+    // console.log("isWithinLastTwoHours", isWithinLastTwoHours);
     if (order?.inProgress || isWithinLastTwoHours) {
-      return order;
+      return { currentOrder: order };
     } else {
-      return null;
+      return { currentOrder: null };
     }
   }
 }

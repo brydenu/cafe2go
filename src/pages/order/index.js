@@ -7,11 +7,10 @@ import DrinkOption from "components/DrinkOption";
 import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
-import HotTempOption from "components/HotTempOption";
-import IcedAmountOption from "components/IcedAmountOption";
-import getLoggedInUser from "utils/getLoggedInUser";
-import checkIfGuest from "utils/checkIfGuest";
-import fetchMenu from "utils/fetchMenu";
+import CustomTempOption from "components/CustomTempOption";
+import getLoggedInUser from "utils/client/getLoggedInUser";
+import checkIfGuest from "utils/client/checkIfGuest";
+import fetchMenu from "utils/client/fetchMenu";
 import { ClipLoader, SyncLoader } from "react-spinners";
 
 export default function Order({ searchParams }) {
@@ -22,7 +21,6 @@ export default function Order({ searchParams }) {
   const [currentDrinkCustomizations, setCurrentDrinkCustomizations] = useState(
     []
   );
-  const [isIced, setIsIced] = useState(false);
   const [selectedCustomizations, setSelectedCustomizations] = useState({
     drink: selectedDrink?.menu_id,
   });
@@ -216,13 +214,14 @@ export default function Order({ searchParams }) {
                     <HotIcedOption
                       updateDrink={updateDrink}
                       selectedDrink={selectedDrink}
-                      setIsIced={setIsIced}
                     />
-                    {isIced ? (
-                      <IcedAmountOption updateDrink={updateDrink} />
-                    ) : (
-                      <HotTempOption updateDrink={updateDrink} />
-                    )}
+                    <CustomTempOption
+                      isIced={
+                        selectedCustomizations?.hot_iced?.ingredient_name ===
+                        "iced"
+                      }
+                      updateDrink={updateDrink}
+                    />
                   </>
                 )}
                 {(bevType === "coffee" ||
@@ -237,7 +236,6 @@ export default function Order({ searchParams }) {
                   />
                 )}
                 <OrderCustomization
-                  selectedCustomizations={selectedCustomizations}
                   customizations={currentDrinkCustomizations}
                   updateDrink={updateDrink}
                   selectedDrink={selectedDrink}

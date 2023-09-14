@@ -1,7 +1,6 @@
 import getUserById from "utils/db/users/getUserById";
-import getUserCurrentOrder from "utils/db/orders/getUserCurrentOrder";
+import checkLatestOrder from "utils/db/orders/checkLatestOrder";
 import { decodeToken } from "utils/auth/auth";
-import createDrinkLabel from "utils/createDrinkLabel";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -10,34 +9,62 @@ export default async function handler(req, res) {
     const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ message: "Unauthorized", no_token_token: token });
+    }
+
+    let decoded;
+    let userId;
+    let user;
+    try {
+      // Verify and decode the JWT
+      decoded = decodeToken(token);
+    } catch (e) {
+      return res.status(401).json({ message: "error decoding token" });
     }
 
     try {
-      // Verify and decode the JWT
-      const decoded = decodeToken(token);
-
+      userId = decoded.sub;
       // Retrieve user data based on the user identifier
-      const user = await getUserById(decoded.sub);
-
+      user = await getUserById(userId);
+    } catch (e) {
+      res.status(401).json({ message: `cant find user with id ${userId}` });
+    }
+    try {
       if (user.user_id === 1) {
         return res.status(200).json(user);
       }
 
-      const userCurrentOrder = await getUserCurrentOrder(user.user_id);
-      if (!!userCurrentOrder) {
-        const order = await createDrinkLabel(userCurrentOrder);
-        user["currentOrder"] = order;
-      }
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
+      // if (!user) {
+      //   return res.status(404).json({ message: "User not found" });
+      // }
+    } catch (error) {
+      return res.status(401).json({
+        message: "An error occurred retrieving user info",
+        token,
+        decoded,
+        user,
+        userId,
+        error: error,
+      });
+    }
+    try {
+      if (!!user.latest_order_id) {
+        const latestOrder = await checkLatestOrder(
+          user.latest_order_id,
+          user.latest_order_date
+        );
+        user["latestOrder"] = latestOrder;
       }
       // Return the user data in the API response
       return res.status(200).json(user);
     } catch (error) {
       // JWT verification failed
-      return res.status(401).json({ message: "Invalid token", error: error });
+      return res.status(401).json({
+        message: "An error occurred retrieving latest drink information",
+        error: error,
+      });
     }
   }
 }

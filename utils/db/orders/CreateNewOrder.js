@@ -13,7 +13,7 @@ export default async function CreateNewOrder(drinkData) {
       )}) RETURNING order_id`,
       values: values,
     };
-
+    // Hi Bryden
     const response = await pool.query(query);
     return response.rows[0];
   } else {
@@ -24,7 +24,7 @@ export default async function CreateNewOrder(drinkData) {
     if (error) {
       // Handle the error
     }
-
+    // I hope you are having a good day
     return data[0];
   }
 }

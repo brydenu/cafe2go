@@ -3,12 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import QuantityChanger from "./QuantityChanger";
 
-export default function HotIcedOption({
-  updateDrink,
-  selectedDrink,
-  setIsIced,
-  zIndex,
-}) {
+export default function HotIcedOption({ updateDrink, selectedDrink, zIndex }) {
   const [options, setOptions] = useState([
     { ingredient_name: "hot", ingredient_label: "Hot" },
     { ingredient_name: "iced", ingredient_label: "Iced" },
@@ -25,11 +20,6 @@ export default function HotIcedOption({
 
   useEffect(() => {
     updateDrink(customization_name, selectedOption);
-    if (selectedOption.ingredient_name === "iced") {
-      setIsIced(true);
-    } else {
-      setIsIced(false);
-    }
   }, [selectedOption]);
 
   const handleChange = (e) => {

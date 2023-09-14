@@ -3,7 +3,7 @@ import axios from "axios";
 import AdminWrapper from "components/AdminWrapper";
 import Header from "components/Header";
 import QueueCard from "components/QueueCard";
-import fetchInProgressOrders from "utils/fetchInProgressOrders";
+import fetchInProgressOrders from "utils/client/fetchInProgressOrders";
 
 export default function Queue() {
   const [orders, setOrders] = useState([]);
@@ -45,10 +45,10 @@ export default function Queue() {
       <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
         <h1 className="text-5xl font-bold mb-8 mt-20">Queue</h1>
         <div className="w-full flex flex-wrap">
-          {orders.length < 1 && (
+          {orders?.length < 1 && (
             <p className="w-full text-center text-md">No orders in queue.</p>
           )}
-          {orders.map((order, idx) => (
+          {orders?.map((order, idx) => (
             <QueueCard
               key={order.id}
               orderArrayIdx={idx}
