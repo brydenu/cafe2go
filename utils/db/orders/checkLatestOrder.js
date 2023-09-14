@@ -9,16 +9,17 @@ export default async function checkLatestOrder(orderId, orderTime) {
   const orderTimeAdjusted = subHours(orderTimeISO, 7);
   const latestOrder = { orderId, orderTime, order: null };
   const now = new Date();
+  const nowAdjusted = subHours(now, 7);
   const recentTimeDuration = subHours(now, 1);
   console.log("recentTimeDuration", recentTimeDuration);
   console.log("orderTimeISO", orderTimeISO);
   console.log("now", now);
   const orderIsRecent = isWithinInterval(orderTimeAdjusted, {
     start: recentTimeDuration,
-    end: now,
+    end: nowAdjusted,
   });
-  const timeInfo = { recentTimeDuration, orderTimeISO, orderIsRecent };
-  latestOrder["timeInfo"] = timeInfo;
+  //   const timeInfo = { recentTimeDuration, orderTimeAdjusted, orderIsRecent };
+  //   latestOrder["timeInfo"] = timeInfo;
 
   console.log("orderIsRecent", orderIsRecent);
   if (orderIsRecent) {
