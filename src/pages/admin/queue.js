@@ -45,10 +45,10 @@ export default function Queue() {
       <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
         <h1 className="text-5xl font-bold mb-8 mt-20">Queue</h1>
         <div className="w-full flex flex-wrap">
-          {orders.length < 1 && (
+          {orders?.length < 1 && (
             <p className="w-full text-center text-md">No orders in queue.</p>
           )}
-          {orders.map((order, idx) => (
+          {orders?.map((order, idx) => (
             <QueueCard
               key={order.id}
               orderArrayIdx={idx}
