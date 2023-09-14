@@ -3,40 +3,42 @@ import { supabase } from "db/db";
 import createDrinkLabel from "utils/createDrinkLabel";
 
 export default async function checkLatestOrder(orderId, orderTime) {
-  console.log("orderId", orderId);
+  //   console.log("orderId", orderId);
   //   console.log("orderTime", orderTime);
-  const orderTimeISO = parseISO(orderTime);
-  const orderTimeAdjusted = subHours(orderTimeISO, 7);
+  const orderTimeDate = new Date(orderTime);
+  const orderTimeAdjusted = subHours(orderTimeDate, 7);
   const latestOrder = { orderId, orderTime, order: null };
   const now = new Date();
   const nowAdjusted = subHours(now, 7);
-  const recentTimeDuration = subHours(now, 1);
+  const recentTimeDuration = subHours(nowAdjusted, 1);
   console.log("recentTimeDuration", recentTimeDuration);
-  console.log("orderTimeISO", orderTimeISO);
-  console.log("now", now);
+  console.log("orderTimeAdjusted", orderTimeAdjusted);
+  console.log("nowAdjusted", nowAdjusted);
   const orderIsRecent = isWithinInterval(orderTimeAdjusted, {
     start: recentTimeDuration,
     end: nowAdjusted,
   });
+  console.log("orderIsRecent", orderIsRecent);
   //   const timeInfo = { recentTimeDuration, orderTimeAdjusted, orderIsRecent };
   //   latestOrder["timeInfo"] = timeInfo;
 
-  console.log("orderIsRecent", orderIsRecent);
-  if (orderIsRecent) {
-    latestOrder["isRecent"] = true;
-    const { data, error } = await supabase
-      .from("orders")
-      .select("*")
-      .eq("order_id", orderId)
-      .single();
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("order_id", orderId)
+    .single();
 
-    if (error) {
-      // Handle the error
-    }
+  console.log("data", data);
 
-    const order = await createDrinkLabel(data);
-
-    latestOrder.order = order;
+  if (error) {
+    // Handle the error
   }
-  return latestOrder;
+
+  const order = await createDrinkLabel(data);
+  console.log("order", order);
+  order["isRecent"] = true;
+
+  latestOrder.order = order;
+  const orderInfo = { info: latestOrder, isRecent: orderIsRecent };
+  return orderInfo;
 }

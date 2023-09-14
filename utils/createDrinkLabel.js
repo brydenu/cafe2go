@@ -40,16 +40,23 @@ export default async function createDrinkLabel(data) {
   const orderTime = format(date, "h:mm a");
   const orderDate = format(date, "dd/MM/yyyy");
   const nowUTC = new Date();
+  console.log("nowUTC, orderDate, orderTime", nowUTC, orderDate, orderTime);
   const now = subHours(nowUTC, 7);
+  console.log("now", now);
   const orderDuration = formatDistance(date, now);
+  console.log("orderDuration", orderDuration);
   const orderedToday = isSameDay(date, startOfDay(new Date()));
+  console.log("orderedToday", orderedToday);
   const completed = data.completed_date ? new Date(data.completed_date) : null;
   const completedTime = completed ? format(completed, "h:mm a") : null;
   const completedDate = completed ? format(date, "dd/MM/yyyy") : null;
+  console.log("completed", completed);
+  console.log("completedTime, completedDate", completedTime, completedDate);
+  const completedDuration = completed ? formatDistance(completed, now) : null;
 
-  const completedDuration = completed ? formatDistanceToNow(completed) : null;
   let drinkName = await getDrinkName(data.menu_id);
   if (data.hot_iced === "iced") drinkName = "Iced" + " " + drinkName;
+  console.log("drinkName", drinkName);
   const label = {
     id: data.order_id,
     customerName,
@@ -66,6 +73,7 @@ export default async function createDrinkLabel(data) {
       completedDuration,
     },
   };
+  console.log("currentLabel", label);
   const nonCustomizations = [
     "ordered_date",
     "completed_date",
