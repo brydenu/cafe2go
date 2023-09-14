@@ -2,7 +2,7 @@ import {
   isSameDay,
   startOfDay,
   format,
-  formatDistanceToNow,
+  formatDistance,
   subHours,
 } from "date-fns";
 import getDrinkName from "./db/menu/getDrinkName";
@@ -39,11 +39,14 @@ export default async function createDrinkLabel(data) {
   const date = subHours(dbDate, 7);
   const orderTime = format(date, "h:mm a");
   const orderDate = format(date, "dd/MM/yyyy");
-  const orderDuration = formatDistanceToNow(date);
+  const nowUTC = new Date();
+  const now = subHours(nowUTC, 7);
+  const orderDuration = formatDistance(date, now);
   const orderedToday = isSameDay(date, startOfDay(new Date()));
   const completed = data.completed_date ? new Date(data.completed_date) : null;
   const completedTime = completed ? format(completed, "h:mm a") : null;
   const completedDate = completed ? format(date, "dd/MM/yyyy") : null;
+
   const completedDuration = completed ? formatDistanceToNow(completed) : null;
   let drinkName = await getDrinkName(data.menu_id);
   if (data.hot_iced === "iced") drinkName = "Iced" + " " + drinkName;
