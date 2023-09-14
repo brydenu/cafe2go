@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import getLoggedInUser from "utils/getLoggedInUser";
+import getLoggedInUser from "utils/client/getLoggedInUser";
 import validateToken from "utils/auth/validateToken";
 import validateAdmin from "utils/auth/validateAdmin";
 
@@ -35,6 +35,8 @@ export default function AuthWrapper({ children }) {
       }
       if (isGuest) {
         setGuest(true);
+      } else {
+        setUser(loggedInUser);
       }
     };
     validate();

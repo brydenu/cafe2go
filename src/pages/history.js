@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import AuthWrapper from "components/AuthWrapper";
-import getUserHistory from "utils/getUserHistory";
+import getUserHistory from "utils/client/getUserHistory";
 import HistoryDrink from "components/HistoryDrink";
 
 export default function History() {

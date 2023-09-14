@@ -1,9 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useState } from "react";
 import { BeatLoader } from "react-spinners";
+import { useQueryClient } from "react-query";
 
 export default function DashboardDrinkTracker({ drink }) {
   const [isOpen, setIsOpen] = useState(false);
+  console.log("drink in ddt", drink);
 
   const openDrinkModal = () => {
     setIsOpen(true);
@@ -13,12 +15,16 @@ export default function DashboardDrinkTracker({ drink }) {
     setIsOpen(false);
   };
 
+  if (!drink) {
+    return <></>;
+  }
+
   return (
     <>
       <div
         onClick={openDrinkModal}
         className={`w-full sm:w-4/5 sm:h-16 fixed sm:absolute bottom-0 sm:bottom-5 sm:rounded-lg flex flex-row justify-evenly items-center text-white hover:cursor-pointer px-3 py-2 bg-${
-          drink.inProgress ? "secondary" : "primary"
+          drink?.inProgress ? "secondary" : "primary"
         }`}
       >
         <div className="text-center flex flex-col sm:flex-row items-center">
@@ -26,14 +32,14 @@ export default function DashboardDrinkTracker({ drink }) {
             Latest order:
           </div>
           <div className="flex flex-col">
-            <div className="font-bold sm:ml-1">{drink.drinkName}</div>
+            <div className="font-bold sm:ml-1">{drink?.drinkName}</div>
             {/* <div className="text-xs sm:ml-1">({drink.duration} ago)</div> */}
           </div>
         </div>
         <div className="text-center flex flex-col sm:flex-row items-center">
           <div>Order status: </div>
           <div className="font-bold sm:ml-1">
-            {drink.inProgress ? "In progress" : "Completed"}
+            {drink?.inProgress ? "In progress" : "Completed"}
           </div>
         </div>
       </div>
@@ -67,16 +73,16 @@ export default function DashboardDrinkTracker({ drink }) {
                     <p className="text-2xl">
                       Order status:{" "}
                       <span className="font-bold">
-                        {drink.inProgress ? "In progress" : "Completed"}
+                        {drink?.inProgress ? "In progress" : "Completed"}
                       </span>
                     </p>
                     <p className="text-sm text-white">
-                      Ordered received at {drink.info.orderTime} (
-                      {drink.info.orderDuration} ago)
+                      Ordered received at {drink?.info?.orderTime} (
+                      {drink?.info?.orderDuration} ago)
                     </p>
                   </Dialog.Title>
                   <div className="bg-white px-10 py-4 text-center">
-                    <h3 className="font-bold text-xl">{drink.drinkName}</h3>
+                    <h3 className="font-bold text-xl">{drink?.drinkName}</h3>
                     {!!drink.customizations ? (
                       <ul>
                         {drink.customizations.map((customization) => (

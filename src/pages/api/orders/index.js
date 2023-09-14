@@ -2,6 +2,7 @@ import { pool } from "db/db";
 import CreateNewOrder from "utils/db/orders/CreateNewOrder";
 import getOrderById from "utils/db/orders/getOrderById";
 import createDrinkLabel from "utils/createDrinkLabel";
+import updateUserLatestOrder from "utils/db/users/updateUserLatestOrder";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -20,6 +21,9 @@ export default async function handler(req, res) {
 
       // Create a new row in the orders table
       const order = await CreateNewOrder(data);
+      console.log("new order!", order);
+      const { order_id, user_id } = order;
+      const updated = await updateUserLatestOrder(user_id, order_id);
 
       res.status(201).json(order);
     } catch (error) {
