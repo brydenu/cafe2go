@@ -3,7 +3,6 @@ import createDrinkLabel from "utils/createDrinkLabel";
 
 export default async function getInProgressOrders() {
   if (process.env.ENVIRONMENT === "dev") {
-
     // Supabase code
     const { data, error } = await supabase
       .from("orders")
@@ -20,4 +19,5 @@ export default async function getInProgressOrders() {
       orders.push(label);
     }
     return orders;
+  }
 }
