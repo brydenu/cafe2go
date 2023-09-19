@@ -23,7 +23,7 @@ export default function DashboardDrinkTracker({ drink }) {
     <>
       <div
         onClick={openDrinkModal}
-        className={`w-full sm:w-4/5 sm:h-16 fixed sm:absolute bottom-0 sm:bottom-5 sm:rounded-lg flex flex-row justify-evenly items-center text-white hover:cursor-pointer px-3 py-2 bg-${
+        className={`w-full sm:w-4/5 sm:h-16 fixed bottom-0 sm:bottom-5 sm:rounded-lg flex flex-row justify-evenly items-center text-white hover:cursor-pointer px-3 py-2 bg-${
           drink?.inProgress ? "secondary" : "primary"
         }`}
       >
