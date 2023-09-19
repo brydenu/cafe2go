@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
       // Create a new row in the orders table
       const order = await CreateNewOrder(data);
-      console.log("new order!", order);
+      // console.log("new order!", order);
       const { order_id, user_id } = order;
       const updated = await updateUserLatestOrder(user_id, order_id);
 

@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   try {
     const decoded = decodeToken(token);
     const userId = decoded.sub;
-    console.log("userId", userId);
+    // console.log("userId", userId);
     const currentOrder = await getUserCurrentOrder(userId);
     return res.status(200).json(currentOrder);
   } catch {
