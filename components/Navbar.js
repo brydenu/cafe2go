@@ -32,7 +32,7 @@ export default function Navbar({ user, admin, guest }) {
   };
 
   return (
-    <nav className="bg-primary w-full h-16 flex flex-row justify-between items-center absolute top-0">
+    <nav className="bg-primary w-full h-16 flex flex-row justify-between items-center fixed top-0">
       <div
         className="h-full flex flex-row justify-between items-center gap-2 bg-white px-4"
         onClick={handleClickHome}

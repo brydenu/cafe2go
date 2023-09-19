@@ -3,45 +3,22 @@ import { supabase } from "db/db";
 import bcrypt from "bcrypt";
 
 export default async function CreateUser(user) {
-  if (process.env.ENVIRONMENT === "dev") {
-    // Original code
-    const { password } = user;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user["password"] = hashedPassword;
-    const values = Object.values(user);
+  // Supabase code
+  const lower = user.email.toLowerCase();
+  user.email = lower;
+  const { password } = user;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  user["password"] = hashedPassword;
+  const { data, error } = await supabase
+    .from("users")
+    .insert(user)
+    .select("user_id");
 
-    const columns = Object.keys(user);
-    let columnsString = columns.shift();
-    while (columns.length > 0) {
-      columnsString = columnsString + ", " + columns.shift();
-    }
-
-    const query = {
-      text: `INSERT INTO users (${columnsString}) VALUES (${generatePlaceholders(
-        values
-      )}) RETURNING user_id;`,
-      values: values,
-    };
-
-    const response = await pool.query(query);
-
-    return response.rows[0];
-  } else {
-    // Supabase code
-    const { password } = user;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user["password"] = hashedPassword;
-    const { data, error } = await supabase
-      .from("users")
-      .insert(user)
-      .select("user_id");
-
-    if (error) {
-      // Handle the error
-    }
-
-    return data[0];
+  if (error) {
+    // Handle the error
   }
+
+  return data[0];
 }
 
 function generatePlaceholders(values) {

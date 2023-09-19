@@ -43,7 +43,7 @@ export default function Dashboard() {
     const getUser = async () => {
       const res = await getLoggedInUser(token);
       const loggedInUser = res.user.data;
-      console.log("loggedInUser", loggedInUser);
+      // console.log("loggedInUser", loggedInUser);
       if (loggedInUser.user_id === 1) {
         localStorage.clear();
         router.push("/");
@@ -54,7 +54,7 @@ export default function Dashboard() {
     getUser();
   }, []);
 
-  console.log("user", user);
+  // console.log("user", user);
 
   return (
     <AuthWrapper>
@@ -74,7 +74,7 @@ export default function Dashboard() {
             destination="/quickorder"
             bgColor="primary"
             bgHover="secondary"
-            isDisabled={false}
+            isDisabled={true}
           />
         </div>
         <div className="flex flex-col sm:flex-row w-full sm:w-fit mx-2 sm:mx-0">
@@ -83,7 +83,7 @@ export default function Dashboard() {
             destination="/favorites"
             bgColor="primary"
             bgHover="secondary"
-            isDisabled={false}
+            isDisabled={true}
           />
           <DashboardOption
             title="Order History"
