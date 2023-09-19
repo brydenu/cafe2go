@@ -11,14 +11,10 @@ export default async function checkLatestOrder(orderId, orderTime) {
   const now = new Date();
   const nowAdjusted = subHours(now, 7);
   const recentTimeDuration = subHours(nowAdjusted, 1);
-  console.log("recentTimeDuration", recentTimeDuration);
-  console.log("orderTimeAdjusted", orderTimeAdjusted);
-  console.log("nowAdjusted", nowAdjusted);
   const orderIsRecent = isWithinInterval(orderTimeAdjusted, {
     start: recentTimeDuration,
     end: nowAdjusted,
   });
-  console.log("orderIsRecent", orderIsRecent);
   //   const timeInfo = { recentTimeDuration, orderTimeAdjusted, orderIsRecent };
   //   latestOrder["timeInfo"] = timeInfo;
 
@@ -28,14 +24,11 @@ export default async function checkLatestOrder(orderId, orderTime) {
     .eq("order_id", orderId)
     .single();
 
-  console.log("data", data);
-
   if (error) {
     // Handle the error
   }
 
   const order = await createDrinkLabel(data);
-  console.log("order", order);
   order["isRecent"] = true;
 
   latestOrder.order = order;

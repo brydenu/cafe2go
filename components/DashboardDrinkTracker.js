@@ -5,7 +5,7 @@ import { useQueryClient } from "react-query";
 
 export default function DashboardDrinkTracker({ drink }) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("drink in ddt", drink);
+  // console.log("drink in ddt", drink);
 
   const openDrinkModal = () => {
     setIsOpen(true);

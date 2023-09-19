@@ -43,7 +43,7 @@ export default function Dashboard() {
     const getUser = async () => {
       const res = await getLoggedInUser(token);
       const loggedInUser = res.user.data;
-      console.log("loggedInUser", loggedInUser);
+      // console.log("loggedInUser", loggedInUser);
       if (loggedInUser.user_id === 1) {
         localStorage.clear();
         router.push("/");
@@ -54,7 +54,7 @@ export default function Dashboard() {
     getUser();
   }, []);
 
-  console.log("user", user);
+  // console.log("user", user);
 
   return (
     <AuthWrapper>
