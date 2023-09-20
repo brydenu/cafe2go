@@ -77,7 +77,7 @@ export default function DashboardDrinkTracker({ drink }) {
                       </span>
                     </p>
                     <p className="text-sm text-white">
-                      Ordered received at {drink?.info?.orderTime} (
+                      Order received at {drink?.info?.orderTime} (
                       {drink?.info?.orderDuration} ago)
                     </p>
                   </Dialog.Title>

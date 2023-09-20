@@ -3,18 +3,24 @@ import { useRouter } from "next/router";
 import AuthWrapper from "components/AuthWrapper";
 import getUserHistory from "utils/client/getUserHistory";
 import HistoryDrink from "components/HistoryDrink";
+import { BeatLoader } from "react-spinners";
 
 export default function History() {
   const [orders, setOrders] = useState([]);
   const [completedOrders, setCompletedOrders] = useState([]);
   const [inProgressOrders, setInProgressOrders] = useState([]);
+  const [hasOrdered, setHasOrdered] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const getOrders = async () => {
       const res = await getUserHistory(token);
-      setOrders(res);
+      const orderHistory = res.orders;
+      setOrders(orderHistory);
+      if (!res.hasOrdered) {
+        setHasOrdered(false);
+      }
     };
     getOrders();
   }, []);
@@ -39,7 +45,7 @@ export default function History() {
 
   return (
     <AuthWrapper>
-      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200 mt-16">
         <div className="py-5 flex flex-col justify-center text-center">
           <h1 className="font-bold text-4xl">Order History</h1>
           <p
@@ -66,9 +72,18 @@ export default function History() {
             Completed orders
           </div>
           <div className="w-full sm:w-11/12 flex flex-col justify-center items-center align-middle">
-            {completedOrders?.map((drink) => (
-              <HistoryDrink key={drink.id} drink={drink} />
-            ))}
+            {completedOrders.length > 0 && hasOrdered === true ? (
+              completedOrders?.map((drink) => (
+                <HistoryDrink key={drink.id} drink={drink} />
+              ))
+            ) : (
+              <BeatLoader
+                color="#32A5DC"
+                loading={true}
+                aria-label="Loading Spinner"
+                size={16}
+              />
+            )}
           </div>
         </div>
       </main>
