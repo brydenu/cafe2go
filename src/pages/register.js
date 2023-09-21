@@ -42,11 +42,13 @@ export default function Register() {
           router.push("/dashboard");
         }
       } catch (e) {
+        console.log("e", e.response);
         if (e.response.status === 409) {
           setErrorMessage("Account with that email already exists");
           setIsSubmitting(false);
         } else {
           setErrorMessage("Error creating account. Please try again later.");
+          setIsSubmitting(false);
         }
       }
     },
@@ -110,7 +112,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={isSubmitting ? true : false}
-              className="bg-secondary text-white px-2 py-2 rounded-lg w-1/4 text-center"
+              className="bg-secondary text-white px-2 py-2 ml-2 rounded-lg w-1/4 text-center"
             >
               {isSubmitting ? (
                 <ClipLoader

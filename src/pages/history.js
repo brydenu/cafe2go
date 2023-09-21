@@ -72,17 +72,23 @@ export default function History() {
             Completed orders
           </div>
           <div className="w-full sm:w-11/12 flex flex-col justify-center items-center align-middle">
-            {completedOrders.length > 0 && hasOrdered === true ? (
-              completedOrders?.map((drink) => (
-                <HistoryDrink key={drink.id} drink={drink} />
-              ))
+            {hasOrdered === true ? (
+              completedOrders.length > 0 ? (
+                completedOrders?.map((drink) => (
+                  <HistoryDrink key={drink.id} drink={drink} />
+                ))
+              ) : (
+                <BeatLoader
+                  color="#32A5DC"
+                  loading={true}
+                  aria-label="Loading Spinner"
+                  size={16}
+                />
+              )
             ) : (
-              <BeatLoader
-                color="#32A5DC"
-                loading={true}
-                aria-label="Loading Spinner"
-                size={16}
-              />
+              <p className="my-5">
+                No orders found. Place an order to see your order history.
+              </p>
             )}
           </div>
         </div>

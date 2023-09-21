@@ -92,7 +92,10 @@ export default function Dashboard() {
             bgHover="secondary"
           />
         </div>
-        <DashboardDrinkTracker drink={user?.latestOrder?.info?.order} />
+        <DashboardDrinkTracker
+          drink={user?.latestOrder?.info?.order}
+          isRecent={user?.latestOrder?.isRecent}
+        />
       </main>
     </AuthWrapper>
   );

@@ -7,7 +7,7 @@ export default async function checkLatestOrder(orderId, orderTime) {
   //   console.log("orderTime", orderTime);
   const orderTimeDate = new Date(orderTime);
   const orderTimeAdjusted = subHours(orderTimeDate, 7);
-  const latestOrder = { orderId, orderTime, order: null };
+  const latestOrder = { orderId, orderTime, orderTimeAdjusted, order: null };
   const now = new Date();
   const nowAdjusted = subHours(now, 7);
   const recentTimeDuration = subHours(nowAdjusted, 1);
@@ -29,7 +29,6 @@ export default async function checkLatestOrder(orderId, orderTime) {
   }
 
   const order = await createDrinkLabel(data);
-  order["isRecent"] = true;
 
   latestOrder.order = order;
   const orderInfo = { info: latestOrder, isRecent: orderIsRecent };

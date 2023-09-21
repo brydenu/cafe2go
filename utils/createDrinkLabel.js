@@ -35,19 +35,16 @@ export default async function createDrinkLabel(data) {
     customer = await getCustomerName(data.user_id);
     customerName = customer.first_name + " " + customer.last_name.substr(0, 1);
   }
-  const dbDate = new Date(data.ordered_date);
-  const date = subHours(dbDate, 7);
+  const date = new Date(data.ordered_date);
   const orderTime = format(date, "h:mm a");
   const orderDate = format(date, "MM/dd/yyyy");
-  const nowUTC = new Date();
-  const now = subHours(nowUTC, 7);
-  const orderDuration = formatDistance(date, now);
+  const now = new Date();
   const orderedToday = isSameDay(date, startOfDay(new Date()));
   const completed = data.completed_date ? new Date(data.completed_date) : null;
+  const orderDuration = formatDistance(date, now);
   const completedTime = completed ? format(completed, "h:mm a") : null;
   const completedDate = completed ? format(date, "MM/dd/yyyy") : null;
   const completedDuration = completed ? formatDistance(completed, now) : null;
-
   let drinkName = await getDrinkName(data.menu_id);
   if (data.hot_iced === "iced") drinkName = "Iced" + " " + drinkName;
   const label = {

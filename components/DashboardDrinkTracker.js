@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useQueryClient } from "react-query";
 
-export default function DashboardDrinkTracker({ drink }) {
+export default function DashboardDrinkTracker({ drink, isRecent }) {
   const [isOpen, setIsOpen] = useState(false);
   // console.log("drink in ddt", drink);
 
@@ -80,6 +80,12 @@ export default function DashboardDrinkTracker({ drink }) {
                       Order received at {drink?.info?.orderTime} (
                       {drink?.info?.orderDuration} ago)
                     </p>
+                    {drink?.info?.completedTime && (
+                      <p className="text-sm text-white">
+                        Order completed at {drink?.info?.completedTime} (
+                        {drink?.info?.completedDuration} ago)
+                      </p>
+                    )}
                   </Dialog.Title>
                   <div className="bg-white px-10 py-4 text-center">
                     <h3 className="font-bold text-xl">{drink?.drinkName}</h3>
