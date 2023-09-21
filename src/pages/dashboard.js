@@ -14,18 +14,6 @@ export default function Dashboard() {
   const [storageToken, setStorageToken] = useState("");
   const router = useRouter();
 
-  // console.log("storageToken", storageToken);
-  // const { currentDrink, isLoading, isError } =
-  //   useFetchCurrentDrink(storageToken);
-  // console.log("user", user);
-  // // console.log("currentDrink", currentDrink);
-  // // console.log("isLoading ->", isLoading);
-  // // console.log("isError ->", isError);
-  // if (currentDrink?.currentOrder) {
-  //   setUserCurrentDrink(currentDrink?.currentOrder);
-  // }
-
-  useEffect(() => {}, [storageToken]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     setStorageToken(token);
