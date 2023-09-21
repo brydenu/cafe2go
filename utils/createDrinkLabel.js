@@ -35,12 +35,21 @@ export default async function createDrinkLabel(data) {
     customer = await getCustomerName(data.user_id);
     customerName = customer.first_name + " " + customer.last_name.substr(0, 1);
   }
-  const date = new Date(data.ordered_date);
+  let date = new Date(data.ordered_date);
+  if (process.env.ENVIRONMENT !== "dev") {
+    date = subHours(date, 7);
+  }
   const orderTime = format(date, "h:mm a");
   const orderDate = format(date, "MM/dd/yyyy");
-  const now = new Date();
+  let now = new Date();
+  if (process.env.ENVIRONMENT !== "dev") {
+    now = subHours(now, 7);
+  }
   const orderedToday = isSameDay(date, startOfDay(new Date()));
-  const completed = data.completed_date ? new Date(data.completed_date) : null;
+  let completed = data.completed_date ? new Date(data.completed_date) : null;
+  if (process.env.ENVIRONMENT !== "dev" && completed) {
+    completed = subHours(completed, 7);
+  }
   const orderDuration = formatDistance(date, now);
   const completedTime = completed ? format(completed, "h:mm a") : null;
   const completedDate = completed ? format(date, "MM/dd/yyyy") : null;
