@@ -149,7 +149,7 @@ export default function Order({ searchParams }) {
 
   return (
     <AuthWrapper>
-      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+      <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200 mt-12">
         <h1 className="text-4xl mb-4">Order A Drink</h1>
         <small
           className="text-sm mb-8 text-secondary underline hover:cursor-pointer"
