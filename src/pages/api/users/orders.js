@@ -20,12 +20,18 @@ export default async function handler(req, res) {
     const user_id = decoded.sub;
     const orderHistory = await getOrderHistory(user_id);
     const formatted = [];
+    const responseObj = { orders: [], hasOrdered: true };
     for (let order of orderHistory) {
       const formattedOrder = await createDrinkLabel(order);
       formatted.push(formattedOrder);
     }
+    if (!formatted.length) {
+      responseObj.hasOrdered = false;
+    } else {
+      responseObj.orders = formatted;
+    }
     // Return the user data in the API response
-    return res.status(200).json(formatted);
+    return res.status(200).json(responseObj);
   } catch (error) {
     // JWT verification failed
     return res.status(401).json({ message: "Invalid token", error: error });
