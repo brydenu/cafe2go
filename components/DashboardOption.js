@@ -6,6 +6,7 @@ export default function DashboardOption({
   bgColor,
   bgHover,
   isDisabled,
+  primaryOption = false,
 }) {
   const router = useRouter();
 
@@ -18,14 +19,22 @@ export default function DashboardOption({
 
   return (
     <div
-      className={`w-90 h-24 mx-5 sm:w-60 sm:h-60 sm:px-10 sm:aspect-square flex flex-col justify-center items-center rounded shadow-md m-2 duration-300 ${
+      className={`w-90 h-24 sm:h-32 mx-5 ${
+        primaryOption ? " sm:w-full mx-5 " : " sm:w-full sm:min-w-48 sm:px-10 "
+      } sm:h-60 sm:px-10 sm:aspect-square flex flex-col justify-center items-center rounded shadow-md m-2 duration-300 ${
         isDisabled ? `bg-gray-500` : `hover:cursor-pointer ${backgroundColor}`
       } `}
       onClick={handleClick}
     >
-      <p className="text-center text-white font-bold text-2xl">{title}</p>
+      <p
+        className={`text-center text-white font-bold ${
+          primaryOption ? " text-2xl" : " text-xl"
+        }`}
+      >
+        {title}
+      </p>
       {isDisabled && (
-        <p className="text-center text-white italic text-xl ">(Coming soon)</p>
+        <p className="text-center text-white italic text-lg ">(Coming soon)</p>
       )}
     </div>
   );
