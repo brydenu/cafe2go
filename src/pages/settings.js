@@ -47,18 +47,13 @@ export default function Settings() {
     onSubmit: async (values) => {
       setIsSubmitting(true);
       try {
-        console.log("TRAUEREA");
-        console.log("values", values);
-        console.log("token", token);
         const response = await updateUser(token, values);
-        console.log("RESPONSE", response);
 
         if (response.status === 200) {
           const data = response.data;
           setIsSubmitting(false);
         }
       } catch (e) {
-        console.log("e", e.response);
         if (e.response.status === 409) {
           setErrorMessage("Account with that email already exists");
           setIsSubmitting(false);
