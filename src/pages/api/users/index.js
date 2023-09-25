@@ -1,19 +1,20 @@
 import getUserById from "utils/db/users/getUserById";
+import updateUser from "utils/db/users/updateUser";
 import checkLatestOrder from "utils/db/orders/checkLatestOrder";
 import { decodeToken } from "utils/auth/auth";
 
 export default async function handler(req, res) {
+  // Get the JWT from the Authorization header
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Unauthorized", no_token_token: token });
+  }
+
   if (req.method === "GET") {
-    // Get the JWT from the Authorization header
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(" ")[1];
-
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized", no_token_token: token });
-    }
-
     let decoded;
     let userId;
     let user;
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
     } catch (e) {
       res.status(401).json({ message: `cant find user with id ${userId}` });
     }
+
     try {
       if (user.user_id === 1) {
         return res.status(200).json(user);
@@ -65,6 +67,25 @@ export default async function handler(req, res) {
         message: "An error occurred retrieving latest drink information",
         error: error,
       });
+    }
+  } else if (req.method === "PATCH") {
+    let decoded;
+    let userId;
+    const data = req.body;
+    // console.log("data", data);
+
+    try {
+      decoded = decodeToken(token);
+      userId = decoded.sub;
+    } catch (e) {
+      return res.status(401).json({ message: "error decoding token" });
+    }
+
+    try {
+      const updated = await updateUser(data, userId);
+      return res.status(200).json({ message: "User updated successfully." });
+    } catch (e) {
+      return res.status(500).json({ message: "error updating user" });
     }
   }
 }

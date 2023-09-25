@@ -50,22 +50,26 @@ export default function Dashboard() {
         className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200"
         style={{ margin: 0, padding: 0 }}
       >
-        <div className="flex flex-col sm:flex-row w-full sm:w-fit mx-2 sm:mx-0">
+        <div className="flex flex-col sm:flex-row w-full mx-2 sm:mx-0">
           <DashboardOption
             title="Order a Drink"
             destination="/order"
             bgColor="primary"
             bgHover="secondary"
+            primaryOption={true}
           />
+        </div>
+        <div className="flex flex-col sm:flex-row w-full mx-2 sm:mx-0">
           <DashboardOption
             title="Quick Order"
             destination="/quickorder"
             bgColor="primary"
             bgHover="secondary"
             isDisabled={true}
+            primaryOption={true}
           />
         </div>
-        <div className="flex flex-col sm:flex-row w-full sm:w-fit mx-2 sm:mx-0">
+        <div className="flex flex-col sm:flex-row w-full mx-2 sm:mx-0">
           <DashboardOption
             title="Edit Favorites"
             destination="/favorites"
@@ -76,6 +80,12 @@ export default function Dashboard() {
           <DashboardOption
             title="Order History"
             destination="/history"
+            bgColor="primary"
+            bgHover="secondary"
+          />
+          <DashboardOption
+            title="Settings"
+            destination="/settings"
             bgColor="primary"
             bgHover="secondary"
           />
