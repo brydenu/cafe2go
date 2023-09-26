@@ -22,6 +22,7 @@ export default function buildOrderQuery(data) {
   if (guestName) {
     values.push(guestName);
   }
+
   for (let value of valuesObjects) {
     if (value.shots_option) {
       values.push(value.ingredient_name);
@@ -36,11 +37,14 @@ export default function buildOrderQuery(data) {
       values.push(value.menu_id);
     } else if (!!value.ingredient_name && value.ingredient_name !== "None") {
       values.push(value.ingredient_name);
+    } else if (typeof value === "string") {
+      values.push(value);
     }
   }
   const insertColumns = [...columns];
 
   let columnsString = insertColumns.shift();
+
   while (insertColumns.length > 0) {
     columnsString = columnsString + ", " + insertColumns.shift();
   }

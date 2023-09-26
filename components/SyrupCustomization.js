@@ -35,7 +35,6 @@ export default function SyrupCustomization({
   const addAdditionalSyrup = () => {
     if (numOfAdditionalSyrups < 2) {
       setNumOfAdditionalSyrups(numOfAdditionalSyrups + 1);
-      console.log("added syrup");
     }
   };
 

@@ -87,7 +87,6 @@ export default async function createDrinkLabel(data) {
     "syrup3_pumps",
   ];
   const customizationKeys = Object.keys(data);
-  // console.log("customizationKeys", customizationKeys);
   const customizations = [];
   for (let key of customizationKeys) {
     if (!!data[key]) {
@@ -101,6 +100,8 @@ export default async function createDrinkLabel(data) {
         }
       } else if (key === "custom_temp" && !!data[key]) {
         customizations.push(data[key]);
+      } else if (key === "note") {
+        customizations.push(`"${data[key]}"`);
       } else if (
         !nonCustomizations.includes(key) &&
         !quantitityCustomizations.includes(key)
