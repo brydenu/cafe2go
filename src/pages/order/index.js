@@ -146,7 +146,6 @@ export default function Order({ searchParams }) {
       console.error("error creating drink");
     }
   };
-  console.log("selectedCustomizations", selectedCustomizations);
 
   return (
     <AuthWrapper>
