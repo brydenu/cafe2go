@@ -127,6 +127,7 @@ export default function Order({ searchParams }) {
     setIsSubmitting(true);
 
     const data = { drink: selectedCustomizations, user_id: user.user_id };
+    console.log("order customizations submitted:", data);
     if (isGuest) {
       if (!!guestName) {
         data["guestName"] = guestName;
