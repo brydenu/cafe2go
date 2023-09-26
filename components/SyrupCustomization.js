@@ -45,7 +45,7 @@ export default function SyrupCustomization({
   };
 
   return (
-    <div className="w-full flex flex-col flex-nowrap justify-between items-center my-2">
+    <div className="w-full flex flex-col flex-nowrap justify-between items-center">
       <SyrupOption
         options={options}
         updateDrink={updateDrink}

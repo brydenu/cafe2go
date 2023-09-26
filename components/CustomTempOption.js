@@ -24,7 +24,7 @@ export default function CustomTempOption({ updateDrink, isIced }) {
 
   useEffect(() => {
     if (
-      !selectedOption.ingredientName ||
+      !selectedOption.ingredient_name ||
       selectedOption.ingredient_name === "Normal"
     ) {
       updateDrink(customization_name);
