@@ -127,7 +127,6 @@ export default function Order({ searchParams }) {
     setIsSubmitting(true);
 
     const data = { drink: selectedCustomizations, user_id: user.user_id };
-    console.log("order customizations submitted:", data);
     if (isGuest) {
       if (!!guestName) {
         data["guestName"] = guestName;
@@ -212,6 +211,14 @@ export default function Order({ searchParams }) {
                 <hr />
                 {selectedDrink?.menu_id !== 10 && (
                   <>
+                    <FormCheckbox
+                      customization={{
+                        customization_label: "Personal Cup",
+                        customization_name: "personal_cup",
+                      }}
+                      updateDrink={updateDrink}
+                      selectedDrink={selectedDrink}
+                    />
                     <HotIcedOption
                       updateDrink={updateDrink}
                       selectedDrink={selectedDrink}
