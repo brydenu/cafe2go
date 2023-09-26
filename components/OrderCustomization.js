@@ -1,6 +1,7 @@
 import { BeatLoader } from "react-spinners";
 import IngredientOption from "./IngredientOption";
 import SyrupCustomization from "./SyrupCustomization";
+import OrderNote from "./OrderNote";
 
 export default function OrderCustomization({
   customizations,
@@ -76,6 +77,7 @@ export default function OrderCustomization({
           })}
         </>
       )}
+      <OrderNote updateDrink={updateDrink} />
     </div>
   );
 }
