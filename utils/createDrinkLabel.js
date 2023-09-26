@@ -102,6 +102,8 @@ export default async function createDrinkLabel(data) {
         customizations.push(data[key]);
       } else if (key === "note") {
         customizations.push(`"${data[key]}"`);
+      } else if (key === "personal_cup") {
+        customizations.push("Personal cup");
       } else if (
         !nonCustomizations.includes(key) &&
         !quantitityCustomizations.includes(key)

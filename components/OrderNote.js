@@ -6,7 +6,7 @@ export default function OrderNote({ updateDrink }) {
 
   return (
     <div
-      className="w-full flex flex-nowrap justify-between items-center mb-1 mt-4"
+      className="w-full flex flex-nowrap justify-between items-center mt-2 mb-4"
       style={{ zIndex: 50 }}
     >
       <label className="text-xl">Notes</label>
