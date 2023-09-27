@@ -7,12 +7,14 @@ import fetchInProgressOrders from "utils/client/fetchInProgressOrders";
 
 export default function Queue() {
   const [orders, setOrders] = useState([]);
+  const [showingOrders, setShowingOrders] = useState([]);
+  const [finishedOrders, setFinishedOrders] = useState([]);
 
   const fetchOrders = async () => {
     try {
       // Fetch orders data from the server
-      const orders = await fetchInProgressOrders();
-      setOrders(orders);
+      const ordersRes = await fetchInProgressOrders();
+      setOrders(ordersRes);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
@@ -31,6 +33,16 @@ export default function Queue() {
     };
   }, []);
 
+  useEffect(() => {
+    const unfinishedOrders = orders.filter(
+      (requestOrder) =>
+        !finishedOrders.some(
+          (finishedOrder) => requestOrder.id === finishedOrder.id
+        )
+    );
+    setShowingOrders(unfinishedOrders);
+  }, [orders]);
+
   const finishOrder = async (orderArrayIdx, orderId) => {
     const res = await axios.patch("/api/orders/finish", { id: orderId });
 
@@ -45,10 +57,10 @@ export default function Queue() {
       <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
         <h1 className="text-5xl font-bold mb-8 mt-20">Queue</h1>
         <div className="w-full flex flex-wrap">
-          {orders?.length < 1 && (
+          {showingOrders?.length < 1 && (
             <p className="w-full text-center text-md">No orders in queue.</p>
           )}
-          {orders?.map((order, idx) => (
+          {showingOrders?.map((order, idx) => (
             <QueueCard
               key={order.id}
               orderArrayIdx={idx}

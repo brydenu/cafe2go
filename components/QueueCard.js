@@ -17,7 +17,7 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder }) {
     setTimeout(() => {
       finishOrder(orderArrayIdx, order.id);
       setIsClicked(false);
-    }, 500);
+    }, 600);
   };
 
   return (
