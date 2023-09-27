@@ -16,14 +16,13 @@ export default function QueueCard({ order, orderArrayIdx, finishOrder }) {
     setIsClicked(true);
     setTimeout(() => {
       finishOrder(orderArrayIdx, order.id);
-      setIsClicked(false);
-    }, 500);
+    }, 600);
   };
 
   return (
     <div
       key={order.id}
-      className={`bg-white border m-2 rounded border-primary w-1/4 flex flex-col justify-start duration-[600ms] ${
+      className={`bg-white border m-2 rounded border-primary w-1/4 flex flex-col justify-start duration-[400ms] ${
         isMouseDown ? " duration-300 translate-y-2" : ""
       } ${isClicked ? "-translate-y-8 opacity-0" : ""}`}
     >
