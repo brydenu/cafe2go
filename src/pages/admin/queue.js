@@ -34,22 +34,28 @@ export default function Queue() {
   }, []);
 
   useEffect(() => {
-    const unfinishedOrders = orders.filter(
-      (requestOrder) =>
-        !finishedOrders.some(
-          (finishedOrder) => requestOrder.id === finishedOrder.id
-        )
-    );
+    const unfinishedOrders = orders.filter((requestOrder) => {
+      for (let finishedOrder of finishedOrders) {
+        if (finishedOrder.id === requestOrder.id) {
+          return;
+        }
+      }
+      return requestOrder;
+    });
     setShowingOrders(unfinishedOrders);
-  }, [orders]);
+  }, [orders, finishedOrders]);
 
   const finishOrder = async (orderArrayIdx, orderId) => {
     const res = await axios.patch("/api/orders/finish", { id: orderId });
 
-    const newOrders = [...orders];
+    const newFinishedOrders = [...finishedOrders, showingOrders[orderArrayIdx]];
+    if (newFinishedOrders.length > 5) {
+      newFinishedOrders.shift();
+    }
+    setFinishedOrders(newFinishedOrders);
+    const newOrders = [...showingOrders];
     newOrders.splice(orderArrayIdx, 1);
-    // console.log("newORders", newOrders);
-    setOrders([...newOrders]);
+    setShowingOrders([...newOrders]);
   };
 
   return (
