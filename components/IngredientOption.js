@@ -106,10 +106,11 @@ export default function IngredientOption({
                       className={({ active }) =>
                         `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${
                           active ? "bg-secondary text-white" : ""
-                        }`
+                        } ${option.in_stock ? "" : " text-grey-700"}`
                       }
                     >
                       {option.ingredient_name}
+                      <span>{!option.in_stock && " (Out of stock)"}</span>
                     </Listbox.Option>
                   ))}
               </Listbox.Options>

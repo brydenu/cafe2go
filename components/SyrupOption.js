@@ -129,10 +129,12 @@ export default function SyrupOption({
                         className={({ active }) =>
                           `hover:cursor-pointer px-5 py-1 rounded text-center text-xl z-50 ${
                             active ? "bg-secondary text-white" : ""
-                          }`
+                          }
+                          ${option.in_stock ? "" : " text-gray-400"}`
                         }
                       >
                         {option.ingredient_name}
+                        {!option.in_stock && " (Out of stock)"}
                       </Listbox.Option>
                     ))}
                 </Listbox.Options>
