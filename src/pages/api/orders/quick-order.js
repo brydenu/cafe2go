@@ -21,14 +21,15 @@ export default async function handler(req, res) {
     try {
         const decoded = await decodeToken(token);
         const tokenId = decoded.sub;
+        console.log("tokenId", tokenId);
         if (tokenId !== data.user_id) {
             return res.status(405).json({
                 message:
                     "Unauthorized (user_id of favorite drink does not match user_id of token sent in request).",
             });
         }
-
         const order = await CreateNewOrder(data);
+        console.log("order created,", order);
         const { order_id, user_id } = order;
         const updated = await updateUserLatestOrder(user_id, order_id);
 

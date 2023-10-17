@@ -18,7 +18,16 @@ export default function QuickOrder() {
         setToken(localStorageToken);
         const getFavorites = async () => {
             const res = await getUserFavorites(localStorageToken);
-            setFavorites(res?.favorites);
+            if (res?.favorites.length < 1) {
+                setHasFavorites(false);
+            } else {
+                setFavorites(res?.favorites);
+            }
+            if (res?.latestOrder?.info) {
+                setMostRecentOrder(res?.latestOrder?.info);
+            } else {
+                setMostRecentOrder(null);
+            }
         };
         getFavorites();
     }, []);
@@ -50,6 +59,21 @@ export default function QuickOrder() {
                     </div>
                     <div className="w-full sm:w-11/12 flex flex-col justify-center items-center align-middle mb-8">
                         {/* TODO: INSERT MOST RECENT ORDER DATA HERE */}
+                        {mostRecentOrder?.order ? (
+                            <FavoriteDrink
+                                key={mostRecentOrder?.orderId}
+                                drink={{ label: mostRecentOrder?.order }}
+                                handleSubmit={handleSubmit}
+                                recentOrder={true}
+                            />
+                        ) : (
+                            <BeatLoader
+                                color="#32A5DC"
+                                loading={true}
+                                aria-label="Loading Spinner"
+                                size={16}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="w-full flex flex-col items-center">
@@ -58,12 +82,13 @@ export default function QuickOrder() {
                     </div>
                     <div className="w-full sm:w-11/12 flex flex-col justify-center items-center align-middle">
                         {hasFavorites === true ? (
-                            favorites.length > 0 ? (
+                            favorites.length > 0 && !!token ? (
                                 favorites?.map((drink) => (
                                     <FavoriteDrink
                                         key={drink?.order?.favorite_id}
                                         drink={drink}
                                         handleSubmit={handleSubmit}
+                                        token={token}
                                     />
                                 ))
                             ) : (

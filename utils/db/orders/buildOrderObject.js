@@ -20,7 +20,9 @@ export default function buildOrderObject(data) {
         return orderObject;
     }
 
-    const { columns, values } = buildOrderQuery(data);
+    console.log("in boo, data", data);
+    const buildableData = !!data?.favorite_id ? { drink: data } : data;
+    const { columns, values } = buildOrderQuery(buildableData);
 
     for (let i = 0; i < columns.length; i++) {
         orderObject[columns[i]] = values[i];

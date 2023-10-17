@@ -6,14 +6,21 @@ import OrderNote from "./OrderNote";
 import submitQuickOrder from "utils/client/submitQuickOrder";
 import Order from "@/pages/order";
 import { useRouter } from "next/router";
+import deleteFavorite from "utils/client/deleteFavorite";
 
-export default function FavoriteDrink({ handleSubmit, drink }) {
+export default function FavoriteDrink({
+    handleSubmit,
+    drink,
+    token,
+    recentOrder = false,
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const [customizedOrder, setCustomizedOrder] = useState(drink.order);
     // const [isUsingPersonalCup, setIsUsingPersonalCup] = useState(false);
     // const [note, setNote] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
     const router = useRouter();
 
     const { order, label } = drink;
@@ -43,20 +50,28 @@ export default function FavoriteDrink({ handleSubmit, drink }) {
         setIsLoading(false);
     };
 
-    const handleTogglePersonalCup = () => {
-        setIsUsingPersonalCup((current) => !current);
-    };
-
-    const handleUpdateNote = (e) => {
-        const noteInput = e.target.value;
-        setNote(noteInput);
-    };
-
     const updateDrink = (customizationName, customizationValue) => {
         setCustomizedOrder((currentOrder) => ({
             ...currentOrder,
             [customizationName]: customizationValue,
         }));
+    };
+
+    const handleConfirmDelete = () => {
+        setIsConfirmingDelete((current) => !current);
+    };
+
+    const handleDeleteFavorite = async () => {
+        setIsLoading(true);
+        const res = await deleteFavorite(token, order?.favorite_id);
+        if (res.deletion_success) {
+            window.location.reload();
+        } else {
+            setErrorMessage(
+                "Problem deleting favorite. Please try again later"
+            );
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -96,7 +111,7 @@ export default function FavoriteDrink({ handleSubmit, drink }) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl pt-6 pb-3 text-left align-middle shadow-xl transition-all bg-white">
+                                <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl pt-6 pb-3 text-left align-middle shadow-xl transition-all bg-white px-3">
                                     <Dialog.Title className="leading-6 text-primary px-10 pb-4 text-center border-primary border-b">
                                         <h3 className="font-bold text-2xl">
                                             {drinkName}
@@ -105,16 +120,21 @@ export default function FavoriteDrink({ handleSubmit, drink }) {
                                     <div className="bg-white px-10 py-4 text-center">
                                         {!!customizations ? (
                                             <ul>
-                                                {customizations.map(
-                                                    (customization) => (
-                                                        <li
-                                                            key={`${drink.id}-${customization}`}
-                                                            className="text-md"
-                                                        >
-                                                            {customization}
-                                                        </li>
-                                                    )
-                                                )}
+                                                <div className="border-primary border p-4">
+                                                    <li className="text-md font-bold">
+                                                        Customizations:
+                                                    </li>
+                                                    {customizations.map(
+                                                        (customization) => (
+                                                            <li
+                                                                key={`${drink.id}-${customization}`}
+                                                                className="text-md"
+                                                            >
+                                                                {customization}
+                                                            </li>
+                                                        )
+                                                    )}
+                                                </div>
                                                 <FormCheckbox
                                                     customization={{
                                                         customization_label:
@@ -123,9 +143,11 @@ export default function FavoriteDrink({ handleSubmit, drink }) {
                                                             "personal_cup",
                                                     }}
                                                     updateDrink={updateDrink}
+                                                    fontSize={"md"}
                                                 />
                                                 <OrderNote
                                                     updateDrink={updateDrink}
+                                                    fontSize={"md"}
                                                 />
                                             </ul>
                                         ) : (
@@ -141,29 +163,84 @@ export default function FavoriteDrink({ handleSubmit, drink }) {
                                     </div>
 
                                     <div className="mt-4 w-full flex justify-center bg-white gap-3">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeDrinkModal}
-                                        >
-                                            Close
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={handleQuickOrder}
-                                        >
-                                            {isLoading ? (
-                                                <ClipLoader
-                                                    color="#ffffff"
-                                                    size={16}
-                                                    loading={true}
-                                                    aria-label="Loading Spinner"
-                                                />
+                                        {!recentOrder &&
+                                            (isConfirmingDelete ? (
+                                                <div className="flex flex-col flex-nowrap justify-center align-center align-middle">
+                                                    <p className="text-black my-2">
+                                                        Are you sure you want to
+                                                        delete this favorite?
+                                                    </p>
+                                                    <div className="flex flex-row flex-nowrap justify-center gap-2">
+                                                        <button
+                                                            type="button"
+                                                            className="max-h-[40px] inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 duration-200"
+                                                            onClick={
+                                                                handleConfirmDelete
+                                                            }
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            className="max-h-[40px] inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 duration-200"
+                                                            disabled={isLoading}
+                                                            onClick={
+                                                                handleDeleteFavorite
+                                                            }
+                                                        >
+                                                            {isLoading ? (
+                                                                <ClipLoader
+                                                                    color="#ffffff"
+                                                                    size={16}
+                                                                    loading={
+                                                                        true
+                                                                    }
+                                                                    aria-label="Loading Spinner"
+                                                                />
+                                                            ) : (
+                                                                "Confirm Delete"
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             ) : (
-                                                "Order"
-                                            )}
-                                        </button>
+                                                <button
+                                                    type="button"
+                                                    className="max-h-[40px] inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 duration-200"
+                                                    onClick={
+                                                        handleConfirmDelete
+                                                    }
+                                                >
+                                                    Delete
+                                                </button>
+                                            ))}
+                                        {!isConfirmingDelete && (
+                                            <>
+                                                {/* <button
+                                                    type="button"
+                                                    className="max-h-[40px] inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 duration-200"
+                                                    onClick={closeDrinkModal}
+                                                >
+                                                    Close
+                                                </button> */}
+                                                <button
+                                                    type="button"
+                                                    className={`max-h-[40px] inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 duration-200`}
+                                                    onClick={handleQuickOrder}
+                                                >
+                                                    {isLoading ? (
+                                                        <ClipLoader
+                                                            color="#ffffff"
+                                                            size={16}
+                                                            loading={true}
+                                                            aria-label="Loading Spinner"
+                                                        />
+                                                    ) : (
+                                                        "Order"
+                                                    )}
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

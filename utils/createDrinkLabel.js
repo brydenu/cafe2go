@@ -91,6 +91,7 @@ export default async function createDrinkLabel(data, labelForFavorite = false) {
         "in_progress",
         "order_id",
         "guest_name",
+        "favorite_id",
     ];
     const quantityCustomizations = [
         "syrup1_pumps",

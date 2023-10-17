@@ -75,7 +75,7 @@ export default function Dashboard() {
                         destination="/favorites"
                         bgColor="primary"
                         bgHover="secondary"
-                        isDisabled={true}
+                        isDisabled={false}
                     />
                     <DashboardOption
                         title="Order History"
