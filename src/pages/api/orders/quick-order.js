@@ -28,7 +28,7 @@ export default async function handler(req, res) {
                     "Unauthorized (user_id of favorite drink does not match user_id of token sent in request).",
             });
         }
-        const order = await CreateNewOrder(data);
+        const order = await CreateNewOrder(data, true);
         console.log("order created,", order);
         const { order_id, user_id } = order;
         const updated = await updateUserLatestOrder(user_id, order_id);

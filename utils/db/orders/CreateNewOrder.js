@@ -3,11 +3,11 @@ import { supabase } from "db/db";
 import buildOrderObject from "./buildOrderObject";
 import buildOrderQuery from "./buildOrderQuery";
 
-export default async function CreateNewOrder(drinkData) {
+export default async function CreateNewOrder(drinkData, isQuickOrder) {
     //   // Hi Bryden
 
     // Supabase code
-    const orderObject = buildOrderObject(drinkData);
+    const orderObject = buildOrderObject(drinkData, isQuickOrder);
     // console.log("drinkData.drink:", drinkData.drink);
     const { data, error } = await supabase.from("orders").insert(orderObject);
     if (error) {

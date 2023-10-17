@@ -62,7 +62,10 @@ export default function QuickOrder() {
                         {mostRecentOrder?.order ? (
                             <FavoriteDrink
                                 key={mostRecentOrder?.orderId}
-                                drink={{ label: mostRecentOrder?.order }}
+                                drink={{
+                                    label: mostRecentOrder?.order,
+                                    order: mostRecentOrder?.orderData,
+                                }}
                                 handleSubmit={handleSubmit}
                                 recentOrder={true}
                             />
