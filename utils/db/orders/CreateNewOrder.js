@@ -3,7 +3,7 @@ import { supabase } from "db/db";
 import buildOrderObject from "./buildOrderObject";
 import buildOrderQuery from "./buildOrderQuery";
 
-export default async function CreateNewOrder(drinkData, isQuickOrder) {
+export default async function CreateNewOrder(drinkData, isQuickOrder = false) {
     //   // Hi Bryden
 
     // Supabase code
