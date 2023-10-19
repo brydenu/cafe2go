@@ -3,6 +3,7 @@ import IngredientOption from "./IngredientOption";
 import SyrupCustomization from "./SyrupCustomization";
 import OrderNote from "./OrderNote";
 import { useEffect } from "react";
+import React from "react";
 
 export default function OrderCustomization({
     customizations,
@@ -70,28 +71,30 @@ export default function OrderCustomization({
                             customization.customization_ingredient !== "syrup"
                         ) {
                             return (
-                                <>
+                                <React.Fragment
+                                    key={customization.customization_id}
+                                >
                                     <IngredientOption
                                         customization={customization}
-                                        key={customization.customization_id}
                                         updateDrink={updateDrink}
                                         selectedDrink={selectedDrink}
                                         zIndex={zIndex}
                                     />
                                     <hr />
-                                </>
+                                </React.Fragment>
                             );
                         } else {
                             return (
-                                <SyrupCustomization
-                                    customization={customization}
-                                    key={
-                                        customization.customization_customization_id
-                                    }
-                                    updateDrink={updateDrink}
-                                    selectedDrink={selectedDrink}
-                                    zIndex={zIndex}
-                                />
+                                <React.Fragment
+                                    key={customization.customization_id}
+                                >
+                                    <SyrupCustomization
+                                        customization={customization}
+                                        updateDrink={updateDrink}
+                                        selectedDrink={selectedDrink}
+                                        zIndex={zIndex}
+                                    />
+                                </React.Fragment>
                             );
                         }
                     })}
