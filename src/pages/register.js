@@ -72,7 +72,7 @@ export default function Register() {
                         src="/images/BS-Symbol-BS-Master-TM.svg"
                         height={45}
                         width={45}
-                        alt="BioLife Solutions logo"
+                        alt="Cafe2Go logo"
                     />
                     <h1 className="text-4xl text-primary font-bold my-5">
                         Register
