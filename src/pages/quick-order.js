@@ -43,7 +43,7 @@ export default function QuickOrder() {
 
     return (
         <AuthWrapper>
-            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200 mt-16">
+            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-background mt-16">
                 <div className="py-4 flex flex-col justify-center text-center">
                     <h1 className="font-bold text-4xl">Quick Order</h1>
                     <p
@@ -71,7 +71,7 @@ export default function QuickOrder() {
                             />
                         ) : (
                             <BeatLoader
-                                color="#32A5DC"
+                                color="#8f7b7b"
                                 loading={true}
                                 aria-label="Loading Spinner"
                                 size={16}
@@ -96,7 +96,7 @@ export default function QuickOrder() {
                                 ))
                             ) : (
                                 <BeatLoader
-                                    color="#32A5DC"
+                                    color="#8f7b7b"
                                     loading={true}
                                     aria-label="Loading Spinner"
                                     size={16}

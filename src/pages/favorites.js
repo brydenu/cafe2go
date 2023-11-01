@@ -139,7 +139,7 @@ export default function Favorites({ searchParams }) {
 
     return (
         <AuthWrapper>
-            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200 mt-12">
+            <main className="w-full min-h-screen flex flex-col items-center justify-center bg-background mt-12">
                 <h1 className="text-4xl mb-4">Create new favorite drink</h1>
                 <small
                     className="text-sm mb-8 text-secondary underline hover:cursor-pointer"
@@ -234,7 +234,7 @@ export default function Favorites({ searchParams }) {
                         ) : (
                             <div className="self-center py-10">
                                 <SyncLoader
-                                    color="#32A5DC"
+                                    color="#8f7b7b"
                                     size={12}
                                     loading={true}
                                     aria-label="Loading Spinner"

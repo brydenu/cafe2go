@@ -63,13 +63,13 @@ export default function Register() {
     }, []);
 
     return (
-        <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200">
+        <main className="w-full min-h-screen flex flex-col items-center justify-center bg-background">
             <Navbar />
             <div className="pt-3 sm:rounded w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
                 <div className="flex flex-row items-center justify-center gap-5">
                     <Image
                         priority
-                        src="/images/BS-Symbol-BS-Master-TM.svg"
+                        src="/images/logo.png"
                         height={45}
                         width={45}
                         alt="Cafe2Go logo"

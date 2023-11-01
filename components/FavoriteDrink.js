@@ -153,7 +153,7 @@ export default function FavoriteDrink({
                                         ) : (
                                             <div className="py-5">
                                                 <BeatLoader
-                                                    color="#32A5DC"
+                                                    color="#8f7b7b"
                                                     size={12}
                                                     loading={true}
                                                     aria-label="Loading Spinner"

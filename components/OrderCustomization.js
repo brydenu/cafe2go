@@ -49,7 +49,7 @@ export default function OrderCustomization({
             {!(customizations.length > 0) ? (
                 <div className="py-5">
                     <BeatLoader
-                        color="#32A5DC"
+                        color="#8f7b7b"
                         size={12}
                         loading={true}
                         aria-label="Loading Spinner"

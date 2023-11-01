@@ -47,24 +47,21 @@ export default function Dashboard() {
     return (
         <AuthWrapper>
             <main
-                className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-200"
+                className="w-full min-h-screen flex flex-col items-center justify-center bg-background"
                 style={{ margin: 0, padding: 0 }}
             >
                 <div className="flex flex-col sm:flex-row w-full mx-2 sm:mx-0">
                     <DashboardOption
                         title="Order a Drink"
                         destination="/order"
-                        bgColor="primary"
-                        bgHover="secondary"
                         primaryOption={true}
+                        mainOption={true}
                     />
                 </div>
                 <div className="flex flex-col sm:flex-row w-full mx-2 sm:mx-0">
                     <DashboardOption
                         title="Quick Order"
                         destination="/quick-order"
-                        bgColor="primary"
-                        bgHover="secondary"
                         isDisabled={false}
                         primaryOption={true}
                     />
@@ -73,22 +70,13 @@ export default function Dashboard() {
                     <DashboardOption
                         title="Edit Favorites"
                         destination="/favorites"
-                        bgColor="primary"
-                        bgHover="secondary"
                         isDisabled={false}
                     />
                     <DashboardOption
                         title="Order History"
                         destination="/history"
-                        bgColor="primary"
-                        bgHover="secondary"
                     />
-                    <DashboardOption
-                        title="Settings"
-                        destination="/settings"
-                        bgColor="primary"
-                        bgHover="secondary"
-                    />
+                    <DashboardOption title="Settings" destination="/settings" />
                 </div>
                 <DashboardDrinkTracker
                     drink={user?.latestOrder?.info?.order}
