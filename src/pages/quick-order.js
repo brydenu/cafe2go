@@ -104,8 +104,9 @@ export default function QuickOrder() {
                             )
                         ) : (
                             <p className="my-5">
-                                You haven't set any favorites yet. Go to "Edit
-                                Favorites" in the dashboard to set some!
+                                You haven&apos;t set any favorites yet. Go to
+                                &quot;Edit Favorites&quot; in the dashboard to
+                                set some!
                             </p>
                         )}
                     </div>
