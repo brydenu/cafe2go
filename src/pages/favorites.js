@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import AuthWrapper from "components/AuthWrapper";
-import GuestNameInput from "components/GuestNameInput";
 import DrinkOption from "components/DrinkOption";
 import OrderCustomization from "components/OrderCustomization";
 import FormCheckbox from "components/FormCheckbox";
 import HotIcedOption from "components/HotIcedOption";
 import CustomTempOption from "components/CustomTempOption";
 import getLoggedInUser from "utils/client/getLoggedInUser";
-import checkIfGuest from "utils/client/checkIfGuest";
 import fetchMenu from "utils/client/fetchMenu";
 import { ClipLoader, SyncLoader } from "react-spinners";
+import addFavorite from "utils/client/addFavorite";
 
-export default function Order({ searchParams }) {
+export default function Favorites({ searchParams }) {
     const [user, setUser] = useState({});
     const [bevType, setBevType] = useState("coffee");
     const [menu, setMenu] = useState([]);
@@ -24,15 +23,11 @@ export default function Order({ searchParams }) {
         drink: selectedDrink?.menu_id,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isGuest, setIsGuest] = useState(true);
-    const [guestName, setGuestName] = useState("");
-    const [guestNameError, setGuestNameError] = useState(false);
+    const [token, setToken] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [saveConfirmed, setSaveConfirmed] = useState(false);
 
-    // console.log("selectedDrink:", selectedDrink);egg slay!!!!!!! geeia smells
-    /*
-
-  
-  */
     // console.log("selectedCustomizations:", selectedCustomizations);
     // console.log("selectedDrink:", selectedDrink);
 
@@ -40,12 +35,9 @@ export default function Order({ searchParams }) {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+        setToken(token);
 
         const getUser = async () => {
-            const guest = await checkIfGuest(token);
-            if (!guest) {
-                setIsGuest(false);
-            }
             const res = await getLoggedInUser(token);
             const loggedInUser = res.user.data;
             setUser(loggedInUser);
@@ -55,7 +47,6 @@ export default function Order({ searchParams }) {
             const res = await fetchMenu();
             const fetchedMenu = res.data.menu;
             setMenu(fetchedMenu);
-            // console.log("menu res.data.menu:", res.data.menu);
         };
 
         getMenu();
@@ -108,6 +99,7 @@ export default function Order({ searchParams }) {
     };
 
     const updateDrink = (property, value = null) => {
+        setSaveConfirmed(false);
         if (value) {
             setSelectedCustomizations((selectedCustomizations) => ({
                 ...selectedCustomizations,
@@ -130,30 +122,25 @@ export default function Order({ searchParams }) {
         setIsSubmitting(true);
 
         const data = { drink: selectedCustomizations, user_id: user.user_id };
-        if (isGuest) {
-            if (!!guestName) {
-                data["guestName"] = guestName;
-            } else {
-                setGuestNameError(true);
-                setIsSubmitting(false);
-                return;
-            }
-        }
         try {
-            const res = await axios.post(`api/orders`, data);
+            const res = await addFavorite(token, data);
             if (res.status === 201) {
                 const { order_id } = res.data;
-                router.push(`/order/success?order_id=${order_id}`);
+                setSuccessMessage("Favorite saved.");
+                setIsSubmitting(false);
+                setSaveConfirmed(true);
             }
         } catch (e) {
-            console.error("error creating drink");
+            console.error("error saving favorite drink");
+            setErrorMessage("Error saving favorite drink.");
+            setIsSubmitting(false);
         }
     };
 
     return (
         <AuthWrapper>
             <main className="w-full min-h-screen flex flex-col items-center justify-center bg-background mt-12">
-                <h1 className="text-4xl mb-4">Order A Drink</h1>
+                <h1 className="text-4xl mb-4">Create new favorite drink</h1>
                 <small
                     className="text-sm mb-8 text-secondary underline hover:cursor-pointer"
                     onClick={handleGoBack}
@@ -200,16 +187,6 @@ export default function Order({ searchParams }) {
                         </button>
                     </div>
                     <form className="w-full flex flex-col w-full bg-white justify-center mb-2 px-8 sm:px-16">
-                        {isGuest && (
-                            <>
-                                <GuestNameInput setGuestName={setGuestName} />
-                                {guestNameError && (
-                                    <p className="text-red-500 text-sm text-end">
-                                        Please enter your name
-                                    </p>
-                                )}
-                            </>
-                        )}
                         {menu.length > 0 ? (
                             <>
                                 <DrinkOption
@@ -222,16 +199,6 @@ export default function Order({ searchParams }) {
                                 <hr />
                                 {selectedDrink?.menu_id !== 10 && (
                                     <>
-                                        <FormCheckbox
-                                            customization={{
-                                                customization_label:
-                                                    "Personal Cup",
-                                                customization_name:
-                                                    "personal_cup",
-                                            }}
-                                            updateDrink={updateDrink}
-                                            selectedDrink={selectedDrink}
-                                        />
                                         <HotIcedOption
                                             updateDrink={updateDrink}
                                             selectedDrink={selectedDrink}
@@ -261,6 +228,7 @@ export default function Order({ searchParams }) {
                                     updateDrink={updateDrink}
                                     selectedDrink={selectedDrink}
                                     bevType={bevType}
+                                    page={"favorites"}
                                 />
                             </>
                         ) : (
@@ -275,12 +243,13 @@ export default function Order({ searchParams }) {
                         )}
                     </form>
                     <button
-                        className={`w-40 min-h-[44px] text-white rounded-xl bg-green-600 hover:bg-green-500 duration-200 self-end font-bold text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle ${
-                            isSubmitting &&
-                            "bg-gray-400 hover:bg-gray-400 hover:cursor-default"
+                        className={`w-40 min-h-[44px] text-white rounded-xl duration-200 self-end text-lg mx-10 my-2 px-4 py-2 flex justify-center align-middle ${
+                            saveConfirmed
+                                ? " bg-gray-400 hover:bg-gray-400 hover:cursor-default"
+                                : " bg-green-600 hover:bg-green-500 font-bold"
                         }`}
                         onClick={handleSubmit}
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || saveConfirmed}
                     >
                         {isSubmitting ? (
                             <ClipLoader
@@ -289,8 +258,10 @@ export default function Order({ searchParams }) {
                                 loading={true}
                                 aria-label="Loading Spinner"
                             />
+                        ) : saveConfirmed ? (
+                            "Saved"
                         ) : (
-                            "Submit Order"
+                            "Save Drink"
                         )}
                     </button>
                 </div>
