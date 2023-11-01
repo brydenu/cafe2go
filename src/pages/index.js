@@ -60,7 +60,7 @@ export default function Home() {
                             width={75}
                             alt="Cafe2Go logo"
                         />
-                        <h1 className=" text-4xl sm:text-6xl text-primary font-bold text-center">
+                        <h1 className=" text-3xl sm:text-4xl text-primary font-bold text-center">
                             Welcome to Cafe2Go
                         </h1>
                     </div>
@@ -79,7 +79,7 @@ export default function Home() {
                         </Link>
                         <button
                             onClick={handleGuestSignIn}
-                            className="hover:cursor-pointer hover:scale-110 duration-200 text-white text-lg bg-secondary text-center px-4 py-2 rounded w-full sm:w-1/4 shadow-md"
+                            className="hover:cursor-pointer hover:scale-110 leading-[1rem] duration-200 text-white text-md bg-secondary text-center px-4 py-2 rounded w-full sm:w-1/4 shadow-md"
                         >
                             {isLoading ? (
                                 <ClipLoader
